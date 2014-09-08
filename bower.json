@@ -1,0 +1,19 @@
+{
+  "name": "ant3",
+  "version": "0.0.0",
+  "authors": [
+    "David Kamphausen <david.kamphausen@web.de>"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*",
+    "threejs-examples": "*"
+  }
+}
