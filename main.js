@@ -1,4 +1,4 @@
-require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Models) {
+require(['base',"terrain","skybox","models","controls"],function(Base,Terrain,Skybox, Models, Controls) {
   // Our Javascript will go here.
   Base.init();
 
@@ -39,6 +39,13 @@ require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Model
   Terrain.create(scene);
 
   Skybox.add(scene);
+
+  Controls.init({
+    move:function(d) {
+      Base.camera.position.x-=d.dx*0.3;
+      Base.camera.position.z-=d.dy*0.3;
+    }
+  });
 
   Base.render();
 

@@ -18,8 +18,8 @@ define([],function() {
       camera.position.y = 311;
       camera.position.z = 376;
       camera.rotation.x = -52 * Math.PI / 180;
-      camera.rotation.y = 35 * Math.PI / 180;
-      camera.rotation.z = 37 * Math.PI / 180;
+//      camera.rotation.y = 35 * Math.PI / 180;
+//      camera.rotation.z = 37 * Math.PI / 180;
 
       console.log("CAM",camera);
 
