@@ -3,7 +3,7 @@ define([],function() {
 
     init:function() {
       self.scene = new THREE.Scene();
-      self.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+      var camera = self.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
 
       self.renderer = new THREE.WebGLRenderer();
 
@@ -13,6 +13,16 @@ define([],function() {
       self.camera.position.y = 2;
 
       self.camera.position.x=1;
+
+      camera.position.x = 349;
+      camera.position.y = 311;
+      camera.position.z = 376;
+      camera.rotation.x = -52 * Math.PI / 180;
+      camera.rotation.y = 35 * Math.PI / 180;
+      camera.rotation.z = 37 * Math.PI / 180;
+
+      console.log("CAM",camera);
+
     },
 
     render:function() {

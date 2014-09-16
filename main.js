@@ -1,7 +1,6 @@
-require(['base',"terrain"],function(Base,Terrain) {
+require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Models) {
   // Our Javascript will go here.
   //
-
   Base.init();
 
 
@@ -25,47 +24,28 @@ require(['base',"terrain"],function(Base,Terrain) {
   scene.add( directionalLight );
 
 
-  var manager = new THREE.LoadingManager();
-  manager.onProgress = function ( item, loaded, total ) {
 
-    console.log( item, loaded, total );
-
-  };
-
-  var texture = new THREE.Texture();
-
-  var loader = new THREE.ImageLoader( manager );
-  loader.load( 'models/bakery.bmp', function ( image ) {
-
-    texture.image = image;
-    texture.needsUpdate = true;
-
-  } );
 
   // model
-
-  var loader = new THREE.OBJLoader( manager );
-  loader.load( 'models/bakery.obj', function ( object ) {
-
-    object.traverse( function ( child ) {
-
-      if ( child instanceof THREE.Mesh ) {
-
-        child.material.map = texture;
-
-      }
-
-    } );
-
-    object.position.y = - 1;
+  Models.load("bakery", function(object) {
+    object.position.y = 100;
     object.rotation.x=-3.14/2;
     object.rotation.z=-3.14/8;
+    object.scale.set(30,30,30);
     scene.add( object );
-    console.log("ADDED");
-
-  } );
+  });
+  Models.load("bakery", function(object) {
+    object.position.y = 100;
+    object.position.z = 100;
+    object.rotation.x=-3.14/2;
+    object.rotation.z=-3.14/8;
+    object.scale.set(30,30,30);
+    scene.add( object );
+  });
 
   Terrain.create(scene);
+
+  Skybox.add(scene);
 
   Base.render();
 
