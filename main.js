@@ -1,8 +1,6 @@
 require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Models) {
   // Our Javascript will go here.
-  //
   Base.init();
-
 
   console.log("Terrain",Terrain);
   var geometry = new THREE.BoxGeometry(1,1,1);
@@ -10,8 +8,6 @@ require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Model
   material=new THREE.MeshLambertMaterial({
     color: 'blue' 
   });
-  var cube = new THREE.Mesh( geometry, material );
-  //scene.add( cube );
   var scene=Base.scene;
 
   var light = new THREE.AmbientLight( 0x404040 ); // soft white light
@@ -23,9 +19,6 @@ require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Model
   directionalLight.position.set( 1, 1, 0 );
   scene.add( directionalLight );
 
-
-
-
   // model
   Models.load("bakery", function(object) {
     object.position.y = 100;
@@ -34,11 +27,11 @@ require(['base',"terrain","skybox","models"],function(Base,Terrain,Skybox, Model
     object.scale.set(30,30,30);
     scene.add( object );
   });
-  Models.load("bakery", function(object) {
+  Models.load("townhall_try2", function(object) {
     object.position.y = 100;
     object.position.z = 100;
     object.rotation.x=-3.14/2;
-    object.rotation.z=-3.14/8;
+    object.rotation.z=+3.14*6/4;
     object.scale.set(30,30,30);
     scene.add( object );
   });

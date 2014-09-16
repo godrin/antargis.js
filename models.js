@@ -44,10 +44,9 @@ define([],function() {
 
           models[name]=object;
 
-          for(var i in callbacks[name]) {
-            console.log("I",i);
-            callbacks[name][i](object.clone());
-          }
+          $.each(callbacks[name],function(ke,cb) {
+            cb(object.clone());
+          });
         });
       }
     }
