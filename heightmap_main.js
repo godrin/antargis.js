@@ -14,5 +14,11 @@ require(['heightmap','generator'],function(HeightMap, Generator) {
   console.log(map.get("rock").interpolate(1.5,1));
 
 
-  Generator.test();
+  Generator.test(function(w,h,data) {
+    var map2=new HeightMap({width:w,height:w,map:{rock:data}});
+    var canvas=map2.toCanvas();
+    console.log("C",canvas);
+    $("#image").append(canvas).css({width:sw,height:sw});
+
+  });
 });

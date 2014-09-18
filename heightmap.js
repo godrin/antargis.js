@@ -1,21 +1,22 @@
 define([],function() {
 
   var ArrayType = window.Float64Array || window.Array;
-  var defaultOptions={
-    width:256,
-    height:256,
-  };
 
   function createMap(w,h) {
     return new ArrayType(w*h);
   }
 
   var HeightMap=function(options) {
-    this.options={};
-    $.extend(this.options,defaultOptions);
-    $.extend(this.options,options);
+    this.options=$.extend({
+      width:256,
+      height:256,
+      map:{}
+    },
+    options);
 
-    this.map={rock:createMap(this.options.width, this.options.height)};
+    this.map=this.options.map;
+    if(!this.map.rock)
+      this.map.rock=createMap(this.options.width, this.options.height);
   };
 
   HeightMap.prototype.generate=function() {
