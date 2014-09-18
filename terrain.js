@@ -1,16 +1,33 @@
-define(['bower_components/THREE.Terrain/build/THREE.Terrain.min.js'],function(TT) {
+define(['bower_components/THREE.Terrain/src/THREE.Terrain.js',"heightmap"],function(TT,HeightMap) {
   return {
 
     createTerrain: function(scene, material) {
       var xS = 63, yS = 63;
+      var heightmap=THREE.Terrain.DiamondSquare;
+
+      heightmap=function(g,options) {
+        console.log("OPTIONS",options);
+        var xl = options.xSegments + 1,
+        yl = options.ySegments + 1;
+        for (i = 0; i < xl; i++) {
+          for (j = 0; j < yl; j++) {
+            g[j * xl + i].z += Math.random()*40;
+          }
+        }
+      };
+
+      var h=new HeightMap({width:xS+1,height:yS+1});
+      h.generate();
+
+
       terrainScene = THREE.Terrain({
         easing: THREE.Terrain.Linear,
         frequency: 2.5,
-        heightmap: THREE.Terrain.DiamondSquare,
+        heightmap: h.toThreeTerrain(), //heightmap,
         material: material||new THREE.MeshBasicMaterial({color: 0x5566aa}),
         maxHeight: 100,
         minHeight: -100,
-        steps: 1,
+        steps: 2,
         useBufferGeometry: false,
         xSegments: xS,
         xSize: 1024,
@@ -19,8 +36,9 @@ define(['bower_components/THREE.Terrain/build/THREE.Terrain.min.js'],function(TT
       });
       // Assuming you already have your global scene
       scene.add(terrainScene);
+      this.geo = terrainScene.children[0].geometry;
+      console.log("GEO",heightmap);
       return;
-      var geo = terrainScene.children[0].geometry;
 
       //
       // // Add randomly distributed foliage

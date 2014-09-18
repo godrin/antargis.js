@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>My first Three.js app</title>
+    <style>canvas { width: 100%; height: 100% }
+      body { margin:0px;}
+    </style>
+		<script id="fragment_shader_screen" type="x-shader/x-fragment">
+
+			varying vec2 vUv;
+			uniform sampler2D tDiffuse;
+
+			void main() {
+
+				gl_FragColor = texture2D( tDiffuse, vUv );
+
+			}
+
+		</script>
+
+		<script id="fragment_shader_pass_1" type="x-shader/x-fragment">
+
+			varying vec2 vUv;
+			uniform float time;
+
+			void main() {
+
+				float r = vUv.x;
+				if( vUv.y < 0.5 ) r = 0.0;
+				float g = vUv.y;
+				if( vUv.x < 0.5 ) g = 0.0;
+
+				gl_FragColor = vec4( r, g, time, 1.0 );
+
+			}
+
+		</script>
+
+		<script id="vertexShader" type="x-shader/x-vertex">
+
+			varying vec2 vUv;
+
+			void main() {
+
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+  </head>
+  <body>
+    <script src="jquery-1.7.2.min.js"></script>
+    <script src="bower_components/threejs/build/three.min.js"></script>
+    <script src="bower_components/threejs-examples/examples/js/loaders/OBJLoader.js"></script>
+    <script data-main="heightmap_main" src="bower_components/requirejs/require.js"></script>
+    <div id="image"></div>
+    <div id="container"></div>
+  </body>
+</html>

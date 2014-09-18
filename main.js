@@ -31,12 +31,13 @@ require(['base',"terrain","skybox","models","controls"],function(Base,Terrain,Sk
     object.position.y = 100;
     object.position.z = 100;
     object.rotation.x=-3.14/2;
-    object.rotation.z=+3.14*6/4;
+    object.rotation.z=+3.14*6/4+3.14;
     object.scale.set(30,30,30);
     scene.add( object );
   });
 
   Terrain.create(scene);
+  console.log("GEO",Terrain.geo);
 
   Skybox.add(scene);
 
