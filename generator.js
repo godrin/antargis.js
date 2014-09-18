@@ -8,25 +8,7 @@ define([],function() {
     });
   }
 
-  var fct= function() {
-    loadShader("simplex3d",function(options) {
-      options=$.extend({
-        uniforms:{
-          delta:{type:'f',value:1.0},
-          viewport:{type:'v2',value:new THREE.Vector2(256,256)}
-        }
-      },options);
-      var m=new THREE.ShaderMaterial(options);
-      console.log("M",m);
-
-      var cameraRTT = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, -10000, 10000 );
-      cameraRTT.position.z = 100;
-      var rtTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat } );
-      var sceneRTT = new THREE.Scene();
-    });
-  };
-
-  fct.test=function(datacallback) { 
+  var fct = function(datacallback) { 
 
     var container;
 
@@ -41,8 +23,8 @@ define([],function() {
     };
 
     loadShader("simplex3d",function(shader) {
-    init(shader);
-    animate();
+      init(shader);
+      animate();
     });
 
     function init(shader) {
@@ -103,22 +85,19 @@ define([],function() {
 
     function render() {
 
-if(false) {
-      var time = Date.now() * 0.0015;
-      if ( material.uniforms.time.value > 1 || material.uniforms.time.value < 0 ) {
+      if(false) {
+        var time = Date.now() * 0.0015;
+        if ( material.uniforms.time.value > 1 || material.uniforms.time.value < 0 ) {
+          delta *= -1;
+        }
 
-        delta *= -1;
-
+        material.uniforms.time.value += delta;
       }
-
-      material.uniforms.time.value += delta;
-}
       renderer.clear();
 
       // Render first scene into texture
 
       renderer.render( sceneRTT, cameraRTT, rtTexture, true );
-
 
       var arr = new Uint8Array( rtt.width * rtt.height*4 );
       var gl = renderer.getContext();
@@ -126,8 +105,6 @@ if(false) {
       if(datacallback)
         datacallback(rtt.width,rtt.height,arr);
       renderer.render( sceneRTT, cameraRTT );
-
-
     }
   };
   return fct;
