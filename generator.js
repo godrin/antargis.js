@@ -36,15 +36,16 @@ define([],function() {
 
     var delta = 0.01;
     var rtt={
-      width:8, //window.innerWidth,
-      height:8//window.innerHeight
+      width:64,
+      height:64
     };
 
-    init();
+    loadShader("simplex3d",function(shader) {
+    init(shader);
     animate();
+    });
 
-    function init() {
-
+    function init(shader) {
 
       rtTexture = new THREE.WebGLRenderTarget( rtt.width, rtt.height, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat } );
 
@@ -56,14 +57,19 @@ define([],function() {
       camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
       camera.position.z = 100;
 
-
       sceneRTT = new THREE.Scene();
 
       material = new THREE.ShaderMaterial( {
 
-        uniforms: { time: { type: "f", value: 0.0 } },
-        vertexShader: document.getElementById( 'vertexShader' ).textContent,
-        fragmentShader: document.getElementById( 'fragment_shader_pass_1' ).textContent
+        uniforms: { 
+          //time: { type: "f", value: 0.0 },
+          delta: { type:'f', value:Math.random()},
+          viewport:{type:'v2',value:new THREE.Vector2(rtt.width,rtt.height)}
+
+        },
+        vertexShader: //shader.vertexShader, 
+        document.getElementById( 'vertexShader' ).textContent,
+        fragmentShader: shader.fragmentShader //document.getElementById( 'fragment_shader_pass_1' ).textContent
 
       } );
       var plane = new THREE.PlaneGeometry( window.innerWidth, window.innerHeight );
@@ -75,8 +81,9 @@ define([],function() {
       renderer.setSize( rtt.width,rtt.height);
       renderer.autoClear = false;
 
-      container.appendChild( renderer.domElement );
-
+      // disable if render off screen is wished
+      if(true)
+        container.appendChild( renderer.domElement );
 
     }
     var framesDone=0;
@@ -96,6 +103,7 @@ define([],function() {
 
     function render() {
 
+if(false) {
       var time = Date.now() * 0.0015;
       if ( material.uniforms.time.value > 1 || material.uniforms.time.value < 0 ) {
 
@@ -104,7 +112,7 @@ define([],function() {
       }
 
       material.uniforms.time.value += delta;
-
+}
       renderer.clear();
 
       // Render first scene into texture
@@ -115,15 +123,8 @@ define([],function() {
       var arr = new Uint8Array( rtt.width * rtt.height*4 );
       var gl = renderer.getContext();
       gl.readPixels( 0, 0, rtt.width, rtt.height, gl.RGBA, gl.UNSIGNED_BYTE, arr);
-      datacallback(rtt.width,rtt.height,arr);
-      //console.log("A",arr);
-      // Render full screen quad with generated texture
-
-      //renderer.render( sceneScreen, cameraRTT );
-
-      // Render second scene to screen
-      // (using first scene as regular texture)
-
+      if(datacallback)
+        datacallback(rtt.width,rtt.height,arr);
       renderer.render( sceneRTT, cameraRTT );
 
 
