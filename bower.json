@@ -16,6 +16,9 @@
     "threejs": "*",
     "threejs-examples": "*",
     "THREE.Terrain": "~1.1.0",
-    "requirejs": "~2.1.15"
+    "requirejs": "~2.1.15",
+    "q": "~2.0.2",
+    "jquery": "~2.1.1",
+    "underscore": "~1.7.0"
   }
 }

@@ -8,19 +8,16 @@ define([],function() {
     });
   }
 
-  var fct = function(datacallback) { 
-
+  var fct = function(options,datacallback) { 
     var container;
-
     var cameraRTT, camera, sceneRTT, renderer;
-
     var rtTexture, material, quad;
-
     var delta = 0.01;
-    var rtt={
-      width:64,
-      height:64
-    };
+    var w=64;
+    var rtt=_.extend({
+      width:w,
+      height:w
+    },options);
 
     loadShader("simplex3d",function(shader) {
       init(shader);
@@ -35,23 +32,17 @@ define([],function() {
       cameraRTT.position.z = 100;
 
       container = document.getElementById( 'container' );
-
-      camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
-      camera.position.z = 100;
-
       sceneRTT = new THREE.Scene();
 
       material = new THREE.ShaderMaterial( {
 
         uniforms: { 
-          //time: { type: "f", value: 0.0 },
           delta: { type:'f', value:Math.random()},
           viewport:{type:'v2',value:new THREE.Vector2(rtt.width,rtt.height)}
 
         },
-        vertexShader: //shader.vertexShader, 
-        document.getElementById( 'vertexShader' ).textContent,
-        fragmentShader: shader.fragmentShader //document.getElementById( 'fragment_shader_pass_1' ).textContent
+        vertexShader: shader.vertexShader, 
+        fragmentShader: shader.fragmentShader
 
       } );
       var plane = new THREE.PlaneGeometry( window.innerWidth, window.innerHeight );
@@ -64,7 +55,7 @@ define([],function() {
       renderer.autoClear = false;
 
       // disable if render off screen is wished
-      if(true)
+      if(false)
         container.appendChild( renderer.domElement );
 
     }
@@ -98,7 +89,6 @@ define([],function() {
       // Render first scene into texture
 
       renderer.render( sceneRTT, cameraRTT, rtTexture, true );
-
       var arr = new Uint8Array( rtt.width * rtt.height*4 );
       var gl = renderer.getContext();
       gl.readPixels( 0, 0, rtt.width, rtt.height, gl.RGBA, gl.UNSIGNED_BYTE, arr);

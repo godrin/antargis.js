@@ -21,12 +21,10 @@ define([],function() {
           if(options && options.move)
             options.move({dx:e.pageX-ox, dy:e.pageY-oy});
 
-
           ox=e.pageX;
           oy=e.pageY;
         }
       });
-
 
       $(document).keydown(function(e) {
         console.log("KEYD",e);

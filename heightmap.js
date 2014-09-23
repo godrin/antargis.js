@@ -11,10 +11,10 @@ define([],function() {
       width:256,
       height:256,
       map:{}
-    },
-    options);
+    }, options);
 
     this.map=this.options.map;
+    
     if(!this.map.rock)
       this.map.rock=createMap(this.options.width, this.options.height);
   };
@@ -24,7 +24,8 @@ define([],function() {
     var rock=this.get("rock");
     for(x=0;x<this.options.width;x++)
       for(y=0;y<this.options.height;y++) {
-        var val=x*1.0/this.options.width;
+        var val=Math.sin(x)*20.0;///this.options.width;
+        console.log("VAL",val);
         rock(x,y,val);
       }
   };
@@ -49,27 +50,47 @@ define([],function() {
       var v11=this(fx+1,fy+1);
       var dx=x-fx;
       var dy=y-fy;
-      return (v00*(1-dx)+v10*dx)*(1-dy)+(v01*(1-dx)+v11*dx)*dy;
+      var ret= (v00*(1-dx)+v10*dx)*(1-dy)+(v01*(1-dx)+v11*dx)*dy;
+      console.log("IIII",x,y,ret,v00,v01,v10,v11,w,array,fx,fy);
+      return ret;
     };
 
     return fct;
   };
+  
+  HeightMap.prototype.pickGreen=HeightMap.pickGreen=function(w,h,data) {
+    var a=new Array(w*h);
+    var x,y;
+    for(y=0;y<h;y++) {
+      for(x=0;x<w;x++) {
+        a[y*w+x]=data[(y*w+x)*4+1]*0.2;
+      }
+    }
+    return a;
+  }
 
 
   HeightMap.prototype.toThreeTerrain=function() {
     var self=this;
     return function(g,options) {
-      console.log("OPTIONS",options);
-      var xl = self.options.xSegments + 1,
-      yl = self.options.ySegments + 1;
+      console.log("OPTIONS",g,options);
+      var xl = options.xSegments + 1,
+      yl = options.ySegments + 1;
       var rock=self.get("rock");
       for (i = 0; i < xl; i++) {
         for (j = 0; j < yl; j++) {
-          g[j * xl + i].z += rock(i,j);
+          g[(yl-j-1) * xl + i].z += rock(i,j);
         }
       }
     };
   };
+
+
+  HeightMap.prototype.toTexture=function() {
+    // UNTESTED !!!!
+    var rampTex = new THREE.DataTexture( data.pixels, data.width, data.height, THREE.RGBAFormat );
+    rampTex.needsUpdate = true;
+  }
 
   HeightMap.prototype.toCanvas = function(_type) {
     var type=_type||"rock";
