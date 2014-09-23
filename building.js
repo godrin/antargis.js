@@ -15,7 +15,7 @@ define(["models", "entities"],function(Models, Entities) {
       }
 
       if(entity.scale) 
-        object.mesh.scale(entity.scale,entity.scale,entity.scale);
+        object.scale.set(entity.scale,entity.scale,entity.scale);
 
       scene.add( object );
     });

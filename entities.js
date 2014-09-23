@@ -3,7 +3,7 @@ define([],function() {
   return {
     well: {
       mesh:'well',
-      scale:0.1
+      scale:0.03
     },
     fishing_hut: {
       mesh:"fishing_hut",
