@@ -36,9 +36,9 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
 
       Terrain.create(mapOptions,scene,threeHeightMap);
 
-      new Building("townhall",{x:0,y:0},scene,map);
+      new Building("fishing_hut",{x:0,y:0},scene,map);
       new Building("townhall",{x:3,y:3},scene,map);
-      new Building("townhall",{x:5,y:3},scene,map);
+      new Building("well",{x:5,y:3},scene,map);
       Controls.init({
         move:function(d) {
           var x=Base.camera.position.x;

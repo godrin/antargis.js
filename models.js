@@ -27,7 +27,7 @@ define([],function() {
 
         var texture = new THREE.Texture();
 
-        imageloader.load( 'models/'+name+'.bmp', function ( image ) {
+        imageloader.load( 'models/'+name+'.png', function ( image ) {
 
           texture.image = image;
           texture.needsUpdate = true;

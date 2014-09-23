@@ -50,9 +50,7 @@ define([],function() {
       var v11=this(fx+1,fy+1);
       var dx=x-fx;
       var dy=y-fy;
-      var ret= (v00*(1-dx)+v10*dx)*(1-dy)+(v01*(1-dx)+v11*dx)*dy;
-      console.log("IIII",x,y,ret,v00,v01,v10,v11,w,array,fx,fy);
-      return ret;
+      return (v00*(1-dx)+v10*dx)*(1-dy)+(v01*(1-dx)+v11*dx)*dy;
     };
 
     return fct;
