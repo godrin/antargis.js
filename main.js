@@ -4,8 +4,8 @@ require.config({
   },
 });
 
-require(['base',"terrain","skybox","models","controls", "generator","heightmap", "building"],
-  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Building) {
+require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level"],
+  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level) {
     // Our Javascript will go here.
     Base.init();
 
@@ -30,15 +30,13 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
       data=HeightMap.pickGreen(w,h,data)
 
       var map=new HeightMap({width:w,height:w,map:{rock:data}});
-      console.log("MAP2",map);
 
       var threeHeightMap=map.toThreeTerrain();
 
       Terrain.create(mapOptions,scene,threeHeightMap);
 
-      new Building("fishing_hut",{x:0,y:0},scene,map);
-      new Building("townhall",{x:3,y:3},scene,map);
-      new Building("well",{x:5,y:3},scene,map);
+      new Level(scene,map);
+
       Controls.init({
         move:function(d) {
           var x=Base.camera.position.x;
@@ -54,9 +52,4 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
       });
       Base.render();
     });
-
-
-
-
-
   });

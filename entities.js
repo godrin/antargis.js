@@ -1,6 +1,10 @@
 define([],function() {
 
   return {
+    mill: {
+      mesh:'mill',
+      scale:1
+    },
     well: {
       mesh:'well',
       scale:0.03
