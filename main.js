@@ -1,15 +1,8 @@
-require.config({
-  paths: {
-    'underscore':'bower_components/underscore/underscore-eamd'
-  },
-});
-
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level"],
   function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level) {
     // Our Javascript will go here.
     Base.init();
 
-    console.log("Terrain",Terrain);
     var geometry = new THREE.BoxGeometry(1,1,1);
     var scene=Base.scene;
 

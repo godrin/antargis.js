@@ -1,6 +1,10 @@
 define([],function() {
 
   return {
+    bakery: {
+      mesh:'bakery',
+      rotation: { z: -3.14*1/8}
+    },
     mill: {
       mesh:'mill',
       scale:1

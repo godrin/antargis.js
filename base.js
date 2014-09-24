@@ -9,24 +9,14 @@ define([],function() {
 
       self.renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( self.renderer.domElement );
-      self.camera.position.z = 5;
-      self.camera.position.y = 2;
-
-      self.camera.position.x=0;
-
+      
       camera.position.x = 16;
       camera.position.y = -5;
       camera.position.z = 10;
       camera.rotation.x = ( 10+32) * Math.PI / 180;
-//      camera.rotation.y = 35 * Math.PI / 180;
-//      camera.rotation.z = 37 * Math.PI / 180;
-
-      console.log("CAM",camera);
-
     },
 
     render:function() {
-      //      console.log("RENDER");
       var lastTime=0;
       function render() {
 
@@ -34,8 +24,6 @@ define([],function() {
         var timeDiff = time - lastTime;
         lastTime = time;
         requestAnimationFrame(self.render);
-        //cube.rotation.x += 0.1;
-        //        cube.rotation.y += 1*timeDiff*0.001;
         self.renderer.render(self.scene, self.camera);
       }
       render();
