@@ -20,6 +20,15 @@ define([],function() {
     townhall: {
       mesh:"townhall_try2",
       rotation: { z: 3.14*6/4+3.14 }
+    },
+    hero: {
+      mesh:"hero_lp",
+      scale: 0.05
+    },
+    tower: {
+      mesh:"tower",
+      scale:1.8
+
     }
   };
 
