@@ -224,15 +224,9 @@ module Milkshape
             {
               "parent" => self.bones.index{|b|b.name==bone.parent}||-1,
               "keys" => frames.map{|frame|
-
-                pos=frame.pos
-
-                m=bone.relative
-                pos=pos.inverseTranslate(m)
-                pos=pos.inverseRotate(m)
                 {
                   "time"=>frame.time/FPS,
-                  "pos"=>frame.pos.invert_by(bone.relative).to_3,  #pos.to_3,
+                  "pos"=>frame.pos.invert_by(bone.relative).to_3,
                   "rot"=>frame.rot.to_quat,
                   "scl"=>[1,1,1]
                 }
