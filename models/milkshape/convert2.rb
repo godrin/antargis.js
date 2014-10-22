@@ -17,7 +17,7 @@ module Milkshape
   Triangle=Struct.new(:flags, :a, :b, :c, :na, :nb, :nc, :group)
   Material=Struct.new(:name, :ambient, :diffuse, :specular, :emissive, :shinines, :transparency, :color, :alpha)
 
-  Bone=Struct.new(:name, :parent, :config, :frames, :parentObject, :relative, :absolute)
+  Bone=Struct.new(:name, :parent, :config, :frames, :parentObject, :relative)
   BoneConfig=Struct.new(:flags, :posx, :posy, :posz, :rotx, :roty, :rotz)
   Keyframes=Struct.new(:pos, :rot)
   Keyframe=Struct.new(:time, :x, :y, :z)
@@ -144,18 +144,6 @@ module Milkshape
         m.translation=[-bone.config.posx,-bone.config.posy,-bone.config.posz]
         bone.relative=m
       }
-      i=0
-      self.bones.each{|bone|
-        if bone.parentObject
-          bone.absolute=bone.parentObject.absolute*bone.relative
-          #pp "BBB",i,bone.absolute,bone.parentObject.absolute,bone.relative
-
-        else
-          bone.absolute=bone.relative
-          #pp "AAA", i,bone.absolute, bone.relative
-        end
-        i+=1
-      }
     end
 
     def to_3
@@ -163,7 +151,7 @@ module Milkshape
       makeAbsoluteBones
 
       #pp bones
-      
+
       #exit
       vCount=0
       nCount=0
@@ -184,22 +172,7 @@ module Milkshape
         "influencesPerVertex"=>1,
         "materials"=>self.materials.map{|mat|mat.to_3},
         "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v|
-            boneIndex=v.bone.to_i
-            vp=V4.new(v.x,v.y,v.z,1)
-            vp0=vp
-            #boneIndex=0 if boneIndex<0
-            if boneIndex>=0
-              m=self.bones[boneIndex].absolute
-            #  vp=vp.inverseTranslate(m)
-              #vp=vp.translate(m) #self.bones[boneIndex].absolute)
-              #vp=vp.rotate(m)
-            #   vp=vp.inverseRotate(m)
-            end
-
-            #pp "VERTEX",vp0,vp.to_3,boneIndex,self.bones[boneIndex].absolute
-#exit
-
-            vp.to_3
+          [v.x,v.y,v.z]
         }}.flatten,
         "normals" =>self.meshes.map{|mesh|mesh.normals.map{|v|[v.x,v.y,v.z]}}.flatten,
         "uvs" =>[self.meshes.map{|mesh|mesh.vertices.map{|v|[v.u, 1-v.v]}}.flatten],
@@ -226,8 +199,8 @@ module Milkshape
         "bones"=>
         self.bones.map{|bone|
           posb=bone
-            rotq=rot2quat([posb.config.rotx,posb.config.roty,posb.config.rotz])
-            posb=[posb.config.posx,posb.config.posy,posb.config.posz]
+          rotq=rot2quat([posb.config.rotx,posb.config.roty,posb.config.rotz])
+          posb=[posb.config.posx,posb.config.posy,posb.config.posz]
 
           {"parent"=>self.bones.index{|b|b.name==bone.parent}||-1,
            "name"=>bone.name,
@@ -252,9 +225,9 @@ module Milkshape
 
             pos=V4.new(*pos,1)
 
-              m=bone.relative
-              pos=pos.inverseTranslate(m)
-           pos=pos.inverseRotate(m)
+            m=bone.relative
+            pos=pos.inverseTranslate(m)
+            pos=pos.inverseRotate(m)
             pos=pos.to_3
             {
               "time"=>frame[0].time/FPS,
