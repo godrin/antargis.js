@@ -35,6 +35,10 @@ class V4
     )
   end
 
+  def invert_by(m)
+    inverseTranslate(m).inverseRotate(m)
+  end
+
   def to_quat
 
     heading,attitude,bank=to_3.reverse

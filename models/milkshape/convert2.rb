@@ -143,6 +143,8 @@ module Milkshape
 
   # FIXME: make local monkey patch
 
+  LocalFrame=Struct.new(:time, :pos, :rot)
+
   class Scene
     def sum(array)
       array.inject(0){|a,b|a+b}
@@ -216,31 +218,29 @@ module Milkshape
         "skinWeights"=>self.meshes.map{|mesh|mesh.vertices.map{1}}.flatten,
         "animation" => {
           "length" => head.frames/FPS,
-          "hierarchy" => 
-        self.bones.map{|bone|
-          frames=(0...bone.frames.rot.length).map{|i|[bone.frames.pos[i],bone.frames.rot[i]]}
-
-          { "parent" => self.bones.index{|b|b.name==bone.parent}||-1,
-            "keys" => frames.map{|frame|
-
-            pos=frame[0].vec
-            rot=frame[1].vec
-
-            m=bone.relative
-            pos=pos.inverseTranslate(m)
-            pos=pos.inverseRotate(m)
+          "hierarchy" => self.bones.map{|bone|
+            # gather pos and rot frames in one data-structure
+            frames=(0...bone.frames.rot.length).map{|i|LocalFrame.new(bone.frames.pos[i].time, bone.frames.pos[i].vec, bone.frames.rot[i].vec )}
             {
-              "time"=>frame[0].time/FPS,
-              "pos"=>pos.to_3,
-              "rot"=>rot.to_quat,
-              "scl"=>[1,1,1]
+              "parent" => self.bones.index{|b|b.name==bone.parent}||-1,
+              "keys" => frames.map{|frame|
+
+                pos=frame.pos
+
+                m=bone.relative
+                pos=pos.inverseTranslate(m)
+                pos=pos.inverseRotate(m)
+                {
+                  "time"=>frame.time/FPS,
+                  "pos"=>frame.pos.invert_by(bone.relative).to_3,  #pos.to_3,
+                  "rot"=>frame.rot.to_quat,
+                  "scl"=>[1,1,1]
+                }
+              }
             }
           }
-          }
-        }},
-
+        },
         "colors"=>[]
-
       }
     end
 
