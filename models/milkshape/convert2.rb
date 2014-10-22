@@ -2,9 +2,12 @@
 
 require 'pp'
 require 'json'
+require './m.rb'
 
 module Milkshape
   NUM="[+-]?[0-9]+\\.?[0-9]*"
+
+  FPS=30.0
 
   Scene=Struct.new(:head, :meshes, :materials, :bones)
   Head=Struct.new(:frames, :frame)
@@ -14,7 +17,7 @@ module Milkshape
   Triangle=Struct.new(:flags, :a, :b, :c, :na, :nb, :nc, :group)
   Material=Struct.new(:name, :ambient, :diffuse, :specular, :emissive, :shinines, :transparency, :color, :alpha)
 
-  Bone=Struct.new(:name, :parent, :config, :frames)
+  Bone=Struct.new(:name, :parent, :config, :frames, :parentObject, :relative, :absolute)
   BoneConfig=Struct.new(:flags, :posx, :posy, :posz, :rotx, :roty, :rotz)
   Keyframes=Struct.new(:pos, :rot)
   Keyframe=Struct.new(:time, :x, :y, :z)
@@ -131,10 +134,39 @@ module Milkshape
     def sum(array)
       array.inject(0){|a,b|a+b}
     end
+
+    def makeAbsoluteBones
+      self.bones.each{|bone|
+        bone.parentObject=self.bones.select{|b|b.name==bone.parent}.first
+        m=M4.new
+        m.rotation=[bone.config.rotx,bone.config.roty,bone.config.rotz]
+        m=m.t
+        m.translation=[-bone.config.posx,-bone.config.posy,-bone.config.posz]
+        bone.relative=m
+      }
+      i=0
+      self.bones.each{|bone|
+        if bone.parentObject
+          bone.absolute=bone.parentObject.absolute*bone.relative
+          #pp "BBB",i,bone.absolute,bone.parentObject.absolute,bone.relative
+
+        else
+          bone.absolute=bone.relative
+          #pp "AAA", i,bone.absolute, bone.relative
+        end
+        i+=1
+      }
+    end
+
     def to_3
 
-vCount=0
-nCount=0
+      makeAbsoluteBones
+
+      #pp bones
+      
+      #exit
+      vCount=0
+      nCount=0
 
       {
         "metadata"=>{
@@ -147,9 +179,28 @@ nCount=0
           "uvs"           => sum(meshes.map{|mesh|mesh.vertices.length}),
           "colors"        => 0,
           "materials"     => self.materials.length,
+          "bones"         => self.bones.length,
         },
+        "influencesPerVertex"=>1,
         "materials"=>self.materials.map{|mat|mat.to_3},
-        "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v|[v.x,v.y,v.z]}}.flatten,
+        "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v|
+            boneIndex=v.bone.to_i
+            vp=V4.new(v.x,v.y,v.z,1)
+            vp0=vp
+            #boneIndex=0 if boneIndex<0
+            if boneIndex>=0
+              m=self.bones[boneIndex].absolute
+            #  vp=vp.inverseTranslate(m)
+              #vp=vp.translate(m) #self.bones[boneIndex].absolute)
+              #vp=vp.rotate(m)
+            #   vp=vp.inverseRotate(m)
+            end
+
+            #pp "VERTEX",vp0,vp.to_3,boneIndex,self.bones[boneIndex].absolute
+#exit
+
+            vp.to_3
+        }}.flatten,
         "normals" =>self.meshes.map{|mesh|mesh.normals.map{|v|[v.x,v.y,v.z]}}.flatten,
         "uvs" =>[self.meshes.map{|mesh|mesh.vertices.map{|v|[v.u, 1-v.v]}}.flatten],
         "faces" =>self.meshes.map{|mesh|
@@ -161,20 +212,82 @@ nCount=0
             [
               0x28,
               v.a.to_i+addV,
-                v.b.to_i+addV,
-                v.c.to_i+addV,
-                v.na.to_i+addN,
-                v.nb.to_i+addN,
-                v.nc.to_i+addN,
-                v.a.to_i+addV,
-                v.b.to_i+addV,
-                v.c.to_i+addV,
+              v.b.to_i+addV,
+              v.c.to_i+addV,
+              v.na.to_i+addN,
+              v.nb.to_i+addN,
+              v.nc.to_i+addN,
+              v.a.to_i+addV,
+              v.b.to_i+addV,
+              v.c.to_i+addV,
             ]
           }
         }.flatten,
+        "bones"=>
+        self.bones.map{|bone|
+          posb=bone
+            rotq=rot2quat([posb.config.rotx,posb.config.roty,posb.config.rotz])
+            posb=[posb.config.posx,posb.config.posy,posb.config.posz]
+
+          {"parent"=>self.bones.index{|b|b.name==bone.parent}||-1,
+           "name"=>bone.name,
+           "scl"=>[1,1,1],
+           "pos"=>posb,
+           "rotq"=>rotq,
+          }
+        },
+        "skinIndices"=>self.meshes.map{|mesh|mesh.vertices.map{|v|[v.bone.to_i]}}.flatten,
+        "skinWeights"=>self.meshes.map{|mesh|mesh.vertices.map{1}}.flatten,
+        "animation" => {
+          "length" => head.frames/FPS,
+          "hierarchy" => 
+        self.bones.map{|bone|
+          frames=(0...bone.frames.rot.length).map{|i|[bone.frames.pos[i],bone.frames.rot[i]]}
+
+          { "parent" => self.bones.index{|b|b.name==bone.parent}||-1,
+            "keys" => frames.map{|frame|
+
+            pos=[frame[0].x,frame[0].y,frame[0].z]
+            rot=[frame[1].x,frame[1].y,frame[1].z]
+
+            pos=V4.new(*pos,1)
+
+              m=bone.relative
+              pos=pos.inverseTranslate(m)
+           pos=pos.inverseRotate(m)
+            pos=pos.to_3
+            {
+              "time"=>frame[0].time/FPS,
+              "pos"=>pos,
+              "rot"=>rot2quat(rot),
+              "scl"=>[1,1,1]
+            }
+          }
+          }
+        }},
+
         "colors"=>[]
 
       }
+    end
+
+    def rot2quat(rot)
+
+      heading,attitude,bank=rot.reverse
+      #      // Assuming the angles are in radians.
+      c1 = Math.cos(heading/2)
+      s1 = Math.sin(heading/2)
+      c2 = Math.cos(attitude/2)
+      s2 = Math.sin(attitude/2)
+      c3 = Math.cos(bank/2)
+      s3 = Math.sin(bank/2)
+      c1c2 = c1*c2
+      s1s2 = s1*s2
+      w =c1c2*c3 - s1s2*s3
+      x =c1c2*s3 + s1s2*c3
+      y =s1*c2*c3 + c1*s2*s3
+      z =c1*s2*c3 - s1*c2*s3
+      [x,y,z,w] 
     end
   end
   class Material
