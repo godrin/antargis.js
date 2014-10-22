@@ -29,6 +29,11 @@ module Milkshape
   end
   Keyframes=Struct.new(:pos, :rot)
   Keyframe=Struct.new(:time, :x, :y, :z)
+  class Keyframe
+    def vec
+      V4.new(x,y,z)
+    end
+  end
 
   class Parser
     public
@@ -218,19 +223,16 @@ module Milkshape
           { "parent" => self.bones.index{|b|b.name==bone.parent}||-1,
             "keys" => frames.map{|frame|
 
-            pos=[frame[0].x,frame[0].y,frame[0].z]
-            rot=[frame[1].x,frame[1].y,frame[1].z]
-
-            pos=V4.new(*pos,1)
+            pos=frame[0].vec
+            rot=frame[1].vec
 
             m=bone.relative
             pos=pos.inverseTranslate(m)
             pos=pos.inverseRotate(m)
-            pos=pos.to_3
             {
               "time"=>frame[0].time/FPS,
-              "pos"=>pos,
-              "rot"=>rot2quat(rot),
+              "pos"=>pos.to_3,
+              "rot"=>rot.to_quat,
               "scl"=>[1,1,1]
             }
           }
@@ -242,24 +244,6 @@ module Milkshape
       }
     end
 
-    def rot2quat(rot)
-
-      heading,attitude,bank=rot.reverse
-      #      // Assuming the angles are in radians.
-      c1 = Math.cos(heading/2)
-      s1 = Math.sin(heading/2)
-      c2 = Math.cos(attitude/2)
-      s2 = Math.sin(attitude/2)
-      c3 = Math.cos(bank/2)
-      s3 = Math.sin(bank/2)
-      c1c2 = c1*c2
-      s1s2 = s1*s2
-      w =c1c2*c3 - s1s2*s3
-      x =c1c2*s3 + s1s2*c3
-      y =s1*c2*c3 + c1*s2*s3
-      z =c1*s2*c3 - s1*c2*s3
-      [x,y,z,w] 
-    end
   end
   class Material
     def to_3
