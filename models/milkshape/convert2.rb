@@ -17,8 +17,16 @@ module Milkshape
   Triangle=Struct.new(:flags, :a, :b, :c, :na, :nb, :nc, :group)
   Material=Struct.new(:name, :ambient, :diffuse, :specular, :emissive, :shinines, :transparency, :color, :alpha)
 
-  Bone=Struct.new(:name, :parent, :config, :frames, :parentObject, :relative)
+  Bone=Struct.new(:name, :parent, :config, :frames, :relative)
   BoneConfig=Struct.new(:flags, :posx, :posy, :posz, :rotx, :roty, :rotz)
+  class Bone
+    def pos
+      V4.new(config.posx,config.posy,config.posz)
+    end
+    def rot
+      V4.new(config.rotx,config.roty,config.rotz)
+    end
+  end
   Keyframes=Struct.new(:pos, :rot)
   Keyframe=Struct.new(:time, :x, :y, :z)
 
@@ -135,24 +143,18 @@ module Milkshape
       array.inject(0){|a,b|a+b}
     end
 
-    def makeAbsoluteBones
+    def makeRelativeBones
       self.bones.each{|bone|
-        bone.parentObject=self.bones.select{|b|b.name==bone.parent}.first
         m=M4.new
         m.rotation=[bone.config.rotx,bone.config.roty,bone.config.rotz]
-        m=m.t
         m.translation=[-bone.config.posx,-bone.config.posy,-bone.config.posz]
         bone.relative=m
       }
     end
 
     def to_3
+      makeRelativeBones
 
-      makeAbsoluteBones
-
-      #pp bones
-
-      #exit
       vCount=0
       nCount=0
 
