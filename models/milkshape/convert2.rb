@@ -200,15 +200,11 @@ module Milkshape
         }.flatten,
         "bones"=>
         self.bones.map{|bone|
-          posb=bone
-          rotq=rot2quat([posb.config.rotx,posb.config.roty,posb.config.rotz])
-          posb=[posb.config.posx,posb.config.posy,posb.config.posz]
-
           {"parent"=>self.bones.index{|b|b.name==bone.parent}||-1,
            "name"=>bone.name,
            "scl"=>[1,1,1],
-           "pos"=>posb,
-           "rotq"=>rotq,
+           "pos"=>bone.pos.to_3,
+           "rotq"=>bone.rot.to_quat,
           }
         },
         "skinIndices"=>self.meshes.map{|mesh|mesh.vertices.map{|v|[v.bone.to_i]}}.flatten,

@@ -1,8 +1,8 @@
 require 'pp'
 
 class V4
-  def initialize(x,y,z,v)
-    @m=[x,y,z,v||1]
+  def initialize(x,y,z,v=1)
+    @m=[x,y,z,v]
   end
   def [](i)
     @m[i]
@@ -13,8 +13,8 @@ class V4
 
   def to_3
     [@m[0]/@m[3],
-    @m[1]/@m[3],
-    @m[2]/@m[3]]
+     @m[1]/@m[3],
+     @m[2]/@m[3]]
   end
 
   def inverseRotate(m)
@@ -33,6 +33,25 @@ class V4
       @m[2]-m[3,2],
       1
     )
+  end
+
+  def to_quat
+
+    heading,attitude,bank=to_3.reverse
+    #      // Assuming the angles are in radians.
+    c1 = Math.cos(heading/2)
+    s1 = Math.sin(heading/2)
+    c2 = Math.cos(attitude/2)
+    s2 = Math.sin(attitude/2)
+    c3 = Math.cos(bank/2)
+    s3 = Math.sin(bank/2)
+    c1c2 = c1*c2
+    s1s2 = s1*s2
+    w =c1c2*c3 - s1s2*s3
+    x =c1c2*s3 + s1s2*c3
+    y =s1*c2*c3 + c1*s2*s3
+    z =c1*s2*c3 - s1*c2*s3
+    [x,y,z,w] 
   end
 end
 
@@ -89,27 +108,3 @@ class M4
   end
 end
 
-id=M4.new([
-  [1,0,0,0],
-  [0,1,0,0],
-  [0,0,1,0],
-  [0,0,0,1]
-])
-x=M4.new([
-  [1,2,3,4],
-  [0,1,0,5],
-  [0,0,8,0],
-  [0,0,0,1]
-])
-
-y=M4.new
-y.rotation=[3.14*0.5,0,0]
-#y.translation=[1,2,3]
-#v=V4.new(0,0,0,1)
-#t=v.inverseTranslate(y)
-#pp y,y.t,y*y.t
-
-#t=t.inverseRotate(y)
-
-
-#pp t,y
