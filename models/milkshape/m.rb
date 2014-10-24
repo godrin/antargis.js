@@ -40,9 +40,8 @@ class V4
   end
 
   def to_quat
-
     heading,attitude,bank=to_3.reverse
-    #      // Assuming the angles are in radians.
+    # Assuming the angles are in radians.
     c1 = Math.cos(heading/2)
     s1 = Math.sin(heading/2)
     c2 = Math.cos(attitude/2)

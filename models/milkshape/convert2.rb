@@ -3,22 +3,35 @@
 require 'pp'
 require 'json'
 require './m.rb'
-
+  
 module Milkshape
+  # simple regex for decimal fractions
   NUM="[+-]?[0-9]+\\.?[0-9]*"
 
+  # use 35 frames per seconds as default 
   FPS=30.0
 
+  ## ms3d-txt format data structures
+  # complete file
   Scene=Struct.new(:head, :meshes, :materials, :bones)
-  Head=Struct.new(:frames, :frame)
+  # frameCount and currentFrame
+  Head=Struct.new(:frameCount, :frame)
   Mesh=Struct.new(:name, :vertices, :normals, :triangles)
   Vertex=Struct.new(:flags, :x, :y, :z, :u, :v, :bone)
   Normal=Struct.new(:x, :y, :z)
   Triangle=Struct.new(:flags, :a, :b, :c, :na, :nb, :nc, :group)
   Material=Struct.new(:name, :ambient, :diffuse, :specular, :emissive, :shinines, :transparency, :color, :alpha)
-
   Bone=Struct.new(:name, :parent, :config, :frames, :relative)
   BoneConfig=Struct.new(:flags, :posx, :posy, :posz, :rotx, :roty, :rotz)
+  Keyframes=Struct.new(:pos, :rot)
+  Keyframe=Struct.new(:time, :x, :y, :z)
+  
+  # some functions to make access to these structures easier
+  class Vertex
+    def pos
+      V4.new(x,y,z)
+    end
+  end
   class Bone
     def pos
       V4.new(config.posx,config.posy,config.posz)
@@ -27,8 +40,6 @@ module Milkshape
       V4.new(config.rotx,config.roty,config.rotz)
     end
   end
-  Keyframes=Struct.new(:pos, :rot)
-  Keyframe=Struct.new(:time, :x, :y, :z)
   class Keyframe
     def vec
       V4.new(x,y,z)
@@ -141,15 +152,9 @@ end
 
 module Milkshape
 
-  # FIXME: make local monkey patch
-
   LocalFrame=Struct.new(:time, :pos, :rot)
 
   class Scene
-    def sum(array)
-      array.inject(0){|a,b|a+b}
-    end
-
     def makeRelativeBones
       self.bones.each{|bone|
         m=M4.new
@@ -170,16 +175,17 @@ module Milkshape
           "formatVersion" => 3.0,
           "sourceFile"    => ARGV[0],
           "generatedBy"   => "MilkshapeConverter",
-          "vertices"      => sum(meshes.map{|mesh|mesh.vertices.length}),
-          "faces"         => sum(meshes.map{|mesh|mesh.triangles.length}),
-          "normals"       => sum(meshes.map{|mesh|mesh.normals.length}),
-          "uvs"           => sum(meshes.map{|mesh|mesh.vertices.length}),
+          "vertices"      => meshes.map{|mesh|mesh.vertices}.flatten.length,
+          "faces"         => meshes.map{|mesh|mesh.triangles}.flatten.length,
+          "normals"       => meshes.map{|mesh|mesh.normals}.flatten.length,
+          "uvs"           => meshes.map{|mesh|mesh.vertices}.flatten.length,
           "colors"        => 0,
           "materials"     => self.materials.length,
           "bones"         => self.bones.length,
         },
         "influencesPerVertex"=>1,
         "materials"=>self.materials.map{|mat|mat.to_3},
+        # there are no groups in 3's json format, so join vertices
         "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v|
           [v.x,v.y,v.z]
         }}.flatten,
@@ -205,8 +211,7 @@ module Milkshape
             ]
           }
         }.flatten,
-        "bones"=>
-        self.bones.map{|bone|
+        "bones"=> self.bones.map{|bone|
           {"parent"=>self.bones.index{|b|b.name==bone.parent}||-1,
            "name"=>bone.name,
            "scl"=>[1,1,1],
@@ -217,7 +222,7 @@ module Milkshape
         "skinIndices"=>self.meshes.map{|mesh|mesh.vertices.map{|v|[v.bone.to_i]}}.flatten,
         "skinWeights"=>self.meshes.map{|mesh|mesh.vertices.map{1}}.flatten,
         "animation" => {
-          "length" => head.frames/FPS,
+          "length" => head.frameCount/FPS,
           "hierarchy" => self.bones.map{|bone|
             # gather pos and rot frames in one data-structure
             frames=(0...bone.frames.rot.length).map{|i|LocalFrame.new(bone.frames.pos[i].time, bone.frames.pos[i].vec, bone.frames.rot[i].vec )}
@@ -226,6 +231,7 @@ module Milkshape
               "keys" => frames.map{|frame|
                 {
                   "time"=>frame.time/FPS,
+                  # positions are not relative to bone-definition as in MS3d format, so invert
                   "pos"=>frame.pos.invert_by(bone.relative).to_3,
                   "rot"=>frame.rot.to_quat,
                   "scl"=>[1,1,1]
@@ -246,12 +252,12 @@ module Milkshape
         "DbgIndex" => 0,
         "DbgName" => self.name,
         "blending" => "NormalBlending",
-        "colorAmbient" => self.ambient[0..-2], # FIXME: 3 values ?
-        "colorDiffuse" => self.diffuse[0..-2], # FIXME: 3 values ?
-        "colorSpecular" => self.specular[0..-2], # FIXME: 3 values ?
+        "colorAmbient" => self.ambient[0..2],
+        "colorDiffuse" => self.diffuse[0..2],
+        "colorSpecular" => self.specular[0..2],
         "depthTest" => true,
         "depthWrite" => true,
-        "mapDiffuse" => self.color, #"MarineCv2_color.jpg",
+        "mapDiffuse" => self.color,
         "mapDiffuseWrap" => ["repeat", "repeat"],
         "shading" => "Lambert",
         "specularCoef" => 9,
