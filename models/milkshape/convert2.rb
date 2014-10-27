@@ -186,10 +186,9 @@ module Milkshape
         "influencesPerVertex"=>1,
         "materials"=>self.materials.map{|mat|mat.to_3},
         # there are no groups in 3's json format, so join vertices
-        "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v|
-          [v.x,v.y,v.z]
-        }}.flatten,
+        "vertices" =>self.meshes.map{|mesh|mesh.vertices.map{|v| v.pos.to_3 }}.flatten,
         "normals" =>self.meshes.map{|mesh|mesh.normals.map{|v|[v.x,v.y,v.z]}}.flatten,
+        # switch v coordinate
         "uvs" =>[self.meshes.map{|mesh|mesh.vertices.map{|v|[v.u, 1-v.v]}}.flatten],
         "faces" =>self.meshes.map{|mesh|
           addV=vCount
@@ -264,7 +263,8 @@ module Milkshape
         "transparency" => 0.0,
         "transparent" => true,
         "vertexColors" => false,
-        "mapDiffuse" => "man_elp.png"
+        "mapDiffuse" => "man_elp.png",
+        "skinning" => true
       } 
     end
   end
