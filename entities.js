@@ -29,6 +29,12 @@ define([],function() {
       mesh:"tower",
       scale:1.8
 
+    },
+    man: {
+      mesh:"man_axe",
+      scale:0.05,
+      type:"json",
+      rotation: { x: 3.14*0.5 }
     }
   };
 

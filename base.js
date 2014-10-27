@@ -1,4 +1,5 @@
 define([],function() {
+      var clock = new THREE.Clock();
   var self={ 
 
     init:function() {
@@ -19,11 +20,16 @@ define([],function() {
     render:function() {
       var lastTime=0;
       function render() {
-
+        requestAnimationFrame(self.render);
         var time = (new Date()).getTime();
         var timeDiff = time - lastTime;
         lastTime = time;
-        requestAnimationFrame(self.render);
+
+        var delta =  clock.getDelta();
+
+        // animate Collada model
+
+        THREE.AnimationHandler.update( delta );
         self.renderer.render(self.scene, self.camera);
       }
       render();
