@@ -16,6 +16,14 @@ define([],function() {
       camera.position.z = 10;
       camera.rotation.x = ( 10+32) * Math.PI / 180;
     },
+    setSize:function(size) {
+      //FIXME
+      return;
+      console.log("SETSIZE",size);
+      self.renderer.setSize( size.width, size.hight );
+      self.camera.aspect = size.width / size.height;
+      self.camera.updateProjectionMatrix();
+    },
 
     render:function() {
       var lastTime=0;

@@ -1,5 +1,5 @@
-require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level"],
-  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level) {
+require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick"],
+  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick) {
     // Our Javascript will go here.
     Base.init();
 
@@ -30,7 +30,26 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
 
       new Level(scene,map);
 
+      var lastPickedEntity=null;
+
       Controls.init({
+        resize:function(size) {
+          Base.setSize(size);
+        },
+        hover:function(mouse) {
+          //console.log("HVOER",mouse);
+          var res=Pick.pick(mouse, Base.camera, Base.scene);
+
+          console.log("PICK",res,res[0].object.id,mouse);
+          if(res.length>0) {
+            if(lastPickedEntity)
+              lastPickedEntity.hovered(false);
+
+            lastPickedEntity=res[0].object.entity;
+            console.log("OBJ",res[0].object.userData,res[0].object.userData.entity.uid);
+//            lastPickedEntity.hovered(true);
+          }
+        },
         move:function(d) {
           var x=Base.camera.position.x;
           var y=Base.camera.position.y+5;

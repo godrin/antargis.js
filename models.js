@@ -5,6 +5,7 @@ define([],function() {
     console.log("manager.onProgress", item, loaded, total );
   };
   var models={};
+  var animations={};
   var objloader = new THREE.OBJLoader( manager );
   var jsonloader = new THREE.JSONLoader( manager );
   var imageloader = new THREE.ImageLoader( manager );
@@ -81,17 +82,8 @@ define([],function() {
         console.log("Loading model", name);
 
         var texture = new THREE.Texture();
-        /*
-        imageloader.load( 'models/'+name+'.png', function ( image ) {
-
-        texture.image = image;
-        texture.needsUpdate = true;
-
-        } );
-        */
         jsonloader.load('models/'+name +'.json' , function ( geometry, materials ) {
 
-          console.log("GGG",geometry,materials);
           geometry.computeVertexNormals();
           geometry.computeBoundingBox();
 
@@ -101,7 +93,7 @@ define([],function() {
             var originalMaterial = materials[ i ];
             console.log("MAT",originalMaterial);
             originalMaterial.skinning = true;
-            }
+          }
 
           var material = new THREE.MeshFaceMaterial( materials );
           var mesh = new THREE.SkinnedMesh( geometry, material, false );
@@ -110,22 +102,27 @@ define([],function() {
           helper.material.linewidth = 3;
           helper.visible = true;
 
-
+          //mesh.computeBoundingBox();
           //scene.add( helper );
           //scene.add( mesh );
-          if(true) {
-            animation = new THREE.Animation( mesh, geometry.animation );
-            animation.play();
-            animation.update( 10 );
-          }
 
           var object=mesh;
           models[name]=object;
+          animations[name]=geometry.animation;
 
           $.each(callbacks[name],function(ke,cb) {
+            var mesh=object.clone();
+            console.log("CLONED",mesh,object);
 
-                     cb([object]);
-            //  cb(object.clone());
+            //cb([object]);
+            if(true) {
+              var animation = new THREE.Animation( mesh, animations[name] );
+              animation.data=animations[name];
+              console.log("ANIM",animation,animations,name);
+              animation.play();
+              animation.update( Math.random()*10 );
+            }
+            cb(mesh);
           });
         } );
       }

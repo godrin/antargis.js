@@ -1,15 +1,18 @@
 define(["models", "entities"],function(Models, Entities) {
 
+  var uid=11110;
+
   var B=function(name,pos,scene,heightmap) {
     var entity=Entities[name];
+    var self=this;
+    this.name=name;
+    this.uid=uid++;
     var loadFct=entity.type=="json"?"loadJSON":"load";
 
     Models[loadFct](entity.mesh, function(objects) {
-      console.log("OOOO",objects);
       if(!(objects instanceof Array)) {
         objects=[objects];
       }
-      console.log("OOOO2222",objects);
       _.each(objects,function(object) {
         object.position.x = pos.x;
         object.position.y = pos.y;
@@ -30,6 +33,15 @@ define(["models", "entities"],function(Models, Entities) {
 
         if(entity.scale) 
           object.scale.set(entity.scale,entity.scale,entity.scale);
+
+        this.mesh=object;
+        console.log("OBJJJJJ",object);
+        var ud={entity:self};
+        if(object.children.length>0)
+          object.children[0].userData=ud;
+        
+
+        object.userData=ud;
 
         scene.add( object );
       });
