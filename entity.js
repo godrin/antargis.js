@@ -2,7 +2,7 @@ define(["models", "entities"],function(Models, Entities) {
 
   var uid=11110;
 
-  var B=function(name,pos,scene,heightmap) {
+  var Entity=function(name,pos,scene,heightmap) {
     var entity=Entities[name];
     var self=this;
     this.name=name;
@@ -48,10 +48,10 @@ define(["models", "entities"],function(Models, Entities) {
     });
   };
 
-  B.prototype.hovered=function() {
+  Entity.prototype.hovered=function() {
     console.log("B hovered");
   };
 
 
-  return B;
+  return Entity;
 });
