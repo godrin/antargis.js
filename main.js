@@ -31,6 +31,7 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
       new Level(scene,map);
 
       var lastPickedEntity=null;
+      var lastPos=null;
 
       Controls.init({
         resize:function(size) {
@@ -45,10 +46,21 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
             if(lastPickedEntity)
               lastPickedEntity.hovered(false);
 
-            lastPickedEntity=res[0].object.entity;
-            console.log("OBJ",res[0].object.userData,res[0].object.userData.entity.uid);
-//            lastPickedEntity.hovered(true);
+            lastPickedEntity=res[0].object.userData.entity;
+            if(lastPickedEntity) {
+              console.log("OBJ",res[0].object.userData,res[0].object.userData.entity.uid);
+              lastPickedEntity.hovered(true);
+            } else 
+            {
+              lastPos=res[0].point;
+            }
           }
+        },
+        click:function() {
+          if(lastPickedEntity)
+            console.log("CLICK ON",lastPickedEntity);
+            else
+            console.log("CLICK POS",lastPos);
         },
         move:function(d) {
           var x=Base.camera.position.x;

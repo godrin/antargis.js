@@ -39,13 +39,17 @@ define(["models", "entities"],function(Models, Entities) {
         var ud={entity:self};
         if(object.children.length>0)
           object.children[0].userData=ud;
-        
+
 
         object.userData=ud;
 
         scene.add( object );
       });
     });
+  };
+
+  B.prototype.hovered=function() {
+    console.log("B hovered");
   };
 
 

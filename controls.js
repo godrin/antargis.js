@@ -22,6 +22,11 @@ define([],function() {
         ox=e.pageX;
         oy=e.pageY;
       });
+      $(document).click(function(e) {
+        console.log("CLICK");
+        if(options && options.click)
+          options.click(e);
+      });
 
       $(document).mousemove(function(e) {
         e.preventDefault();
@@ -54,7 +59,7 @@ define([],function() {
           options.resize({width:containerWidth, height: containerHeight });
 
       });
-  updateSize();
+      updateSize();
 
     }
   };
