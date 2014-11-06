@@ -23,7 +23,8 @@ define([],function() {
     },
     hero: {
       mesh:"hero_lp",
-      scale: 0.05
+      scale: 0.05,
+      mixins: ["boss", "hero"]
     },
     tower: {
       mesh:"tower",

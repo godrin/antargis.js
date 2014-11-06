@@ -3,6 +3,7 @@ define([],function() {
   var mousedown=false;
   var containerWidth, containerHeight;
   var ox,oy;
+  var moves=0;
 
   function updateSize() {
     containerWidth = $("canvas").width();
@@ -21,16 +22,17 @@ define([],function() {
         mousedown=true;
         ox=e.pageX;
         oy=e.pageY;
+        moves=0;
       });
       $(document).click(function(e) {
-        console.log("CLICK");
-        if(options && options.click)
+        if(options && options.click && moves<4)
           options.click(e);
       });
 
       $(document).mousemove(function(e) {
         e.preventDefault();
         e.stopPropagation();
+        moves+=1;
         if(mousedown) {
           if(options && options.move)
             options.move({dx:e.pageX-ox, dy:e.pageY-oy});

@@ -1,17 +1,27 @@
 define(["entity"],function(Entity) {
 
-  var Level=function(scene, map) {
+  var def=[
+    {type:"fishing_hut",pos:{x:20,y:0}},
+    {type:"fishing_hut",pos:{x:20,y:0}},
+    {type:"townhall",pos:{x:3,y:3}},
+    {type:"well",pos:{x:5,y:3}},
+    {type:"well",pos:{x:8,y:3}},
+    {type:"tower",pos:{x:5,y:8}},
+    {type:"hero",pos:{x:7,y:8}},
+    {type:"man",pos:{x:0,y:0}},
+    {type:"man",pos:{x:3,y:0}}
+  ];
+
+
+  var Level=function(scene, map, world) {
     this.scene=scene;
     this.map=map;
-      
-    new Entity("fishing_hut",{x:20,y:0},scene,map);
-    new Entity("townhall",{x:3,y:3},scene,map);
-    new Entity("well",{x:5,y:3},scene,map);
-    new Entity("well",{x:8,y:3},scene,map);
-    new Entity("tower",{x:5,y:8},scene,map);
-    new Entity("hero",{x:7,y:8},scene,map);
-    new Entity("man",{x:0,y:0},scene,map);
-    new Entity("man",{x:3,y:0},scene,map);
+
+    _.each(def,function(entityDef) {
+      console.log(entityDef);
+      var entity=new Entity(entityDef.type,entityDef.pos,scene,map);
+      world.push(entity);
+    });
   };
 
   return Level;

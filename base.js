@@ -25,15 +25,17 @@ define([],function() {
       self.camera.updateProjectionMatrix();
     },
 
-    render:function() {
+    render:function(options) {
       var lastTime=0;
       function render() {
-        requestAnimationFrame(self.render);
+        requestAnimationFrame(render);
         var time = (new Date()).getTime();
         var timeDiff = time - lastTime;
         lastTime = time;
 
         var delta =  clock.getDelta();
+        if(options && options.frameCallback)
+          options.frameCallback(delta);
 
         // animate Collada model
 

@@ -1,5 +1,5 @@
-require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick"],
-  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick) {
+require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world'],
+  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World) {
     // Our Javascript will go here.
     Base.init();
 
@@ -23,44 +23,45 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
       data=HeightMap.pickGreen(w,h,data)
 
       var map=new HeightMap({width:w,height:w,map:{rock:data}});
+      var world=new World();
 
       var threeHeightMap=map.toThreeTerrain();
 
       Terrain.create(mapOptions,scene,threeHeightMap);
 
-      new Level(scene,map);
+      new Level(scene, map, world);
 
       var lastPickedEntity=null;
       var lastPos=null;
+      var selectedEntity=null;
 
       Controls.init({
         resize:function(size) {
           Base.setSize(size);
         },
         hover:function(mouse) {
-          //console.log("HVOER",mouse);
           var res=Pick.pick(mouse, Base.camera, Base.scene);
 
-          console.log("PICK",res,res[0].object.id,mouse);
           if(res.length>0) {
             if(lastPickedEntity)
               lastPickedEntity.hovered(false);
 
             lastPickedEntity=res[0].object.userData.entity;
             if(lastPickedEntity) {
-              console.log("OBJ",res[0].object.userData,res[0].object.userData.entity.uid);
               lastPickedEntity.hovered(true);
             } else 
             {
-              lastPos=res[0].point;
+              lastPos=new THREE.Vector2().copy(res[0].point);
             }
           }
         },
         click:function() {
-          if(lastPickedEntity)
-            console.log("CLICK ON",lastPickedEntity);
-            else
-            console.log("CLICK POS",lastPos);
+          if(lastPickedEntity) {
+            selectedEntity = lastPickedEntity;
+          } else {
+            if(selectedEntity && selectedEntity.moveTo) 
+              selectedEntity.moveTo(lastPos);
+          }
         },
         move:function(d) {
           var x=Base.camera.position.x;
@@ -74,6 +75,13 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
           Base.camera.position.z=10+h;
         }
       });
-      Base.render();
+      Base.render({
+        frameCallback:function(delta) {
+          _.each(world.entities,function(e) {
+            if(e && e.onFrame)
+              e.onFrame(delta);
+          });
+        }
+      });
     });
   });
