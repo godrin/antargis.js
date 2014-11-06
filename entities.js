@@ -24,7 +24,7 @@ define([],function() {
     hero: {
       mesh:"hero_lp",
       scale: 0.05,
-      mixins: ["boss", "hero"]
+      mixins: ["boss", "hero", "movable"]
     },
     tower: {
       mesh:"tower",
@@ -35,7 +35,20 @@ define([],function() {
       mesh:"man_axe",
       scale:0.05,
       type:"json",
-      rotation: { x: 3.14*0.5 }
+      rotation: { x: 3.14*0.5 },
+      mixins:["movable"]
+    },
+    fir: {
+      mesh:"fir2",
+      texture:"fir5.png",
+      scale:0.42,
+      doublesided:true,
+      transparent:true
+    },
+    tree: {
+      mesh:"tree5",
+      scale:0.2,
+      doublesided:true
     }
   };
 

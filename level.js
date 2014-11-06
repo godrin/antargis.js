@@ -1,6 +1,7 @@
 define(["entity"],function(Entity) {
 
   var def=[
+    {type:"fir",pos:{x:20,y:3}},
     {type:"fishing_hut",pos:{x:20,y:0}},
     {type:"fishing_hut",pos:{x:20,y:0}},
     {type:"townhall",pos:{x:3,y:3}},
@@ -11,7 +12,6 @@ define(["entity"],function(Entity) {
     {type:"man",pos:{x:0,y:0}},
     {type:"man",pos:{x:3,y:0}}
   ];
-
 
   var Level=function(scene, map, world) {
     this.scene=scene;

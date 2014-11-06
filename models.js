@@ -30,7 +30,7 @@ define([],function() {
 
 
   var o = {
-    load:function(name, callback) {
+    load:function(name, options, callback) {
       if(models[name])
         return callback(models[name].clone());
 
@@ -44,8 +44,12 @@ define([],function() {
         console.log("Loading model", name);
 
         var texture = new THREE.Texture();
+        var texName=name+".png";
+        if(options.texture)
+          texName=options.texture;
+        texName="models/"+texName;
 
-        imageloader.load( 'models/'+name+'.png', function ( image ) {
+        imageloader.load( texName, function ( image ) {
 
           texture.image = image;
           texture.needsUpdate = true;
@@ -57,6 +61,11 @@ define([],function() {
 
             if ( child instanceof THREE.Mesh ) {
               child.material.map = texture;
+              child.material.side = THREE.DoubleSide;
+              if(options.transparent) {
+              child.material.transparent= true;
+              child.material.depthWrite= false;
+              }
             }
           } );
 
@@ -68,7 +77,7 @@ define([],function() {
         });
       }
     },
-    loadJSON:function(name, callback) {
+    loadJSON:function(name, options, callback) {
       if(models[name])
         return callback(models[name].clone());
 
