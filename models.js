@@ -45,6 +45,7 @@ define([],function() {
 
         var texture = new THREE.Texture();
         var texName=name+".png";
+        texName=name+".jpg";
         if(options.texture)
           texName=options.texture;
         texName="models/"+texName;
@@ -56,6 +57,7 @@ define([],function() {
 
         } );
         objloader.load( 'models/'+name+'.obj', function ( object ) {
+        console.log("OBJ ",arguments);
 
           object.traverse( function ( child ) {
 

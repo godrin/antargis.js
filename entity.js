@@ -32,9 +32,6 @@ define(["models", "entities", "boss", "movable"],function(Models, Entities, Boss
         objects=[objects];
       }
       _.each(objects,function(object) {
-        object.position.x = pos.x;
-        object.position.y = pos.y;
-        object.position.z = heightmap.get("rock").interpolate(pos.x,pos.y);
 
         var rotation=entity.rotation;
         if(rotation) {
@@ -61,7 +58,16 @@ define(["models", "entities", "boss", "movable"],function(Models, Entities, Boss
         self.mesh=object;
         object.userData=ud;
 
-        scene.add( object );
+        if(true) {
+          var node=new THREE.Object3D();
+          node.add(object);
+          node.position.x = pos.x;
+          node.position.y = pos.y;
+          node.position.z = heightmap.get("rock").interpolate(pos.x,pos.y);
+          self.mesh=node;
+          scene.add( node);
+        } else
+          scene.add( object );
       });
     });
   };

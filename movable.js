@@ -19,11 +19,14 @@ define([],function() {
         } else {
           var dir=new THREE.Vector2().subVectors(this.targetPos,this.pos).setLength(togo);
           this.pos.add(dir);
+          this.mesh.rotation.z=-Math.atan2(dir.x,dir.y)+Math.PI;
         }
 
         this.mesh.position.x = this.pos.x;
         this.mesh.position.y = this.pos.y;
         this.mesh.position.z = this.map.get("rock").interpolate(this.pos.x,this.pos.y);
+
+
       }
     };
     entity.moveTo=function(pos) {
