@@ -35,7 +35,7 @@ define([],function() {
       mesh:"man_axe",
       scale:0.05,
       type:"json",
-   rotation: { x: 3.14*0.5 },
+      rotation: { x: 3.14*0.5 },
       mixins:["movable"]
     },
     fir: {
