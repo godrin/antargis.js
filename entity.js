@@ -1,10 +1,6 @@
-define(["models", "entities", "boss", "movable"],function(Models, Entities, Boss, Movable) {
+define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
 
   var uid=11110;
-  var mixins={
-    boss:Boss,
-    movable:Movable
-  };
 
   var Entity=function(name,pos,scene,heightmap) {
     var entity=Entities[name];
@@ -13,16 +9,18 @@ define(["models", "entities", "boss", "movable"],function(Models, Entities, Boss
     this.pos=new THREE.Vector2().copy(pos);
     this.uid=uid++;
     this.map=heightmap;
+    this.resources=_.extend({},entity.resources);
     var loadFct=entity.type=="json"?"loadJSON":"load";
 
     if(entity.mixins) {
       self.mixins=[];
       _.each(entity.mixins,function(mixin) {
         console.log("MIXIIN ",mixin);
-        if(mixins[mixin]) {
-          console.log("FOUND",mixins[mixin]);
-          self.mixins.push(mixins[mixin]);
-          mixins[mixin].init(self);
+        var found=Mixins[mixin];
+        if(Mixins[mixin]) {
+          console.log("FOUND",found);
+          self.mixins.push(found);
+          found.init(self);
         }
       });
     }

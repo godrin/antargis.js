@@ -43,7 +43,10 @@ define([],function() {
       texture:"fir5.png",
       scale:0.42,
       doublesided:true,
-      transparent:true
+      transparent:true,
+      resources: {
+        wood:5
+      }
     },
     tree: {
       mesh:"tree5",

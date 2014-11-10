@@ -21,6 +21,7 @@ define(["entity"],function(Entity) {
     _.each(def,function(entityDef) {
       console.log(entityDef);
       var entity=new Entity(entityDef.type,entityDef.pos,scene,map);
+      entity.world=world;
       world.push(entity);
     });
   };

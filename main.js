@@ -58,8 +58,9 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
         click:function() {
           if(lastPickedEntity) {
             selectedEntity = lastPickedEntity;
+            console.log("selected",selectedEntity);
           } else {
-          console.log("CLICK",selectedEntity);
+            console.log("CLICK",selectedEntity);
             if(selectedEntity && selectedEntity.moveTo) 
               selectedEntity.moveTo(lastPos);
           }

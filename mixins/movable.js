@@ -25,8 +25,6 @@ define([],function() {
         this.mesh.position.x = this.pos.x;
         this.mesh.position.y = this.pos.y;
         this.mesh.position.z = this.map.get("rock").interpolate(this.pos.x,this.pos.y);
-
-
       }
     };
     entity.moveTo=function(pos) {
