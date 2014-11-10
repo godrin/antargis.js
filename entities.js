@@ -11,7 +11,10 @@ define([],function() {
     },
     well: {
       mesh:'well',
-      scale:0.03
+      scale:0.03,
+      resources: {
+        water:100
+      }
     },
     fishing_hut: {
       mesh:"fishing_hut",
@@ -55,7 +58,10 @@ define([],function() {
     },
     big_stone: {
       mesh:'big_stone',
-      scale:1
+      scale:1,
+      resources: {
+        stone:20
+      }
     },
   };
 
