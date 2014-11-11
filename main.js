@@ -61,8 +61,8 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
             console.log("selected",selectedEntity);
           } else {
             console.log("CLICK",selectedEntity);
-            if(selectedEntity && selectedEntity.moveTo) 
-              selectedEntity.moveTo(lastPos);
+            if(selectedEntity && selectedEntity.setLlJob) 
+              selectedEntity.setLlJob( new (selectedEntity.job("move"))(selectedEntity,lastPos));
           }
         },
         move:function(d) {

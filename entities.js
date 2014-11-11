@@ -27,7 +27,7 @@ define([],function() {
     hero: {
       mesh:"hero_lp",
       scale: 0.05,
-      mixins: ["boss", "hero", "movable"]
+      mixins: ["boss", "hero", "lljob"]
     },
     tower: {
       mesh:"tower",
@@ -39,7 +39,7 @@ define([],function() {
       scale:0.05,
       type:"json",
       rotation: { x: 3.14*0.5 },
-      mixins:["movable"]
+      mixins:["lljob", "follower"]
     },
     fir: {
       mesh:"fir2",

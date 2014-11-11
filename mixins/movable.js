@@ -1,13 +1,8 @@
 define([],function() {
 
-  var self={};
-
-  self.init=function(entity) {
-
-    if(!entity.speed)
-      entity.speed=3;
-
-    entity.onFrame=function(delta) {
+  return {
+    speed:3,
+    onFrame:function(delta) {
       if(this.targetPos) {
 
         var distance = this.targetPos.distanceTo(this.pos);
@@ -25,12 +20,13 @@ define([],function() {
         this.mesh.position.x = this.pos.x;
         this.mesh.position.y = this.pos.y;
         this.mesh.position.z = this.map.get("rock").interpolate(this.pos.x,this.pos.y);
+      } else {
+      
       }
-    };
-    entity.moveTo=function(pos) {
+    },
+    moveTo:function(pos) {
       this.targetPos=pos;
-    };
+    }
   };
 
-  return self;
 });

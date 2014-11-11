@@ -17,10 +17,10 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
       _.each(entity.mixins,function(mixin) {
         console.log("MIXIIN ",mixin);
         var found=Mixins[mixin];
-        if(Mixins[mixin]) {
+        if(found) {
           console.log("FOUND",found);
           self.mixins.push(found);
-          found.init(self);
+          _.extend(self,found);
         }
       });
     }

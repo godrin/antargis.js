@@ -1,6 +1,6 @@
 var mixins=[
-  "movable",
-  "boss"
+  "lljob",
+  "follower"
 ];
 var paths=_.map(mixins,function(n) { return "mixins/"+n;});
 
