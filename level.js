@@ -5,9 +5,8 @@ define(["entity"],function(Entity) {
     {type:"fir",pos:{x:20,y:3}},
     {type:"fishing_hut",pos:{x:20,y:0}},
     {type:"fishing_hut",pos:{x:20,y:0}},
-    {type:"townhall",pos:{x:3,y:3}},
+    {type:"townhall",pos:{x:9,y:3}},
     {type:"well",pos:{x:5,y:3}},
-    {type:"well",pos:{x:8,y:3}},
     {type:"tower",pos:{x:5,y:8}},
     {type:"hero",pos:{x:7,y:8}},
     {type:"man",pos:{x:0,y:0}},
@@ -27,5 +26,4 @@ define(["entity"],function(Entity) {
   };
 
   return Level;
-
 });

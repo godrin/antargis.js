@@ -7,8 +7,11 @@ define([],function() {
         this.boss.assignMeJob(this);
       //console.log("has no job");
 
-      if(this.world.search)
-        this.world.search("boss");
+      if(this.world.search) {
+        var f=this.world.search({mixinNames:"boss"},this.pos);
+        if(f.length>0)
+          this.boss=f[0];
+      }
     }
   };
 });

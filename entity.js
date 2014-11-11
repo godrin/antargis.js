@@ -6,6 +6,7 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
     var entity=Entities[name];
     var self=this;
     this.name=name;
+    this.type=name;
     this.pos=new THREE.Vector2().copy(pos);
     this.uid=uid++;
     this.map=heightmap;
@@ -13,13 +14,15 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
     var loadFct=entity.type=="json"?"loadJSON":"load";
 
     if(entity.mixins) {
-      self.mixins=[];
+      self.mixins={};
+      self.mixinNames=[];
       _.each(entity.mixins,function(mixin) {
         console.log("MIXIIN ",mixin);
         var found=Mixins[mixin];
         if(found) {
           console.log("FOUND",found);
-          self.mixins.push(found);
+          self.mixins[mixin]=found;
+          self.mixinNames.push(mixin);
           _.extend(self,found);
         }
       });

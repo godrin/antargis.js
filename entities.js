@@ -18,11 +18,13 @@ define([],function() {
     },
     fishing_hut: {
       mesh:"fishing_hut",
-      rotation: { z: 3.14*1/8}
+      rotation: { z: 3.14*1/8},
+      mixins:["boss"]
     },
     townhall: {
       mesh:"townhall_try2",
-      rotation: { z: 3.14*6/4+3.14 }
+      rotation: { z: 3.14*6/4+3.14 },
+      mixins:["boss"]
     },
     hero: {
       mesh:"hero_lp",
@@ -31,8 +33,8 @@ define([],function() {
     },
     tower: {
       mesh:"tower",
-      scale:1.8
-
+      scale:1.8,
+      mixins:["boss"]
     },
     man: {
       mesh:"man_axe",
