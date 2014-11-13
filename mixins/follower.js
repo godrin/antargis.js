@@ -1,6 +1,6 @@
 define([],function() {
   return {
-    onNoJob:function() {
+    onNoMlJob:function() {
       // has no job
 
       if(this.boss && this.boss.assignMeJob)
