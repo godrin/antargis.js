@@ -37,10 +37,20 @@ define([],function() {
       mixins:["boss"]
     },
     man: {
-      mesh:"man_axe",
-      scale:0.05,
-      type:"json",
-      rotation: { x: 3.14*0.5 },
+      meshes:{
+        "default": {
+          mesh:"man_axe",
+          scale:0.07,
+          type:"json",
+          rotation: { x: 3.14*0.5 }
+        },
+        "axe": {
+          mesh:"man_axe",
+          scale:0.05,
+          type:"json",
+          rotation: { x: 3.14*0.5 }
+        }
+      },
       mixins:["lljob", "mljob", "follower"]
     },
     fir: {

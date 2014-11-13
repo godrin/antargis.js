@@ -57,7 +57,7 @@ define([],function() {
 
         } );
         objloader.load( 'models/'+name+'.obj', function ( object ) {
-        console.log("OBJ ",arguments);
+          console.log("OBJ ",arguments);
 
           object.traverse( function ( child ) {
 
@@ -65,8 +65,8 @@ define([],function() {
               child.material.map = texture;
               child.material.side = THREE.DoubleSide;
               if(options.transparent) {
-              child.material.transparent= true;
-              child.material.depthWrite= false;
+                child.material.transparent= true;
+                child.material.depthWrite= false;
               }
             }
           } );

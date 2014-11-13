@@ -5,36 +5,51 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
   var Entity=function(name,pos,scene,heightmap) {
     var entity=Entities[name];
     var self=this;
+    self.scene=scene;
     this.name=name;
     this.type=name;
     this.pos=new THREE.Vector2().copy(pos);
     this.uid=uid++;
     this.map=heightmap;
     this.resources=_.extend({},entity.resources);
-    var loadFct=entity.type=="json"?"loadJSON":"load";
+    this.type=entity;
 
     if(entity.mixins) {
       self.mixins={};
       self.mixinNames=[];
       _.each(entity.mixins,function(mixin) {
-        console.log("MIXIIN ",mixin);
         var found=Mixins[mixin];
         if(found) {
-          console.log("FOUND",found);
           self.mixins[mixin]=found;
           self.mixinNames.push(mixin);
           _.extend(self,found);
         }
       });
     }
+    this.setMesh("default");
 
-    Models[loadFct](entity.mesh, entity, function(objects) {
+  };
+
+  Entity.prototype.setMesh=function(name){
+
+    var self=this;
+    var entity=this.type;
+    var mesh;
+
+    if(entity.meshes)
+      mesh=entity.meshes[name];
+    else
+      mesh=entity;
+
+    var loadFct=mesh.type=="json"?"loadJSON":"load";
+    Models[loadFct](mesh.mesh, mesh, function(objects) {
+      console.log("OK");
       if(!(objects instanceof Array)) {
         objects=[objects];
       }
       _.each(objects,function(object) {
 
-        var rotation=entity.rotation;
+        var rotation=mesh.rotation;
         if(rotation) {
           if(rotation.x) {
             object.rotation.x=rotation.x;
@@ -47,10 +62,10 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
           }
         }
 
-        if(entity.scale) 
-          object.scale.set(entity.scale,entity.scale,entity.scale);
+        if(mesh.scale) 
+          object.scale.set(mesh.scale,mesh.scale,mesh.scale);
 
-        this.mesh=object;
+        self.mesh=object;
         console.log("OBJJJJJ",object);
         var ud={entity:self};
         if(object.children.length>0)
@@ -62,13 +77,13 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
         if(true) {
           var node=new THREE.Object3D();
           node.add(object);
-          node.position.x = pos.x;
-          node.position.y = pos.y;
-          node.position.z = heightmap.get("rock").interpolate(pos.x,pos.y);
+          node.position.x = self.pos.x;
+          node.position.y = self.pos.y;
+          node.position.z = self.map.get("rock").interpolate(self.pos.x,self.pos.y);
           self.mesh=node;
-          scene.add( node);
+          self.scene.add( node);
         } else
-          scene.add( object );
+          self.scene.add( object );
       });
     });
   };
