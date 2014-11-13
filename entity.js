@@ -74,7 +74,6 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
   };
 
   Entity.prototype.hovered=function() {
-    console.log("B hovered");
   };
 
 
