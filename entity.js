@@ -27,19 +27,30 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
       });
     }
     this.setMesh("default");
-
   };
 
   Entity.prototype.setMesh=function(name){
+
+    if(this.mesh) {
+      this.scene.remove(this.mesh);
+    }
 
     var self=this;
     var entity=this.type;
     var mesh;
 
+    this.meshType=name;
+
     if(entity.meshes)
       mesh=entity.meshes[name];
     else
       mesh=entity;
+
+    if(!mesh) {
+      console.log("No mesh found for ",name);
+      return;
+    }
+
 
     var loadFct=mesh.type=="json"?"loadJSON":"load";
     Models[loadFct](mesh.mesh, mesh, function(objects) {

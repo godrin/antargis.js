@@ -4,6 +4,7 @@
 
   var jobs=[
     "move",
+    "rest"
   ];
   var paths=_.map(jobs,function(n) { return "mixins/mljobs/"+n;});
 
@@ -33,7 +34,8 @@
       },
       onNoLlJob:function(delta) {
         if(this.mljob) {
-          this.mljob.onFrame(delta);
+          if(this.mljob.createLlJob)
+            this.mljob.createLlJob(delta);
           if(this.mljob.ready)
             delete this.mljob;
         } else if(this.onNoMlJob) {

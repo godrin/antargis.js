@@ -44,6 +44,12 @@ define([],function() {
           type:"json",
           rotation: { x: 3.14*0.5 }
         },
+        "rest": {
+          mesh:"man_axe",
+          scale:0.03,
+          type:"json",
+          rotation: { x: 3.14*0.5 }
+        },
         "axe": {
           mesh:"man_axe",
           scale:0.05,
