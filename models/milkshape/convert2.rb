@@ -2,7 +2,8 @@
 
 require 'pp'
 require 'json'
-require './m.rb'
+require_relative './m.rb'
+require_relative './ant4parser.rb'
   
 module Milkshape
   # simple regex for decimal fractions
@@ -263,17 +264,25 @@ module Milkshape
         "transparency" => 0.0,
         "transparent" => true,
         "vertexColors" => false,
-        "mapDiffuse" => "man_elp.png",
+        #"mapDiffuse" => "man_elp.png",
         "skinning" => true
       } 
     end
   end
 end
 
-parser=Milkshape::Parser.new
-begin
-  File.open(ARGV[0]){|f|
-    model = parser.parse {||f.readline}
-    jj model.to_3
-  }
+filename=ARGV[0]
+if filename =~/.*txt/
+  parser=Milkshape::Parser.new
+  begin
+    File.open(ARGV[0]){|f|
+      model = parser.parse {||f.readline}
+      jj model.to_3
+    }
+  end
+elsif filename=~/.*ant4/
+  data=File.open(filename,"rb"){|f|f.read}
+  model=Antargis::Parser.new(data).parse(filename)
+  jj model.to_3
+  #pp "ANT4"
 end
