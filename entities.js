@@ -39,7 +39,7 @@ define([],function() {
     man: {
       meshes:{
         "default": {
-          mesh:"man_axe",
+          mesh:"man_walk",
           scale:0.07,
           type:"json",
           rotation: { x: 3.14*0.5 }

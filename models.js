@@ -25,9 +25,7 @@ define([],function() {
       last.scl = first.scl;
 
     }
-
   }
-
 
   var o = {
     load:function(name, options, callback) {
@@ -79,9 +77,24 @@ define([],function() {
         });
       }
     },
+
+    animate:function(mesh,name) {
+      var animation = new THREE.Animation( mesh, animations[name] );
+      animation.data=animations[name];
+      animation.play();
+      animation.update( Math.random()*10 );
+    },
+
     loadJSON:function(name, options, callback) {
-      if(models[name])
-        return callback(models[name].clone());
+      var self=this;
+      if(models[name]) {
+
+        var m=models[name].clone();
+        this.animate(m,name);
+
+        return callback(m);
+
+      }
 
       if(callbacks[name]) {
         callbacks[name].push(callback);
@@ -113,10 +126,6 @@ define([],function() {
           helper.material.linewidth = 3;
           helper.visible = true;
 
-          //mesh.computeBoundingBox();
-          //scene.add( helper );
-          //scene.add( mesh );
-
           var object=mesh;
           models[name]=object;
           animations[name]=geometry.animation;
@@ -125,14 +134,7 @@ define([],function() {
             var mesh=object.clone();
             console.log("CLONED",mesh,object);
 
-            //cb([object]);
-            if(true) {
-              var animation = new THREE.Animation( mesh, animations[name] );
-              animation.data=animations[name];
-              console.log("ANIM",animation,animations,name);
-              animation.play();
-              animation.update( Math.random()*10 );
-            }
+            self.animate(mesh,name);
             cb(mesh);
           });
         } );
