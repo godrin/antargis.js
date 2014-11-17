@@ -12,7 +12,7 @@ define([],function() {
 
   var callbacks={};
   function ensureLoop( animation ) {
-
+return;
     for ( var i = 0; i < animation.hierarchy.length; i ++ ) {
 
       var bone = animation.hierarchy[ i ];
