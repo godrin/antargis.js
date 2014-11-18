@@ -10,7 +10,7 @@ module Milkshape
   NUM="[+-]?[0-9]+\\.?[0-9]*"
 
   # use 35 frames per seconds as default 
-  FPS=30.0
+  FPS=1 #30.0
 
   ## ms3d-txt format data structures
   # complete file

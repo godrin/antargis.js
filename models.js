@@ -12,7 +12,7 @@ define([],function() {
 
   var callbacks={};
   function ensureLoop( animation ) {
-return;
+    return;
     for ( var i = 0; i < animation.hierarchy.length; i ++ ) {
 
       var bone = animation.hierarchy[ i ];
@@ -78,11 +78,33 @@ return;
       }
     },
 
-    animate:function(mesh,name) {
+    // animate (cloned) mesh
+    animate:function(mesh,name,options) {
       var animation = new THREE.Animation( mesh, animations[name] );
       animation.data=animations[name];
+      var scale=1
+      if(options.timeScale)
+        scale=options.timeScale;
+      animation.timeScale=scale;
       animation.play();
-      animation.update( Math.random()*10 );
+
+      // implement support for looping interval within global animation
+      // have a look at entity also
+      if(options.startFrame) {
+        if(options.endFrame) { 
+          var startAnimation=function() {
+            animation.play(options.startFrame,1);
+          };
+          var time=1000*(options.endFrame-options.startFrame)/scale;
+          var interval=setInterval(startAnimation,time);
+          startAnimation();
+          mesh.beforeRemove=function() {
+            clearInterval(interval);
+          };
+
+        }
+      }else
+        animation.update( Math.random()*10 );
     },
 
     loadJSON:function(name, options, callback) {
@@ -90,7 +112,7 @@ return;
       if(models[name]) {
 
         var m=models[name].clone();
-        this.animate(m,name);
+        this.animate(m,name,options);
 
         return callback(m);
 
@@ -134,7 +156,7 @@ return;
             var mesh=object.clone();
             console.log("CLONED",mesh,object);
 
-            self.animate(mesh,name);
+            self.animate(mesh,name,options);
             cb(mesh);
           });
         } );

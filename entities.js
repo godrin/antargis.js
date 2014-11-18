@@ -38,24 +38,31 @@ define([],function() {
     },
     man: {
       meshes:{
+        "rest": {
+          mesh:"man_e_walk",
+          scale:0.04,
+          type:"json",
+          rotation: { x: 3.14*0.5 },
+          timeScale:30,
+          startFrame:45,
+          endFrame:65
+        },
         "default": {
           mesh:"man_e_walk",
           scale:0.07,
           type:"json",
-          rotation: { x: 3.14*0.5 }
+          rotation: { x: 3.14*0.5 },
+          timeScale:10,
+          startFrame:45,
+          endFrame:65
         },
-        "rest": {
-          mesh:"man_axe",
-          scale:0.03,
-          type:"json",
-          rotation: { x: 3.14*0.5 }
-        },
+       /* 
         "axe": {
           mesh:"man_axe",
           scale:0.05,
           type:"json",
           rotation: { x: 3.14*0.5 }
-        }
+        }*/
       },
       mixins:["lljob", "mljob", "follower"]
     },

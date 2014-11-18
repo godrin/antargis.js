@@ -32,6 +32,11 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
   Entity.prototype.setMesh=function(name){
 
     if(this.mesh) {
+console.log("SET MESH old",this.mesh);
+      // hook to remove animation-restarter-interval
+      if(this.animMesh && this.animMesh.beforeRemove)
+        this.animMesh.beforeRemove();
+
       this.scene.remove(this.mesh);
     }
 
@@ -77,7 +82,6 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
           object.scale.set(mesh.scale,mesh.scale,mesh.scale);
 
         self.mesh=object;
-        console.log("OBJJJJJ",object);
         var ud={entity:self};
         if(object.children.length>0)
           object.children[0].userData=ud;
@@ -91,6 +95,8 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
           node.position.x = self.pos.x;
           node.position.y = self.pos.y;
           node.position.z = self.map.get("rock").interpolate(self.pos.x,self.pos.y);
+          // save anim mesh, so that we can send beforeRemove()
+          self.animMesh=object;
           self.mesh=node;
           self.scene.add( node);
         } else

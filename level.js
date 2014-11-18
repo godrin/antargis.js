@@ -10,7 +10,7 @@ define(["entity"],function(Entity) {
     {type:"tower",pos:{x:5,y:8}},
     {type:"hero",pos:{x:7,y:8}},
     {type:"man",pos:{x:0,y:0}},
-    {type:"man",pos:{x:3,y:0}}
+//    {type:"man",pos:{x:3,y:0}}
   ];
 
   var Level=function(scene, map, world) {
