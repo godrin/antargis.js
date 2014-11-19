@@ -32,7 +32,6 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
   Entity.prototype.setMesh=function(name){
 
     if(this.mesh) {
-console.log("SET MESH old",this.mesh);
       // hook to remove animation-restarter-interval
       if(this.animMesh && this.animMesh.beforeRemove)
         this.animMesh.beforeRemove();
@@ -97,6 +96,8 @@ console.log("SET MESH old",this.mesh);
           node.position.z = self.map.get("rock").interpolate(self.pos.x,self.pos.y);
           // save anim mesh, so that we can send beforeRemove()
           self.animMesh=object;
+          if(self.animationFinished)
+            self.animMesh.animationFinished=_.bind(self.animationFinished,self);
           self.mesh=node;
           self.scene.add( node);
         } else

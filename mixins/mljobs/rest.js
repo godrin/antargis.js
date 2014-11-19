@@ -3,12 +3,12 @@ define([],function() {
     this.entity=entity;
   };
   Job.prototype.createLlJob=function() {
-    if(this.entity.meshType=="rest")
-      this.entity.setMesh("default");
-    else
-      this.entity.setMesh("rest");
-    this.entity.newLlJob("rest",10);
-
+    if(this.entity.meshType!="sit" && this.entity.meshType!="sitdown") {
+      this.entity.playAnimation("sitdown");
+    }else {
+      this.entity.setMesh("sit");
+      this.entity.newLlJob("rest",10);
+    }
   };
 
   return Job;

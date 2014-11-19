@@ -17,6 +17,9 @@
     return {
       setMlJob:function(job) {
         this.mljob=job;
+        // directly assign new job
+        if(job)
+          this.onNoLlJob();
       },
       newMlJob:function() {
         var name=_.first(arguments);
@@ -29,7 +32,9 @@
 
         F.prototype=Jobs[name].prototype;
         var j=new F(p);
+        j.name=name;
         this.setMlJob(j);
+
         return j;
       },
       onNoLlJob:function(delta) {

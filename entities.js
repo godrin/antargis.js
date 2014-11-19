@@ -38,9 +38,37 @@ define([],function() {
     },
     man: {
       meshes:{
-        "rest": {
+        "sit": {
           mesh:"man_e_walk",
-          scale:0.04,
+          scale:0.07,
+          type:"json",
+          rotation: { x: 3.14*0.5 },
+          timeScale:30,
+          startFrame:20,
+          endFrame:20
+        },
+        "sitdown": {
+          mesh:"man_e_walk",
+          scale:0.07,
+          type:"json",
+          rotation: { x: 3.14*0.5 },
+          timeScale:25,
+          startFrame:1,
+          endFrame:18,
+          loop:false
+        },
+        "stand": {
+          mesh:"man_e_walk",
+          scale:0.07,
+          type:"json",
+          rotation: { x: 3.14*0.5 },
+          timeScale:25,
+          startFrame:40,
+          endFrame:40
+        },
+        "walk": {
+          mesh:"man_e_walk",
+          scale:0.07,
           type:"json",
           rotation: { x: 3.14*0.5 },
           timeScale:30,

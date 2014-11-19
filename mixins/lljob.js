@@ -32,6 +32,7 @@
 
         F.prototype=Jobs[name].prototype;
         var j=new F(p);
+        j.name=name;
         this.setLlJob(j);
         return j;
       },
@@ -44,6 +45,14 @@
           this.onNoLlJob(delta);
         } else {
         }
+      },
+      // mesh name should contain an animation with loop=false
+      playAnimation:function(name) {
+        this.setMesh(name);
+        this.newLlJob("rest",20);
+      },
+      animationFinished:function() {
+        this.onNoLlJob(0);
       }
     };
   });

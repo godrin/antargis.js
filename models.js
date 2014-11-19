@@ -80,11 +80,16 @@ define([],function() {
 
     // animate (cloned) mesh
     animate:function(mesh,name,options) {
+      var self=this;
       var animation = new THREE.Animation( mesh, animations[name] );
       animation.data=animations[name];
       var scale=1
       if(options.timeScale)
         scale=options.timeScale;
+
+      if(options.loop===false) {
+        animation.loop=false;
+      }
       animation.timeScale=scale;
       animation.play();
 
@@ -95,12 +100,24 @@ define([],function() {
           var startAnimation=function() {
             animation.play(options.startFrame,1);
           };
-          var time=1000*(options.endFrame-options.startFrame)/scale;
-          var interval=setInterval(startAnimation,time);
-          startAnimation();
-          mesh.beforeRemove=function() {
-            clearInterval(interval);
+          var stopAnimation=function() {
+            animation.stop();
+            if(mesh.animationFinished)
+              mesh.animationFinished();
           };
+          var time=1000*(options.endFrame-options.startFrame)/scale;
+          startAnimation();
+          if(options.loop!==false) {
+            var interval=setInterval(startAnimation,time);
+            mesh.beforeRemove=function() {
+              clearInterval(interval);
+            };
+          } else {
+            var timeout=setTimeout(stopAnimation,time);
+            mesh.beforeRemove=function() {
+              clearTimeout(interval);
+            };
+          }
 
         }
       }else
