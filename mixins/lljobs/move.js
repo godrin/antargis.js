@@ -24,9 +24,7 @@ define([],function() {
         e.mesh.rotation.z=-Math.atan2(dir.x,dir.y)+Math.PI;
       }
 
-      e.mesh.position.x = e.pos.x;
-      e.mesh.position.y = e.pos.y;
-      e.mesh.position.z = e.map.get("rock").interpolate(e.pos.x,e.pos.y);
+      e.updateMeshPos();
     } else {
 
     }

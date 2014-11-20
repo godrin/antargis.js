@@ -1,13 +1,13 @@
-define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
+define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins) {
 
   var uid=11110;
 
   var Entity=function(name,pos,scene,heightmap) {
+
     var entity=Entities[name];
     var self=this;
     self.scene=scene;
     this.name=name;
-    this.type=name;
     this.pos=new THREE.Vector2().copy(pos);
     this.uid=uid++;
     this.map=heightmap;
@@ -29,86 +29,48 @@ define(["models", "entities", "mixins"],function(Models, Entities, Mixins) {
     this.setMesh("default");
   };
 
+  Entity.prototype.updateMeshPos=function() {
+    this.mesh.setPos(this.pos.x, this.pos.y,
+      this.map.get("rock").interpolate(this.pos.x,this.pos.y));
+  };
   Entity.prototype.setMesh=function(name){
 
     if(this.mesh) {
-      // hook to remove animation-restarter-interval
-      if(this.animMesh && this.animMesh.beforeRemove)
-        this.animMesh.beforeRemove();
-
-      this.scene.remove(this.mesh);
+      this.mesh.remove();
     }
 
     var self=this;
     var entity=this.type;
-    var mesh;
+    var meshType;
+    var animation;
 
-    this.meshType=name;
-
-    if(entity.meshes)
-      mesh=entity.meshes[name];
+    if(entity.meshes) {
+      var def=entity.meshes[name];
+      meshType=def.mesh;
+      animation=def.animation;
+    } else if(entity.mesh)
+      meshType=entity.mesh;
     else
-      mesh=entity;
+      meshType=this.name;
 
-    if(!mesh) {
-      console.log("No mesh found for ",name);
-      return;
-    }
+    self.meshType=meshType;
+    self.animation=animation;
 
-
-    var loadFct=mesh.type=="json"?"loadJSON":"load";
-    Models[loadFct](mesh.mesh, mesh, function(objects) {
-      console.log("OK");
-      if(!(objects instanceof Array)) {
-        objects=[objects];
+    Models.load(meshType, animation, this, self.scene, function(mesh) {
+      if(mesh.type==self.meshType && mesh.animation==self.animation) {
+        self.mesh=mesh;
+        mesh.setEntity(self);
+        self.updateMeshPos();
+        if(self.animationFinished)
+          self.mesh.animationFinished=_.bind(self.animationFinished,self);
+      } else {
+        mesh.remove();
       }
-      _.each(objects,function(object) {
-
-        var rotation=mesh.rotation;
-        if(rotation) {
-          if(rotation.x) {
-            object.rotation.x=rotation.x;
-          }
-          if(rotation.y) {
-            object.rotation.y=rotation.y;
-          }
-          if(rotation.z) {
-            object.rotation.z=rotation.z;
-          }
-        }
-
-        if(mesh.scale) 
-          object.scale.set(mesh.scale,mesh.scale,mesh.scale);
-
-        self.mesh=object;
-        var ud={entity:self};
-        if(object.children.length>0)
-          object.children[0].userData=ud;
-
-        self.mesh=object;
-        object.userData=ud;
-
-        if(true) {
-          var node=new THREE.Object3D();
-          node.add(object);
-          node.position.x = self.pos.x;
-          node.position.y = self.pos.y;
-          node.position.z = self.map.get("rock").interpolate(self.pos.x,self.pos.y);
-          // save anim mesh, so that we can send beforeRemove()
-          self.animMesh=object;
-          if(self.animationFinished)
-            self.animMesh.animationFinished=_.bind(self.animationFinished,self);
-          self.mesh=node;
-          self.scene.add( node);
-        } else
-          self.scene.add( object );
-      });
     });
   };
 
   Entity.prototype.hovered=function() {
   };
-
 
   return Entity;
 });

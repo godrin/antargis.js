@@ -1,4 +1,4 @@
-define([],function() {
+define(["model", "config/meshes"], function(Model, Meshes) {
 
   var manager = new THREE.LoadingManager();
   manager.onProgress = function ( item, loaded, total ) {
@@ -28,37 +28,80 @@ define([],function() {
   }
 
   var o = {
-    load:function(name, options, callback) {
-      if(models[name])
-        return callback(models[name].clone());
 
-      if(callbacks[name]) {
-        callbacks[name].push(callback);
+    load:function(mesh, animation, entity, scene, callback) {
+      var meshDef=Meshes[mesh];
+      var loadfct=(meshDef.type=="json")?"loadJSON":"loadObj";
+      
+      this[loadfct](mesh, animation, function(objects) {
+        if(!(objects instanceof Array)) {
+          objects=[objects];
+        }
+
+        var node=new THREE.Object3D();
+        _.each(objects,function(object) {
+          var rotation=meshDef.rotation;
+          if(rotation) {
+            if(rotation.x) {
+              object.rotation.x=rotation.x;
+            }
+            if(rotation.y) {
+              object.rotation.y=rotation.y;
+            }
+            if(rotation.z) {
+              object.rotation.z=rotation.z;
+            }
+          }
+
+          if(meshDef.scale) 
+            object.scale.set(meshDef.scale,meshDef.scale,meshDef.scale);
+
+          var ud={entity:self};
+          if(object.children.length>0)
+            object.children[0].userData=ud;
+
+          object.userData=ud;
+          node.add(object);
+        });
+        scene.add(node);
+        var newModel=new Model(objects, node, scene);
+        newModel.name=mesh;
+        newModel.type=mesh;
+        newModel.animation=animation;
+        callback(newModel);
+      });
+    },
+
+    loadObj:function(name, dummy, callback) {
+      var options = Meshes[name];
+      var key=name;
+      var mesh=options.mesh||name;
+
+
+      if(models[key])
+        return callback(models[key].clone());
+
+      if(callbacks[key]) {
+        callbacks[key].push(callback);
         return;
       }
       else {
         callbacks[name]=[callback];
 
-        console.log("Loading model", name);
-
         var texture = new THREE.Texture();
-        var texName=name+".png";
-        texName=name+".jpg";
+        var texName=mesh+".png";
+        texName=mesh+".jpg";
         if(options.texture)
           texName=options.texture;
         texName="models/"+texName;
 
         imageloader.load( texName, function ( image ) {
-
           texture.image = image;
           texture.needsUpdate = true;
-
-        } );
-        objloader.load( 'models/'+name+'.obj', function ( object ) {
-          console.log("OBJ ",arguments);
+        });
+        objloader.load( 'models/'+mesh+'.obj', function ( object ) {
 
           object.traverse( function ( child ) {
-
             if ( child instanceof THREE.Mesh ) {
               child.material.map = texture;
               child.material.side = THREE.DoubleSide;
@@ -69,9 +112,9 @@ define([],function() {
             }
           } );
 
-          models[name]=object;
+          models[key]=object;
 
-          $.each(callbacks[name],function(ke,cb) {
+          _.each(callbacks[name],function(cb) {
             cb(object.clone());
           });
         });
@@ -124,7 +167,10 @@ define([],function() {
         animation.update( Math.random()*10 );
     },
 
-    loadJSON:function(name, options, callback) {
+    loadJSON:function(name, animation, callback) {
+      var options=_.extend({},Meshes[name]);
+      if(Meshes[name].animations[animation])
+        options=_.extend(options,Meshes[name].animations[animation]);
       var self=this;
       if(models[name]) {
 

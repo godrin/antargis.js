@@ -46,7 +46,6 @@ define(['bower_components/THREE.Terrain/src/THREE.Terrain.js',"heightmap"],funct
         // Assuming you already have your global scene
         scene.add(terrainScene);
         this.geo = terrainScene.children[0].geometry;
-        console.log("GEO",heightmap);
     },
 
     create:function(options,scene,heightmap) {
