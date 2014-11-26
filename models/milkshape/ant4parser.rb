@@ -46,7 +46,7 @@ module Antargis
       (vertexCount=uint32).times do
         vertices<<Milkshape::Vertex.new(0,float,float,float,
                                         float,1-float,
-                                        uint32)
+                                        (uint32)&0xFFFFFFFF)
         normals<<Milkshape::Normal.new(float,float,float)
       end
 

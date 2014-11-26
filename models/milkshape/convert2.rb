@@ -4,7 +4,7 @@ require 'pp'
 require 'json'
 require_relative './m.rb'
 require_relative './ant4parser.rb'
-  
+
 module Milkshape
   # simple regex for decimal fractions
   NUM="[+-]?[0-9]+\\.?[0-9]*"
@@ -26,7 +26,7 @@ module Milkshape
   BoneConfig=Struct.new(:flags, :posx, :posy, :posz, :rotx, :roty, :rotz)
   Keyframes=Struct.new(:pos, :rot)
   Keyframe=Struct.new(:time, :x, :y, :z)
-  
+
   # some functions to make access to these structures easier
   class Vertex
     def pos
@@ -182,7 +182,8 @@ module Milkshape
           "uvs"           => meshes.map{|mesh|mesh.vertices}.flatten.length,
           "colors"        => 0,
           "materials"     => self.materials.length,
-          "bones"         => self.bones.length,
+          # add dummy bone for not-assigned vertices
+          "bones"         => self.bones.length+1,
         },
         "influencesPerVertex"=>1,
         "materials"=>self.materials.map{|mat|mat.to_3},
@@ -211,15 +212,29 @@ module Milkshape
             ]
           }
         }.flatten,
-        "bones"=> self.bones.map{|bone|
+        "bones"=> (self.bones.map{|bone|
           {"parent"=>self.bones.index{|b|b.name==bone.parent}||-1,
            "name"=>bone.name,
            "scl"=>[1,1,1],
            "pos"=>bone.pos.to_3,
            "rotq"=>bone.rot.to_quat,
           }
-        },
-        "skinIndices"=>self.meshes.map{|mesh|mesh.vertices.map{|v|[v.bone.to_i]}}.flatten,
+        }+
+        [
+          {"parent"=>-1,
+           "name"=>"none",
+           "scl"=>[1.0,1.0,1.0],
+           "pos"=>[0.0,0.0,0.0],
+           "rotq"=>[0.0,0.0,0.0,1.0]
+        }
+        ]),
+        "skinIndices"=>self.meshes.map{|mesh|mesh.vertices.map{|v|
+          if v.bone.to_i>self.bones.length 
+            self.bones.length
+          else
+            v.bone.to_i
+          end
+        }}.flatten,
         "skinWeights"=>self.meshes.map{|mesh|mesh.vertices.map{1}}.flatten,
         "animation" => {
           "length" => head.frameCount/FPS,
@@ -234,6 +249,20 @@ module Milkshape
                   # positions are not relative to bone-definition as in MS3d format, so invert
                   "pos"=>frame.pos.invert_by(bone.relative).to_3,
                   "rot"=>frame.rot.to_quat,
+                  "scl"=>[1,1,1]
+                }
+              }
+            }
+          }+self.bones[0..0].map{|bone|
+            # gather frames so that frames can be generated for dummy bone
+            frames=(0...bone.frames.rot.length).map{|i|LocalFrame.new(bone.frames.pos[i].time, bone.frames.pos[i].vec, bone.frames.rot[i].vec )}
+            {
+              "parent" => -1,
+              "keys" => frames.map{|frame|
+                {
+                  "time"=>frame.time/FPS,
+                  "pos"=>[0.0,0.0,0.0],
+                  "rot"=>[0.0, 0.0, 0.0, 1.0],
                   "scl"=>[1,1,1]
                 }
               }
