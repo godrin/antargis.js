@@ -3,8 +3,8 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   var uid=11110;
 
   var Entity=function(name,pos,scene,heightmap) {
-
     var entity=Entities[name];
+    _.extend(this,entity);
     var self=this;
     self.scene=scene;
     this.name=name;
@@ -30,8 +30,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   };
 
   Entity.prototype.updateMeshPos=function() {
-    this.mesh.setPos(this.pos.x, this.pos.y,
-      this.map.get("rock").interpolate(this.pos.x,this.pos.y));
+    if(this.mesh) {
+      this.mesh.setPos(this.pos.x, this.pos.y,
+        this.map.get("rock").interpolate(this.pos.x,this.pos.y));
+    }
   };
   Entity.prototype.setMesh=function(name){
 

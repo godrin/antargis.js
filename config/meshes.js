@@ -15,6 +15,7 @@ define([],function() {
     fishing_hut: {
       mesh:"fishing_hut",
       rotation: { z: 3.14*1/8},
+      scale:1.5
     },
     townhall: {
       mesh:"townhall_try2",
@@ -62,6 +63,33 @@ define([],function() {
         }
       }
     },
+    man_fight: {
+      mesh:"man_fight",
+      scale:0.07,
+      type:"json",
+      rotation: { x: 3.14*0.5 },
+      animations: {
+        "fight": {
+          startFrame:1,
+          endFrame:41,
+          timeScale:25,
+          "events": [ 
+            {
+              time:18,
+              name:"sword"
+            },
+            {
+              time:35,
+              name:"sword"
+            },
+            {
+              time:20,
+              name:"ugh"
+            },
+          ]
+        }
+      }
+    },
     fir: {
       mesh:"fir2",
       texture:"fir5.png",
@@ -78,5 +106,32 @@ define([],function() {
       mesh:'big_stone',
       scale:1,
     },
+    sheep: {
+      scale:0.15,
+      type:"json",
+      rotation: { x: 3.14*0.5 },
+
+      texture:"sheep.png",
+      //wireframe:true,
+      //defaultMaterial:true,
+      animations: {
+        "default": {
+          timeScale:25,
+          startFrame:1,
+          endFrame:45
+        },
+        "eat": {
+          timeScale:25,
+          startFrame:1,
+          endFrame:45,
+          loop:false
+        },
+        "walk": {
+          timeScale: 60,
+          startFrame:45,
+          endFrame:100
+        }
+      }
+    }
   };
 });

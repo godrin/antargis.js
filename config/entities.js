@@ -23,6 +23,7 @@ define([],function() {
     },
     man: {
       meshes:{
+      
         "sit": {
           mesh:"man_e_walk",
           animation:"sit"
@@ -42,6 +43,10 @@ define([],function() {
         "default": {
           mesh:"man_e_walk",
           animation:"stand"
+        },
+        "fight": {
+          mesh:"man_fight",
+          animation:"fight"
         }
       },
       mixins:["lljob", "mljob", "follower"]
@@ -58,6 +63,24 @@ define([],function() {
         stone:20
       }
     },
+    sheep: {
+      mixins:["lljob","animal"],
+      speed:0.5,
+      meshes: {
+        "default": {
+          mesh:"sheep",
+          animation:"eat"
+        },
+        eat: {
+          mesh:"sheep",
+          animation:"eat"
+        },
+        walk: {
+          mesh:"sheep",
+          animation:"walk"
+        }
+      }
+    }
   };
 });
 

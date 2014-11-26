@@ -2,7 +2,8 @@ var mixins=[
   "lljob",
   "mljob",
   "follower",
-  "boss"
+  "boss",
+  "animal",
 ];
 var paths=_.map(mixins,function(n) { return "mixins/"+n;});
 

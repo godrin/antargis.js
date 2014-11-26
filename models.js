@@ -32,7 +32,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
     load:function(mesh, animation, entity, scene, callback) {
       var meshDef=Meshes[mesh];
       var loadfct=(meshDef.type=="json")?"loadJSON":"loadObj";
-      
+
       this[loadfct](mesh, animation, function(objects) {
         if(!(objects instanceof Array)) {
           objects=[objects];
@@ -50,6 +50,19 @@ define(["model", "config/meshes"], function(Model, Meshes) {
             }
             if(rotation.z) {
               object.rotation.z=rotation.z;
+            }
+          }
+          
+          var position=meshDef.position;
+          if(position) {
+            if(position.x) {
+              object.position.x=position.x;
+            }
+            if(position.y) {
+              object.position.y=position.y;
+            }
+            if(position.z) {
+              object.position.z=position.z;
             }
           }
 
@@ -104,7 +117,8 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           object.traverse( function ( child ) {
             if ( child instanceof THREE.Mesh ) {
               child.material.map = texture;
-              child.material.side = THREE.DoubleSide;
+              if(options.doublesided)
+                child.material.side = THREE.DoubleSide;
               if(options.transparent) {
                 child.material.transparent= true;
                 child.material.depthWrite= false;
@@ -202,9 +216,29 @@ define(["model", "config/meshes"], function(Model, Meshes) {
             var originalMaterial = materials[ i ];
             console.log("MAT",originalMaterial);
             originalMaterial.skinning = true;
+            if(options.doublesided) {
+              //  originalMaterial.side = THREE.DoubleSide;
+              console.log("DOUBLE");
+            }
           }
 
           var material = new THREE.MeshFaceMaterial( materials );
+          if(options.doublesided) 
+            material.side = THREE.DoubleSide;
+
+
+          if(options.wireframe) {
+            material=new THREE.MeshBasicMaterial({
+              wireframe: true,
+              color: 'blue'
+            });
+          }
+          if(options.defaultMaterial) {
+            material= new THREE.MeshLambertMaterial({
+              color: 'blue' 
+            });
+          }
+
           var mesh = new THREE.SkinnedMesh( geometry, material, false );
 
           var helper = new THREE.SkeletonHelper( mesh );
@@ -222,7 +256,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
             self.animate(mesh,name,options);
             cb(mesh);
           });
-        } );
+        });
       }
     }
   };

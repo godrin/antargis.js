@@ -4,7 +4,7 @@
 
   var jobs=[
     "move",
-    "rest"
+    "rest",
   ];
   var paths=_.map(jobs,function(n) { return "mixins/mljobs/"+n;});
 
