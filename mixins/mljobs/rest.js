@@ -3,7 +3,7 @@ define([],function() {
     this.entity=entity;
   };
   Job.prototype.createLlJob=function() {
-    if(this.entity.meshType!="sit" && this.entity.meshType!="sitdown") {
+    if(this.entity.meshName!="sit" && this.entity.meshName!="sitdown") {
       this.entity.playAnimation("sitdown");
     }else {
       this.entity.setMesh("sit");

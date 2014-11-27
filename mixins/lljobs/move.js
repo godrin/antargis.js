@@ -21,8 +21,7 @@ define([],function() {
       } else {
         var dir=new THREE.Vector2().subVectors(this.lltargetPos,e.pos).setLength(togo);
         e.pos.add(dir);
-        if(e.mesh && e.mesh.rotation)
-          e.mesh.rotation.z=-Math.atan2(dir.x,dir.y)+Math.PI;
+        e.rotation=-Math.atan2(dir.x,dir.y)+Math.PI;
       }
 
       e.updateMeshPos();

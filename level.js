@@ -10,7 +10,7 @@ define(["entity"],function(Entity) {
     {type:"tower",pos:{x:4,y:7}},
     {type:"hero",pos:{x:7,y:8}},
     {type:"man",pos:{x:1,y:1}}, 
-    {type:"sheep",pos:{x:3,y:5}}, 
+//    {type:"sheep",pos:{x:3,y:5}}, 
 //    {type:"man",pos:{x:3,y:0}}
   ];
 

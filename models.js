@@ -158,9 +158,10 @@ define(["model", "config/meshes"], function(Model, Meshes) {
             animation.play(options.startFrame,1);
           };
           var stopAnimation=function() {
+          console.log("ANIMAL stopANimation",mesh,mesh.animationFinished);
             animation.stop();
-            if(mesh.animationFinished)
-              mesh.animationFinished();
+            if(mesh.userData && mesh.userData.entity && mesh.userData.entity.animationFinished)
+              mesh.userData.entity.animationFinished();
           };
           var time=1000*(options.endFrame-options.startFrame)/scale;
           startAnimation();
@@ -170,6 +171,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
               clearInterval(interval);
             };
           } else {
+          console.log("ANIMAL DONT LOOP",arguments);
             var timeout=setTimeout(stopAnimation,time);
             mesh.beforeRemove=function() {
               clearTimeout(interval);

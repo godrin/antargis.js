@@ -31,20 +31,19 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
   Entity.prototype.updateMeshPos=function() {
     if(this.mesh) {
-      this.mesh.setPos(this.pos.x, this.pos.y,
-        this.map.get("rock").interpolate(this.pos.x,this.pos.y));
+      if(this.mesh && this.mesh.rotation && this.rotation)
+        this.mesh.rotation.z=this.rotation;
+      this.mesh.setPos(this.pos.x, this.pos.y, this.map.get("rock").interpolate(this.pos.x,this.pos.y));
     }
   };
   Entity.prototype.setMesh=function(name){
 
-    if(this.mesh) {
-      this.mesh.remove();
-    }
 
     var self=this;
     var entity=this.type;
     var meshType;
     var animation;
+    this.meshName=name;
 
     if(entity.meshes) {
       var def=entity.meshes[name];
@@ -59,6 +58,9 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     self.animation=animation;
 
     Models.load(meshType, animation, this, self.scene, function(mesh) {
+      if(self.mesh) {
+        self.mesh.remove();
+      }
       if(mesh.type==self.meshType && mesh.animation==self.animation) {
         self.mesh=mesh;
         mesh.setEntity(self);

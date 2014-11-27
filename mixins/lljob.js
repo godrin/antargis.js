@@ -52,6 +52,7 @@
         this.newLlJob("rest",20);
       },
       animationFinished:function() {
+        console.log("ANIMAL anim finished",this.lljob,this.mljob);
         this.onNoLlJob(0);
       }
     };

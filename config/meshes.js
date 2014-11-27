@@ -23,7 +23,7 @@ define([],function() {
     },
     hero: {
       mesh:"hero_lp",
-      scale: 0.05,
+      scale: 0.08,
     },
     tower: {
       mesh:"tower",
