@@ -2,10 +2,9 @@
 
 (function() {
   var jobs=[
-    "move",
     "rest",
   ];
-  var paths=_.map(jobs,function(n) { return "mixins/mljobs/"+n;});
+  var paths=_.map(jobs,function(n) { return "mixins/hljobs/"+n;});
 
   define(paths,function() {
     var Jobs={};
@@ -14,13 +13,13 @@
     }
 
     return {
-      setMlJob:function(job) {
-        this.mljob=job;
+      setHlJob:function(job) {
+        this.hljob=job;
         // directly assign new job
         if(job)
-          this.onNoLlJob();
+          this.onNoMlJob();
       },
-      newMlJob:function() {
+      newHlJob:function() {
         var name=_.first(arguments);
         var rest=_.rest(arguments);
         var p=[this].concat(rest);
@@ -32,18 +31,18 @@
         F.prototype=Jobs[name].prototype;
         var j=new F(p);
         j.name=name;
-        this.setMlJob(j);
+        this.setHlJob(j);
 
         return j;
       },
-      onNoLlJob:function(delta) {
-        if(this.mljob) {
-          if(this.mljob.createLlJob)
-            this.mljob.createLlJob(delta);
-          if(this.mljob.ready)
-            delete this.mljob;
-        } else if(this.onNoMlJob) {
-          this.onNoMlJob(delta);
+      onNoMlJob:function(delta) {
+        if(this.hljob) {
+          if(this.hljob.createMlJob)
+            this.hljob.createMlJob(delta);
+          if(this.hljob.ready)
+            delete this.hljob;
+        } else if(this.onNoHlJob) {
+          this.onNoHlJob(delta);
         } else {
         }
       }
