@@ -23,7 +23,6 @@ define([],function() {
     },
     man: {
       meshes:{
-      
         "sit": {
           mesh:"man_e_walk",
           animation:"sit"

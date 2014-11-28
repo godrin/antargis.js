@@ -9,7 +9,6 @@ define([],function() {
       this.ready=true;
     } else {
       this.entity.setMesh("walk");
-      this.entity.setMesh("fight");
       this.entity.newLlJob("move",this.mltargetPos);
     }
   };
