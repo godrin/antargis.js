@@ -1,4 +1,4 @@
-define([],function() {
+define(["angle"],function(Angle) {
   var Job=function(entity, pos) {
     this.entity=entity;
     this.speed=entity.speed||3;
@@ -21,7 +21,7 @@ define([],function() {
       } else {
         var dir=new THREE.Vector2().subVectors(this.lltargetPos,e.pos).setLength(togo);
         e.pos.add(dir);
-        e.rotation=-Math.atan2(dir.x,dir.y)+Math.PI;
+        e.rotation=Angle.fromVector2(dir);
       }
 
       e.updateMeshPos();

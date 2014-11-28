@@ -12,6 +12,17 @@ define(["entity"],function(Entity) {
     {type:"man",pos:{x:1,y:1}}, 
     {type:"man",pos:{x:1,y:1}}, 
     {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
+    {type:"man",pos:{x:1,y:1}}, 
 //    {type:"sheep",pos:{x:3,y:5}}, 
 //    {type:"man",pos:{x:3,y:0}}
   ];

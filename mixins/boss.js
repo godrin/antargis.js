@@ -1,4 +1,4 @@
-define(["mixins/formations/base.js"],function(RestFormation) {
+define(["mixins/formations/rest.js", "angle"],function(RestFormation, Angle) {
   return {
     followers:[],
     formation:new RestFormation(),
@@ -11,7 +11,8 @@ define(["mixins/formations/base.js"],function(RestFormation) {
         e.newMlJob("move",newPos);
       else {
         console.log("NEW REST!");
-        e.newMlJob("rest",5);
+        var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.pos,e.pos));
+        e.newMlJob("rest",5, dir);
       }
     },
     addFollower:function(follower) {
