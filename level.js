@@ -11,7 +11,7 @@ define(["entity"],function(Entity) {
     {type:"hero",pos:{x:3,y:3}},
     {type:"man",pos:{x:1,y:1}}, 
     {type:"sheep",pos:{x:3,y:5}}, 
-        {type:"man",pos:{x:3,y:0}}
+    {type:"man",pos:{x:3,y:0}}
   ];
 
   if(false) {
@@ -19,19 +19,19 @@ define(["entity"],function(Entity) {
       def.push(
       {type:"man",pos:{x:1,y:1}});
     }
-    }
+  }
 
-    var Level=function(scene, map, world) {
-      this.scene=scene;
-      this.map=map;
+  var Level=function(scene, map, world) {
+    this.scene=scene;
+    this.map=map;
 
-      _.each(def,function(entityDef) {
-        console.log(entityDef);
-        var entity=new Entity(entityDef.type,entityDef.pos,scene,map);
-        entity.world=world;
-        world.push(entity);
-      });
-    };
+    _.each(def,function(entityDef) {
+      console.log(entityDef);
+      var entity=new Entity(entityDef.type,entityDef.pos,scene,map);
+      entity.world=world;
+      world.push(entity);
+    });
+  };
 
-    return Level;
+  return Level;
 });
