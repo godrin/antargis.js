@@ -1,6 +1,4 @@
 var mixins=[
-  "lljob",
-  "mljob",
   "follower",
   "boss",
   "animal",
