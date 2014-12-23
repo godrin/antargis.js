@@ -10,22 +10,14 @@ define(["entity"],function(Entity) {
     {type:"tower",pos:{x:4,y:7}},
     {type:"hero",pos:{x:3,y:3}},
     {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"man",pos:{x:1,y:1}}, 
 //    {type:"sheep",pos:{x:3,y:5}}, 
 //    {type:"man",pos:{x:3,y:0}}
   ];
+
+  for(var i=0;i<10;i++) {
+  def.push(
+    {type:"man",pos:{x:1,y:1}});
+  }
 
   var Level=function(scene, map, world) {
     this.scene=scene;
