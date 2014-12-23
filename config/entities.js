@@ -71,7 +71,7 @@ define([],function() {
       }
     },
     sheep: {
-      mixins:["lljob","animal"],
+      mixins:["job","animal"],
       speed:0.5,
       meshes: {
         "default": {

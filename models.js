@@ -153,12 +153,17 @@ define(["model", "config/meshes"], function(Model, Meshes) {
       // implement support for looping interval within global animation
       // have a look at entity also
       if(options.startFrame) {
-        if(options.endFrame) { 
+        //animation.update( options.startFrame);
+        if(options.animate===false && false) {
+          animation.stop();
+            animation.update(options.startFrame,1);
+        }
+        else if(options.endFrame) { 
           var startAnimation=function() {
             animation.play(options.startFrame,1);
           };
           var stopAnimation=function() {
-          console.log("ANIMAL stopANimation",mesh,mesh.animationFinished);
+            console.log("ANIMAL stopANimation",mesh,mesh.animationFinished);
             animation.stop();
             if(mesh.userData && mesh.userData.entity && mesh.userData.entity.animationFinished)
               mesh.userData.entity.animationFinished();
@@ -168,12 +173,14 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           if(options.loop!==false) {
             var interval=setInterval(startAnimation,time);
             mesh.beforeRemove=function() {
+              animation.stop();
               clearInterval(interval);
             };
           } else {
-          console.log("ANIMAL DONT LOOP",arguments);
+            console.log("ANIMAL DONT LOOP",arguments);
             var timeout=setTimeout(stopAnimation,time);
             mesh.beforeRemove=function() {
+              animation.stop();
               clearTimeout(interval);
             };
           }
@@ -243,10 +250,11 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
           var mesh = new THREE.SkinnedMesh( geometry, material, false );
 
-          var helper = new THREE.SkeletonHelper( mesh );
-          helper.material.linewidth = 3;
-          helper.visible = true;
-
+          if(false) {
+            var helper = new THREE.SkeletonHelper( mesh );
+            helper.material.linewidth = 3;
+            helper.visible = true;
+          }
           var object=mesh;
           models[name]=object;
           animations[name]=geometry.animation;

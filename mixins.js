@@ -4,6 +4,7 @@ var mixins=[
   "follower",
   "boss",
   "animal",
+  "job"
 ];
 var paths=_.map(mixins,function(n) { return "mixins/"+n;});
 

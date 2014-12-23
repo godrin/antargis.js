@@ -12,7 +12,7 @@ define([],function() {
       this.ready=true;
       return this.done-this.time;
     }
-    return 0;
+    return -1;
   };
   return Job;
 });
