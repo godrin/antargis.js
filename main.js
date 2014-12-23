@@ -1,5 +1,7 @@
-require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world'],
-  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World) {
+require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
+'mixins/mljobs/move'],
+  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World,
+  MlMoveJob) {
     // Our Javascript will go here.
     Base.init();
 
@@ -63,11 +65,8 @@ require(['base',"terrain","skybox","models","controls", "generator","heightmap",
             console.log("CLICK",selectedEntity);
 
 
-            if(selectedEntity && selectedEntity.newMlJob) 
-              selectedEntity.newMlJob("move",lastPos); // new (selectedEntity.job("move"))(selectedEntity,lastPos));
-            if(false)
-              if(selectedEntity && selectedEntity.setLlJob) 
-                selectedEntity.setLlJob( new (selectedEntity.job("move"))(selectedEntity,lastPos));
+            if(selectedEntity && selectedEntity.pushJob) 
+              selectedEntity.pushJob(new MlMoveJob(selectedEntity,lastPos)); // new (selectedEntity.job("move"))(selectedEntity,lastPos));
           }
         },
         move:function(d) {

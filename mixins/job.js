@@ -11,12 +11,12 @@ define(["mixins/lljobs/rest"],function(LlRestJob) {
       while(delta>0 && this.jobs.length>0) {
         var job=this.jobs[this.jobs.length-1];
         delta=job.onFrame(delta);
-        if(delta>=0)
+        if(job.ready)
           this.jobs.pop();
       }
       if(delta>0) {
-        if(this.onNoLlJob) {
-          this.onNoLlJob(delta);
+        if(this.onNoJob) {
+          this.onNoJob(delta);
         }
       }
     } ,

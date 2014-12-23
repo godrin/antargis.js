@@ -16,7 +16,7 @@ define([],function() {
       mixins:["boss"]
     },
     hero: {
-      mixins: ["boss", "hero", "lljob", "mljob"]
+      mixins: ["boss", "hero", "job"]
     },
     tower: {
       mixins:["boss"]
@@ -56,7 +56,7 @@ define([],function() {
           animation:"axe"
         }
       },
-      mixins:["lljob", "mljob", "follower"]
+      mixins:["job", "follower"]
     },
     fir: {
       resources: {

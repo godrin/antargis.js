@@ -1,6 +1,7 @@
 define([],function() {
   return {
-    onNoMlJob:function() {
+    onNoJob:function() {
+    console.log("NOJOB");
       if(!this.boss)
         if(this.world.search) {
           var f=this.world.search({mixinNames:"boss"},this.pos);
