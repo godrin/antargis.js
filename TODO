@@ -1,2 +1,64 @@
 to check:
 https://github.com/ashima/webgl-noise
+
+
+many meshes:
+  function createScene( geometry, materials ) {
+
+                buffalos = [];
+                animations = [];
+
+                var x, y,
+                    buffalo, animation,
+                    gridx = 25, gridz = 15,
+                    sepx  = 150, sepz = 300;
+
+                var material = new THREE.MeshFaceMaterial( materials );
+
+                var originalMaterial = materials[ 0 ];
+
+                originalMaterial.skinning = true;
+                originalMaterial.transparent = true;
+                originalMaterial.alphaTest = 0.75;
+
+                THREE.AnimationHandler.add( geometry.animation );
+
+                for( x = 0; x < gridx; x ++ ) {
+
+                    for( z = 0; z < gridz; z ++ ) {
+
+                        buffalo = new THREE.SkinnedMesh( geometry,
+                                material, false );
+
+                        buffalo.position.x = - ( gridx - 1 ) * sepx * 0.5 + x * sepx + Math.random() * 0.5 * sepx;
+                        buffalo.position.z = - ( gridz - 1 ) * sepz * 0.5 + z * sepz + Math.random() * 0.5 * sepz - 500;
+
+                        buffalo.position.y = buffalo.geometry.boundingSphere.radius * 0.5;
+                        buffalo.rotation.y = 0.2 - Math.random() * 0.4;
+
+                        scene.add( buffalo );
+
+                        buffalos.push( buffalo );
+
+                        animation = new THREE.Animation( buffalo, "take_001" );
+                        animations.push( animation );
+
+                        offset.push( Math.random() );
+
+                    }
+from http://chimera.labs.oreilly.com/books/1234000000802/ch05.html#animating_characters_with_skinning
+
+
+      function startAnimation() {
+
+                for( var i = 0; i < animations.length; i ++ ) {
+
+                    animations[ i ].offset = 0.05 * Math.random();
+                    animations[ i ].play();
+
+                }
+
+                dz = dstep;
+                playback = true;
+
+            }
