@@ -29,6 +29,44 @@ define([],function() {
       mesh:"tower",
       scale:1.8,
     },
+    man_pick: {
+      mesh:"man_pick",
+      texture:"man_fight.png",
+      scale:0.07,
+      type:"json",
+      animations: {
+        "pick": {
+          timeScale:45,
+          startFrame:1,
+          endFrame:48,
+          "events": [ 
+            {
+              time:35,
+              name:"pick"
+            }
+          ]
+        }
+      }
+    },
+    man_axe: {
+      mesh:"man_axe",
+      texture:"man_fight.png",
+      scale:0.07,
+      type:"json",
+      animations: {
+        "pick": {
+          timeScale:40,
+          startFrame:1,
+          endFrame:35,
+          "events": [ 
+            {
+              time:27,
+              name:"pick"
+            }
+          ]
+        }
+      }
+    },
     man_e_walk: {
       mesh:"man_e_walk",
       scale:0.07,
@@ -38,7 +76,8 @@ define([],function() {
         "sit": {
           timeScale:30,
           startFrame:20,
-          endFrame:20
+          endFrame:20,
+          animate:false
         },
         "sitdown": {
           timeScale:25,
