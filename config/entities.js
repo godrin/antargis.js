@@ -46,6 +46,14 @@ define([],function() {
         "fight": {
           mesh:"man_fight",
           animation:"fight"
+        },
+        "pick": {
+          mesh:"man_pick",
+          animation:"pick"
+        },
+        "axe": {
+          mesh:"man_axe",
+          animation:"axe"
         }
       },
       mixins:["lljob", "mljob", "follower"]
