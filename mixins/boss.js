@@ -1,24 +1,20 @@
 define(["mixins/formations/rest.js", "angle",
   "mixins/mljobs/rest",
   "mixins/mljobs/move",
+  "mixins/hljobs/rest"
   ],function(RestFormation, Angle,
     MlRestJob,
-    MlMoveJob
+    MlMoveJob,
+    HlRestJob
   ) {
     return {
       followers:[],
-      formation:new RestFormation(),
       assignMeJob:function(e) {
-        console.log("FORM",this.formation);
-        var newPos=this.formation.getPos(this,e);
+        if(!this.hljob)
+          this.hljob=new HlRestJob(this,10,false);
 
-        console.log("ASSIGN ME JOB");
-        if(e.pos.distanceTo(newPos)>0.1)
-          e.pushJob(new MlMoveJob(e,newPos)); //newMlJob("move",newPos);
-        else {
-          console.log("NEW REST!");
-          var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.pos,e.pos));
-          e.pushJob(new MlRestJob(e,5,dir)); //newMlJob("rest",5, dir);
+        if(this.hljob) {
+          this.hljob.assignMeJob(e);
         }
       },
       addFollower:function(follower) {
