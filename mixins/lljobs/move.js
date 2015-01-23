@@ -2,7 +2,7 @@ define(["angle"],function(Angle) {
  
   var Job=function(entity, pos, distance) {
     this.entity=entity;
-    this.speed=entity.speed||3;
+    this.speed=entity.speed||1;
     this.lltargetPos=pos;
     this.distance=distance||0;
   };
@@ -30,6 +30,7 @@ define(["angle"],function(Angle) {
 
       e.updateMeshPos();
     } else {
+      console.log("ERROR: no lltargetpos defined");
 
     }
     return -1;

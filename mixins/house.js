@@ -1,21 +1,52 @@
-define(["mixins/mljobs/fetch.js"],function(MlFetchJob) {
+define(["mixins/hljobs/fetch.js"],function(HlFetchJob) {
   return {
     needed:{
       wood:5,
-      stone:5
+      stone:5,
+      water:50,
     },
     resourcesNeeded:function() {
       var self=this;
-      var needed=_.map(this.needed,function(v,k) {
-        return v-self.resources[k];
+      var currentlyNeeded=[];
+      _.each(this.needed,function(v,k) {
+      console.log("NEEDED",v,k,self.resources);
+        var times=v-(self.resources[k]||0);
+        if(times>0) {
+          _.times(times,function() {
+            currentlyNeeded.push(k);
+          });
+        }
       });
-      console.log("NEEDED",needed);
+      console.log("NEEDED",currentlyNeeded);
+      return currentlyNeeded;
     },
 
-    assignMeJob:function(e) {
 
+    ai:function() {
+
+      var needed=_.shuffle(this.resourcesNeeded());
+
+      if(needed.length>0) {
+
+        var selectedResource=needed[0];
+        var nextEntity=this.world.search(function(e) {
+        console.log("HAS RESOURCE",selectedResource,e,e.resources && e.resources[selectedResource]>0,e,e.resources);
+          return e.resources && e.resources[selectedResource]>0;
+        },this.pos);
+
+        if(nextEntity.length>0) {
+          nextEntity=nextEntity[0];
+          console.log("NEXT",this,selectedResource,nextEntity);
+
+          this.hljob=new HlFetchJob(this,selectedResource,nextEntity);
+        }
+      }
+
+
+
+      console.log("AI");
+      return;
       this.resourcesNeeded();
-
 
       console.log("FORM",this.formation);
       var newPos=this.formation.getPos(this,e);

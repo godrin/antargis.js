@@ -4,6 +4,7 @@ define(["mixins/lljobs/rest",
     var Job=function(entity, resource, targetEntity) {
       this.entity = entity;
       this.resource = resource;
+      this.amount = 1;
       this.targetEntity = targetEntity;
       this.fromPos = entity.pos;
       this.mode="gotoTarget";
@@ -27,13 +28,24 @@ define(["mixins/lljobs/rest",
       return true;
     };
 
+    Job.prototype.take=function() {
+      this.targetEntity.give(this.resource,this.amount,this.entity);
+    };
+
     Job.prototype.goBack=function() {
-      this.ready=true;
+      this.take();
       //FIXME: pick correct mesh
       this.entity.setMesh("walk");
       //this.entity.newLlJob("move",this.fromPos);
       this.entity.pushJob(new LlMoveJob(this.entity,this.fromPos));
+      this.mode="give";
       return true;
+    };
+
+    Job.prototype.give=function() {
+      this.ready=true;
+      if(this.entity.boss)
+        this.entity.give(this.resource,this.amount,this.entity.boss);
     };
 
     Job.prototype.onFrame=function(delta) {
@@ -44,8 +56,7 @@ define(["mixins/lljobs/rest",
       return delta;
     };
 
-  };
 
-  return Job;
-});
+    return Job;
+  });
 

@@ -9,7 +9,7 @@ define([],function() {
     var self=this;
     return _.chain(self.entities).filter(function(e) {
       if(param instanceof Function) {
-        alert("Implement me");
+        return param(e);
       } else {
         for(var name in param) {
           if(e[name] instanceof Array) {

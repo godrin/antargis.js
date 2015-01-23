@@ -76,5 +76,12 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   Entity.prototype.hovered=function() {
   };
 
+  Entity.prototype.give=function(what,amount,toEntity) {
+    if(this.resources[what]>=amount) {
+      this.resources[what]-=amount;
+      toEntity.resources[what]=(toEntity.resource[what]||0)+amount;
+    }
+  };
+
   return Entity;
 });

@@ -13,7 +13,7 @@ define([],function() {
       mixins:["boss"]
     },
     townhall: {
-      mixins:["boss"]
+      mixins:["boss","house"]
     },
     hero: {
       mixins: ["boss", "hero", "job"]
