@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgl - collada - blender</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+      body {
+        font-family: Monospace;
+        background-color: #000000;
+        margin: 0px;
+        overflow: hidden;
+      }
+
+      #info {
+        color: #fff;
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 100;
+        display:block;
+
+      }
+
+      a { color: red }
+
+      #stats { position: absolute; top:0; left: 0 }
+      #stats #fps { background: transparent !important }
+      #stats #fps #fpsText { color: #aaa !important }
+      #stats #fps #fpsGraph { display: none }
+    </style>
+  </head>
+
+  <body>
+    <div id="info">
+      <a href="http://threejs.org" target="_blank">three.js</a> -
+      monster by <a href="http://www.3drt.com/downloads.htm" target="_blank">3drt</a>
+    </div>
+
+    <script src="bower_components/threejs/build/three.js"></script>
+
+    <script src="threejs/examples/js/Detector.js"></script>
+    <script src="threejs/examples/js/libs/stats.min.js"></script>
+
+    <script>
+
+      if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+      var container, stats;
+
+      var camera, scene, renderer, objects;
+      var particleLight, pointLight;
+
+      var clock = new THREE.Clock();
+      var helper;
+
+      init();
+      animate();
+
+
+      function init() {
+
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000 );
+        camera.position.set( 2, 4, 5 );
+
+        scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2( 0x000000, 0.035 );
+
+        // Add Blender exported Collada model
+
+
+        function ensureLoop( animation ) {
+
+          for ( var i = 0; i < animation.hierarchy.length; i ++ ) {
+
+            var bone = animation.hierarchy[ i ];
+
+            var first = bone.keys[ 0 ];
+            var last = bone.keys[ bone.keys.length - 1 ];
+
+            last.pos = first.pos;
+            last.rot = first.rot;
+            last.scl = first.scl;
+
+          }
+
+        }
+
+
+        var loader = new THREE.JSONLoader();
+
+        var skins=[];
+        var name="threejs/examples/models/skinned/human_walk_0_female.js";
+        name="models/milkshape/max_axe.json";
+        name="models/man_axe.json";
+        loader.load(name , function ( geometry, materials ) {
+
+          console.log("GGG",geometry,materials);
+          geometry.computeVertexNormals();
+          geometry.computeBoundingBox();
+
+          ensureLoop( geometry.animation );
+          if(false)
+          for ( var i = 0, il = materials.length; i < il; i ++ ) {
+
+            var originalMaterial = materials[ i ];
+            console.log("MAT",originalMaterial);
+            originalMaterial.skinning = true;
+            if(false) {
+            originalMaterial.map = undefined;
+            //originalMaterial.depthWrite=false; //map = undefined;
+            originalMaterial.opacity=0.8;
+            originalMaterial.shading = THREE.SmoothShading;
+            originalMaterial.color.setHSL( 0.01, 0.3, 0.3 );
+            originalMaterial.ambient.copy( originalMaterial.color );
+            //originalMaterial.specular.setHSL( 0, 0, 0.1 );
+            originalMaterial.shininess = 75;
+
+            //originalMaterial.wrapAround = true;
+            //originalMaterial.wrapRGB.set( 1, 0.5, 0.5 );
+          }
+          }
+
+          var s = 1.5;
+          s=0.2;
+          s=1.0;
+          s=0.2;
+          var material = new THREE.MeshFaceMaterial( materials );
+          var mesh = new THREE.SkinnedMesh( geometry, material, false );
+          mesh.scale.set( s, s, s );
+
+          //mesh.rotation.y = Math.PI/2;
+          //    mesh.userData.delta = 25;
+
+          //mesh.visible=false;
+          skins.push( mesh );
+          helper = new THREE.SkeletonHelper( mesh );
+          helper.material.linewidth = 3;
+          helper.visible = true;
+          scene.add( helper );
+          scene.add( mesh );
+          if(true) {
+            animation = new THREE.Animation( mesh, geometry.animation );
+            animation.play();
+            animation.update( 0 );
+          }
+        } );
+
+
+        // Lights
+
+        scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+        pointLight = new THREE.PointLight( 0xff4400, 5, 30 );
+        pointLight.position.set( 5, 0, 0 );
+        scene.add( pointLight );
+
+        // Renderer
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        container.appendChild( renderer.domElement );
+
+        // Stats
+
+        stats = new Stats();
+        container.appendChild( stats.domElement );
+
+        // Events
+
+        window.addEventListener( 'resize', onWindowResize, false );
+
+      }
+
+      //
+
+      function onWindowResize( event ) {
+
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+      }
+
+      //
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+
+        var delta = clock.getDelta();
+
+        // animate Collada model
+
+        THREE.AnimationHandler.update( delta );
+
+        if ( helper !== undefined ) 
+        helper.update();
+        render();
+        stats.update();
+
+      }
+
+      function render() {
+
+        var timer = Date.now() * 0.0005;
+        var dist=10;
+
+        camera.position.x = Math.cos( timer ) * dist;
+        camera.position.y = 4;
+        camera.position.z = Math.sin( timer ) * dist;
+
+        camera.lookAt( scene.position );
+
+        renderer.render( scene, camera );
+
+      }
+
+    </script>
+  </body>
+</html>

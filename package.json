@@ -8,5 +8,9 @@
   },
   "repository": "",
   "author": "",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "gulp": "~3.8.10",
+    "main-bower-files": "~2.5.0"
+  }
 }

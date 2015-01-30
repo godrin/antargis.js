@@ -1,4 +1,4 @@
-define(['bower_components/THREE.Terrain/src/THREE.Terrain.js',"heightmap"],function(TT,HeightMap) {
+define(['js/libs/THREE.Terrain.min.js',"heightmap"],function(TT,HeightMap) {
   return {
 
     createTerrain: function(options,scene, material,heightmap) {

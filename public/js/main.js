@@ -1,3 +1,11 @@
+requirejs.config({
+  baseUrl:"js",
+  packages:[
+  "mixins/mljobs",
+  'js/mixins/formations'
+  ]
+});
+
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
 'mixins/mljobs/move'],
   function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World,
