@@ -1,15 +1,17 @@
 requirejs.config({
   baseUrl:"js",
   packages:[
-  "mixins/mljobs",
-  'js/mixins/formations'
-  ]
+  'jobs',
+  'formations',
+  'll',
+  'ml',
+  'hl'
+  ],
 });
 
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
-'mixins/mljobs/move'],
-  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World,
-  MlMoveJob) {
+'jobs'],
+  function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs) {
     // Our Javascript will go here.
     Base.init();
 

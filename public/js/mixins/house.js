@@ -1,4 +1,4 @@
-define(["mixins/hljobs/fetch.js"],function(HlFetchJob) {
+define(["jobs"],function(Jobs) {
   return {
     needed:{
       wood:5,
@@ -38,7 +38,7 @@ define(["mixins/hljobs/fetch.js"],function(HlFetchJob) {
           nextEntity=nextEntity[0];
           console.log("NEXT",this,selectedResource,nextEntity);
 
-          this.hljob=new HlFetchJob(this,selectedResource,nextEntity);
+          this.hljob=new Jobs.hl.Fetch(this,selectedResource,nextEntity);
         }
       }
 

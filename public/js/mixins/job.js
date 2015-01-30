@@ -1,4 +1,4 @@
-define(["mixins/lljobs/rest"],function(LlRestJob) {
+define(["jobs"],function(Jobs) {
   return {
     jobs:[], 
     pushJob:function(job) {
@@ -22,7 +22,7 @@ define(["mixins/lljobs/rest"],function(LlRestJob) {
     } ,
     playAnimation:function(name) {
       this.resetJobs();
-      this.pushJob(new LlRestJob(this,20));
+      this.pushJob(new Jobs.ll.Rest(this,20));
       this.setMesh(name);
     },
     animationFinished:function() {

@@ -1,4 +1,4 @@
-define(["mixins/formations/base.js"],function(Base) {
+define(["formations/base"],function(Base) {
 
   var nullForm=function() {
     Base.apply(this,arguments);

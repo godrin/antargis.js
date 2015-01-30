@@ -1,11 +1,7 @@
-define(["mixins/formations/rest.js", "angle",
-  "mixins/mljobs/rest",
-  "mixins/mljobs/move",
-  "mixins/hljobs/rest"
-  ],function(RestFormation, Angle,
-    MlRestJob,
-    MlMoveJob,
-    HlRestJob
+define(["formations", "angle",
+  "jobs",
+  ],function(Formations, Angle,
+    Jobs
   ) {
     return {
       followers:[],
@@ -15,7 +11,7 @@ define(["mixins/formations/rest.js", "angle",
           if(this.ai)
             this.ai();
           if(!this.hljob) 
-            this.hljob=new HlRestJob(this,10,false);
+            this.hljob=new Jobs.hl.Rest(this,10,false);
         }
 
         if(this.hljob) {

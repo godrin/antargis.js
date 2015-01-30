@@ -1,4 +1,4 @@
-define(["mixins/lljobs/move"],function(LlJobMove) {
+define(["ll"],function(ll) {
   var Job=function(entity, pos) {
     this.entity=entity;
     this.mltargetPos=pos;
@@ -10,7 +10,7 @@ define(["mixins/lljobs/move"],function(LlJobMove) {
     } else {
       this.entity.setMesh("walk");
       console.log("E",this.entity);
-      this.entity.pushJob(new LlJobMove(this.entity,this.mltargetPos));
+      this.entity.pushJob(new ll.Move(this.entity,this.mltargetPos));
     }
     return delta;
   };

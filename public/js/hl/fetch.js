@@ -1,4 +1,4 @@
-define(["mixins/mljobs/fetch"],function(MLFetchJob) {
+define(["ml"],function(ml) {
   var Job=function(entity) {
     this.entity = entity;
   };

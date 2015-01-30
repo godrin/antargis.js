@@ -1,4 +1,4 @@
-define(["mixins/formations/base.js"],function(Base) {
+define(["formations/base"],function(Base) {
 
   var lines=[10,14,20,40,100];
 

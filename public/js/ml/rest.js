@@ -1,4 +1,4 @@
-define(["mixins/lljobs/rest"],function(LlRestJob) {
+define(["ll"],function(ll) {
   var Job=function(entity, length, direction) {
     this.entity = entity;
     this.length = length;
@@ -15,7 +15,7 @@ define(["mixins/lljobs/rest"],function(LlRestJob) {
       this.entity.playAnimation("sitdown");
     } else if(!this.done){
       this.entity.setMesh("sit");
-      this.entity.pushJob(new LlRestJob(this.entity,this.length));
+      this.entity.pushJob(new ll.Rest(this.entity,this.length));
       this.done=true
     } else {
       this.ready=true;

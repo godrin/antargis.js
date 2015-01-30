@@ -1,13 +1,9 @@
-define(["mixins/formations/rest.js",
-  "mixins/formations/null.js",
+define(["formations",
   "angle",
-  "mixins/mljobs/rest",
-  "mixins/mljobs/move",
-  ],function(RestFormation, 
-    NullFormation,
+  "ml"
+  ],function(Formations, 
     Angle,
-    MlRestJob,
-    MlMoveJob
+    ml
   ) {
     var Job=function(entity, length, formatted) {
       this.entity = entity;
@@ -15,19 +11,19 @@ define(["mixins/formations/rest.js",
       this.done=false;
       console.log("SITPOS",formatted);
       if(formatted)
-        this.formation=new RestFormation();
+        this.formation=new Formations.Rest();
       else
-        this.formation=new NullFormation();
+        this.formation=new Formations.Null();
     };
     Job.prototype.assignMeJob=function(e) {
       var newPos=this.formation.getPos(this.entity,e);
       console.log("SITPOS",newPos,this.entity.pos);
       if(e.pos.distanceTo(newPos)>0.1)
-        e.pushJob(new MlMoveJob(e,newPos));
+        e.pushJob(new ml.Move(e,newPos));
       else {
         console.log("NEW REST!");
         var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.entity.pos,e.pos));
-        e.pushJob(new MlRestJob(e,5,dir)); //newMlJob("rest",5, dir);
+        e.pushJob(new ml.Rest(e,5,dir)); //newMlJob("rest",5, dir);
       }
     };
     Job.prototype.onFrame=function(delta) {
@@ -39,7 +35,7 @@ define(["mixins/formations/rest.js",
         _.each(this.entity.followers,function(e) {
           self.assignMeJob(e);
         });
-        this.entity.pushJob(new MlRestJob(e,5,dir));
+        this.entity.pushJob(new ml.Rest(e,5,dir));
       }
     };
     return Job;

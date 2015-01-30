@@ -1,6 +1,5 @@
-define(["mixins/lljobs/rest",
-  "mixins/lljobs/move"
-  ],function(LlRestJob,LlMoveJob) {
+define(["ll"
+  ],function(ll) {
     var Job=function(entity, resource, targetEntity) {
       this.entity = entity;
       this.resource = resource;
@@ -16,14 +15,14 @@ define(["mixins/lljobs/rest",
         return false;
       } else {
         this.entity.setMesh("walk");
-        this.entity.pushJob(new LlMoveJob(this.entity,this.mltargetPos,0.5));
+        this.entity.pushJob(new ll.Move(this.entity,this.mltargetPos,0.5));
         return true;
       }
     };
     Job.prototype.collectThings=function() {
       // FIXME: select pick or axe or nothing depending on resource
       this.entity.setMesh("pick");
-      this.entity.pushJob(new LlRestJob(this.entity,3)); //newLlJob("rest",3);
+      this.entity.pushJob(new ll.Rest(this.entity,3)); //newLlJob("rest",3);
       this.mode="goback";
       return true;
     };
@@ -37,7 +36,7 @@ define(["mixins/lljobs/rest",
       //FIXME: pick correct mesh
       this.entity.setMesh("walk");
       //this.entity.newLlJob("move",this.fromPos);
-      this.entity.pushJob(new LlMoveJob(this.entity,this.fromPos));
+      this.entity.pushJob(new ll.Move(this.entity,this.fromPos));
       this.mode="give";
       return true;
     };

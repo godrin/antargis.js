@@ -51,10 +51,10 @@ define(['js/libs/THREE.Terrain.min.js',"heightmap"],function(TT,HeightMap) {
     create:function(options,scene,heightmap) {
       var that=this;
       console.log("TERRAIN create");
-      THREE.ImageUtils.loadTexture('bower_components/THREE.Terrain/demo/img/sand1.jpg', undefined, function(t1) {
-        THREE.ImageUtils.loadTexture('bower_components/THREE.Terrain/demo/img/grass1.jpg', undefined, function(t2) {
-          THREE.ImageUtils.loadTexture('bower_components/THREE.Terrain/demo/img/stone1.jpg', undefined, function(t3) {
-            THREE.ImageUtils.loadTexture('bower_components/THREE.Terrain/demo/img/snow1.jpg', undefined, function(t4) {
+      THREE.ImageUtils.loadTexture('models/sand1.jpg', undefined, function(t1) {
+        THREE.ImageUtils.loadTexture('models/grass1.jpg', undefined, function(t2) {
+          THREE.ImageUtils.loadTexture('models/stone1.jpg', undefined, function(t3) {
+            THREE.ImageUtils.loadTexture('models/snow1.jpg', undefined, function(t4) {
               blend = THREE.Terrain.generateBlendedMaterial([
                 {texture: t1},
                 {texture: t2, levels: [-80, -35, 20, 50]},
