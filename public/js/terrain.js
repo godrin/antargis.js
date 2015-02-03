@@ -42,6 +42,7 @@ define(['js/libs/THREE.Terrain.min.js',"heightmap"],function(TT,HeightMap) {
         //terrainScene.rotation.z=3.1415;
         terrainScene.position.x+=options.width/2;
         terrainScene.position.y+=options.width/2;
+
         console.log("TS",terrainScene);
         // Assuming you already have your global scene
         scene.add(terrainScene);

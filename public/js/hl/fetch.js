@@ -4,7 +4,8 @@ define(["ml"],function(ml) {
   };
 
   Job.prototype.assignMeJob=function(e) {
-    console.log("ASSIGN FETCH MLJOB");
+    console.log("ASSIGN FETCH MLJOB",e);
+    e.pushJob(new ml.Rest(e,5,0));
   };
 
   Job.prototype.onFrame=function(delta) {
