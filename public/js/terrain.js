@@ -1,4 +1,4 @@
-define(['js/THREE.Terrain.js',"heightmap"],function(TT,HeightMap) {
+define(['js/libs/THREE.Terrain.js',"heightmap"],function(TT,HeightMap) {
   return {
 
     createTerrain: function(options,scene, material,heightmap) {
@@ -27,8 +27,10 @@ define(['js/THREE.Terrain.js',"heightmap"],function(TT,HeightMap) {
           heightmap: heightmap, 
           //after: heightmap, 
           material: material||new THREE.MeshBasicMaterial({color: 0x5566aa}),
-          maxHeight: 100,
-          minHeight: -100,
+//          maxHeight: 100,
+//          minHeight: -100,
+//minHeight:0,//undefined,
+//maxHeight:10, //undefined,
           steps: 1,
           useBufferGeometry: false,
           xSegments: xS,
