@@ -53,6 +53,7 @@ define([],function() {
       texture:"man_fight.png",
       scale:0.07,
       type:"json",
+      rotation: { x: 3.14*0.5 },
       animations: {
         "pick": {
           timeScale:40,

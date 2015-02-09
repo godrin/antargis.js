@@ -5,6 +5,9 @@ define(["formations", "angle",
   ) {
     return {
       followers:[],
+      pushHlJob:function(job) {
+        this.hljob=job;
+      },
       assignMeJob:function(e) {
         if(!this.hljob) {
         console.log("AIIII",this);

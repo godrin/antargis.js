@@ -37,7 +37,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     }
   };
   Entity.prototype.setMesh=function(name){
-
+//console.log("setMesh",name,this);
 
     var self=this;
     var entity=this.type;
@@ -79,7 +79,8 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   Entity.prototype.give=function(what,amount,toEntity) {
     if(this.resources[what]>=amount) {
       this.resources[what]-=amount;
-      toEntity.resources[what]=(toEntity.resource[what]||0)+amount;
+      console.log("GIVE TO",toEntity,what);
+      toEntity.resources[what]=(toEntity.resources[what]||0)+amount;
     }
   };
 

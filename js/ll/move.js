@@ -5,6 +5,7 @@ define(["angle"],function(Angle) {
     this.speed=entity.speed||1;
     this.lltargetPos=pos;
     this.distance=distance||0;
+    console.log("JOB SPEED",this.speed);
   };
 
   Job.prototype.onFrame=function(delta) {
@@ -17,7 +18,9 @@ define(["angle"],function(Angle) {
       distance-=this.distance;
 
       if(distance<togo) {
-        e.pos=this.lltargetPos;
+        if(this.distance>0)
+          e.pos=new THREE.Vector2().copy(this.lltargetPos).add(new THREE.Vector2().subVectors(this.lltargetPos,e.pos).setLength(-this.distance));
+        //        e.pos=this.lltargetPos;
         delete this.lltargetPos;
         this.ready=true;
         // return rest time

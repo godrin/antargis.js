@@ -19,7 +19,7 @@ define([],function() {
       mixins: ["boss", "hero", "job"]
     },
     tower: {
-      mixins:["boss"]
+      mixins:["boss", "job"]
     },
     man: {
       meshes:{

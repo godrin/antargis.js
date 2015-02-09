@@ -1,27 +1,6 @@
 define(["entity"],function(Entity) {
-
-  var def=[
-
-    {type:"big_stone",pos:{x:10,y:6}},
-    {type:"fir",pos:{x:20,y:3}},
-    {type:"fishing_hut",pos:{x:20,y:10}},
-    {type:"townhall",pos:{x:9,y:3}},
-    {type:"well",pos:{x:5,y:3}},
-    {type:"tower",pos:{x:4,y:7}},
-//    {type:"hero",pos:{x:3,y:3}},
-    {type:"man",pos:{x:1,y:1}}, 
-    {type:"sheep",pos:{x:3,y:5}}, 
-    {type:"man",pos:{x:3,y:0}}
-  ];
-
-  if(false) {
-    for(var i=0;i<10;i++) {
-      def.push(
-      {type:"man",pos:{x:1,y:1}});
-    }
-  }
-
-  var Level=function(scene, map, world) {
+  var Level=function(def, scene, map, world) {
+    console.log("DEF",def, typeof(def));
     this.scene=scene;
     this.map=map;
 
@@ -32,6 +11,16 @@ define(["entity"],function(Entity) {
       world.push(entity);
     });
   };
+
+  return {
+    Level:Level,
+    load:function(file,scene,map,world,callback) {
+      $.get("levels/"+file,function(def) {
+        def=eval(def);
+        callback(new Level(def,scene,map,world));
+      });
+    }
+  }
 
   return Level;
 });

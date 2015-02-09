@@ -1,9 +1,10 @@
 define(["jobs"],function(Jobs) {
   return {
     needed:{
-      wood:5,
-      stone:5,
-      water:50,
+      wood:1,
+      stone:1,
+      water:1,
+      food:1
     },
     resourcesNeeded:function() {
       var self=this;
@@ -24,22 +25,12 @@ define(["jobs"],function(Jobs) {
 
     ai:function() {
 
-      var needed=_.shuffle(this.resourcesNeeded());
+      var needed=this.resourcesNeeded();
 
       if(needed.length>0) {
-
-        var selectedResource=needed[0];
-        var nextEntity=this.world.search(function(e) {
-        console.log("HAS RESOURCE",selectedResource,e,e.resources && e.resources[selectedResource]>0,e,e.resources);
-          return e.resources && e.resources[selectedResource]>0;
-        },this.pos);
-
-        if(nextEntity.length>0) {
-          nextEntity=nextEntity[0];
-          console.log("NEXT",this,selectedResource,nextEntity);
-
-          this.hljob=new Jobs.hl.Fetch(this,selectedResource,nextEntity);
-        }
+      console.log("JOBS",Jobs);
+        this.pushHlJob(new Jobs.hl.Fetch(this));
+        return;
       }
 
 
