@@ -32,6 +32,12 @@ define([],function() {
         lastTime = time;
 
         var delta =  clock.getDelta();
+        var mydelta=timeDiff*0.001;
+//        delta=timeDiff*0.001;
+        //console.log("DELTA",delta,mydelta); //timeDiff*0.001, delta/(timeDiff*0.001));
+        // use "Date" clock
+        if(true)
+        delta=mydelta;
         if(options && options.frameCallback)
           options.frameCallback(delta);
 

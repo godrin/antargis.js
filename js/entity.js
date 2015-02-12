@@ -2,17 +2,27 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
   var uid=11110;
 
-  var Entity=function(name,pos,scene,heightmap) {
-    var entity=Entities[name];
+  var Entity=function(scene,heightmap,ops) {
+    var entity=Entities[ops.type];
+    if(!entity) {
+      console.warn("No Entity-Type named "+ops.type+" found!");
+      entity={};
+    }
+
     _.extend(this,entity);
+    _.extend(this,ops);
     var self=this;
     self.scene=scene;
-    this.name=name;
-    this.pos=new THREE.Vector2().copy(pos);
+    this.name=this.type;
+    console.log("MAKE ENT",this,ops,entity);
+    this.pos=new THREE.Vector2(this.pos.x,this.pos.y); //.copy(this.pos);
     this.uid=uid++;
     this.map=heightmap;
-    this.resources=_.extend({},entity.resources);
+    // clone
+    this.resources=_.extend({},this.resources);
     this.type=entity;
+    if(!this.meshName)
+      this.meshName="default";
 
     if(entity.mixins) {
       self.mixins={};
@@ -26,7 +36,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
         }
       });
     }
-    this.setMesh("default");
+    this.setMesh(this.meshName);
   };
 
   Entity.prototype.updateMeshPos=function() {
@@ -47,6 +57,8 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
     if(entity.meshes) {
       var def=entity.meshes[name];
+      if(!def)
+        console.warn("No Mesh of name '"+name+"' found in entity-def",entity);
       meshType=def.mesh;
       animation=def.animation;
     } else if(entity.mesh)

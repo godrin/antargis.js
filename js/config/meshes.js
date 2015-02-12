@@ -4,26 +4,56 @@ define([],function() {
       mesh:'bakery',
       rotation: { z: -3.14*1/8}
     },
-    mill: {
-      mesh:'mill',
-      scale:1
+    big_stone: {
+      mesh:'big_stone',
+      scale:1,
     },
-    well: {
-      mesh:'well',
-      scale:0.03,
+    crop_small: {
+      transparent:true,
+      scale:2.2
+    },
+    crop_med: {
+      transparent:true,
+      scale:2.2
+    },
+    crop_high: {
+      transparent:true,
+      scale:2.2
+    },
+    crop_tiny: {
+      transparent:true,
+      //doublesided:true,
+      scale:2.2
+    },
+    farm: {
+      mesh:'farm',
+      scale:0.1,
+      rotation: { z: -0.6}
     },
     fishing_hut: {
       mesh:"fishing_hut",
       rotation: { z: 3.14*1/8},
       scale:1.5
     },
-    townhall: {
-      mesh:"townhall_try2",
-      rotation: { z: 3.14*6/4+3.14 },
+    grave: {
+      mesh:"grave",
+      scale:0.2
     },
     hero: {
       mesh:"hero_lp",
       scale: 0.08,
+    },
+    mine: {
+      mesh:'mine2',
+      scale:0.08
+    },
+    mill: {
+      mesh:'mill',
+      scale:1
+    },
+    townhall: {
+      mesh:"townhall_try2",
+      rotation: { z: 3.14*6/4+3.14 },
     },
     tower: {
       mesh:"tower",
@@ -142,10 +172,6 @@ define([],function() {
       scale:0.2,
       doublesided:true
     },
-    big_stone: {
-      mesh:'big_stone',
-      scale:1,
-    },
     sheep: {
       scale:0.15,
       type:"json",
@@ -172,6 +198,10 @@ define([],function() {
           endFrame:100
         }
       }
+    },
+    well: {
+      mesh:'well',
+      scale:0.03,
     }
   };
 });

@@ -42,6 +42,8 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
     Terrain.create(mapOptions,scene,threeHeightMap);
 
     var levelName=location.hash.replace(/^#/,'');
+    if(!levelName)
+    levelName="tests/fetch.js";
 
     console.log("level",levelName);
 
@@ -97,6 +99,7 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
       });
       Base.render({
         frameCallback:function(delta) {
+        //console.log("DELTA",delta);
           _.each(world.entities,function(e) {
             if(e && e.onFrame)
               e.onFrame(delta);

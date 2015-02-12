@@ -2,7 +2,22 @@ define([],function() {
   return {
     bakery: {
     },
+    crop: {
+    meshName:"tiny",
+      meshes: {
+        "high": { mesh: "crop_high" },
+        "med": { mesh: "crop_med" },
+        "small": { mesh: "crop_small" },
+        "tiny": { mesh: "crop_tiny" }
+      }
+    },
     mill: {
+    },
+    mine: {
+    },
+    farm: {
+    },
+    grave: {
     },
     well: {
       resources: {
@@ -13,6 +28,12 @@ define([],function() {
       mixins:["boss"]
     },
     townhall: {
+      needed:{
+        wood:1,
+        stone:1,
+        water:1,
+        food:1
+      },
       mixins:["boss","house"]
     },
     hero: {

@@ -31,6 +31,9 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
     load:function(mesh, animation, entity, scene, callback) {
       var meshDef=Meshes[mesh];
+      if(!meshDef) {
+      console.warn("No Mesh defined for name '"+mesh+"'");
+      }
       var loadfct=(meshDef.type=="json")?"loadJSON":"loadObj";
 
       this[loadfct](mesh, animation, function(objects) {

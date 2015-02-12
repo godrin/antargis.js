@@ -6,7 +6,7 @@ define(["entity"],function(Entity) {
 
     _.each(def,function(entityDef) {
       console.log(entityDef);
-      var entity=new Entity(entityDef.type,entityDef.pos,scene,map);
+      var entity=new Entity(scene,map, entityDef);
       entity.world=world;
       world.push(entity);
     });

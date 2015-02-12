@@ -33,11 +33,7 @@ define(["ml"],function(ml) {
 
   Job.prototype.onFrame=function(delta) {
     console.log("FIXME hljob-fetch-onframe");
-
-
   };
 
   return Job;
-
-
 });
