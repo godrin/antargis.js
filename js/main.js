@@ -10,8 +10,8 @@ requirejs.config({
 });
 
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
-'jobs'],
-function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs) {
+'jobs','gui'],
+function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs, Gui) {
   // Our Javascript will go here.
   Base.init();
 
@@ -43,7 +43,7 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
 
     var levelName=location.hash.replace(/^#/,'');
     if(!levelName)
-    levelName="tests/fetch.js";
+      levelName="tests/fetch.js";
 
     console.log("level",levelName);
 
@@ -99,7 +99,7 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
       });
       Base.render({
         frameCallback:function(delta) {
-        //console.log("DELTA",delta);
+          //console.log("DELTA",delta);
           _.each(world.entities,function(e) {
             if(e && e.onFrame)
               e.onFrame(delta);
