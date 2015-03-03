@@ -1,0 +1,8 @@
+<!--
+<select ng-model="curlevel" ng-options="level.file as level.name for level in levels" ng-click="change()"></select>
+-->
+<ul>
+  <li ng-repeat="level in levels">
+  <a href='#{{level.file}}'>{{level.name}}</a>
+  </li>
+</ul>

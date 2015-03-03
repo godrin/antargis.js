@@ -1,0 +1,4 @@
+[
+{ "name": "Entities", "file": "tests/entities.js"},
+{ "name": "fetchTest", "file":"tests/fetch.js" }
+]
