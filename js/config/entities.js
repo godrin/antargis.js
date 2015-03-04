@@ -27,6 +27,22 @@ define([],function() {
     fishing_hut: {
       mixins:["boss"]
     },
+    workshop: {
+      needed:{
+        wood:1,
+        stone:1,
+        water:1,
+        food:1,
+        tool:10
+      },
+      production:{
+        tool: {
+          wood:1,
+          stone:1
+        }
+      },
+      mixins:["boss","house"]
+    },
     townhall: {
       needed:{
         wood:1,

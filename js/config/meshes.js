@@ -202,6 +202,11 @@ define([],function() {
     well: {
       mesh:'well',
       scale:0.03,
+    },
+    workshop: {
+      mesh:'workshop',
+      scale:0.18,
+      rotation:{ z:-50*3.14/180 }
     }
   };
 });
