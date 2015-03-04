@@ -1,5 +1,6 @@
 define(["jobs"],function(Jobs) {
   return {
+    // FIXME: maybe move this to other mixin/class - may be used by hero too 
     resourcesNeeded:function() {
       if(!this.needed)
         return [];

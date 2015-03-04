@@ -10,7 +10,7 @@ define(["formations", "angle",
       },
       assignMeJob:function(e) {
         if(!this.hljob) {
-        console.log("AIIII",this);
+          console.log("AIIII",this);
           if(this.ai)
             this.ai();
           if(!this.hljob) 

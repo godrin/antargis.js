@@ -4,7 +4,7 @@ define(["ml"],function(ml) {
   };
 
   Job.prototype.assignMeJob=function(e) {
-    console.log("ASSIGN FETCH MLJOB",e);
+    console.log("invent - ASSIGN FETCH MLJOB",e);
   };
 
   return Job;
