@@ -1,7 +1,10 @@
 define(["ll"],function(ll) {
-  var Job=function(entity, pos) {
+  var Job=function(entity, pos, meshType) {
     this.entity=entity;
     this.mltargetPos=pos;
+    if(!meshType)
+      meshType = "walk";
+    this.meshType = meshType;
   };
   Job.prototype.onFrame=function(delta) {
     var distance = this.mltargetPos.distanceTo(this.entity.pos);

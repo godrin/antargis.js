@@ -2,10 +2,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
   var uid=11110;
 
-  var Entity=function(scene,heightmap,ops) {
+  var Entity=function(scene, heightmap, ops) {
     var entity=Entities[ops.type];
     if(!entity) {
-      console.warn("No Entity-Type named "+ops.type+" found!");
+      console.warn("Entity: No Entity-Type named "+ops.type+" found!");
       entity={};
     }
 
@@ -14,7 +14,6 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     var self=this;
     self.scene=scene;
     this.name=this.type;
-    console.log("MAKE ENT",this,ops,entity);
     this.pos=new THREE.Vector2(this.pos.x,this.pos.y); //.copy(this.pos);
     this.uid=uid++;
     this.map=heightmap;
@@ -47,7 +46,6 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     }
   };
   Entity.prototype.setMesh=function(name){
-//console.log("setMesh",name,this);
 
     var self=this;
     var entity=this.type;
@@ -88,12 +86,26 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   Entity.prototype.hovered=function() {
   };
 
+  Entity.prototype.increaseBy = function(what, amount) {
+      this.resources[what]=(this.resources[what]||0)+amount;
+  };
+  
+  Entity.prototype.take=function(what,amount) {
+    if(this.resources[what]>=amount) {
+      this.resources[what]-=amount;
+      return true;
+    }
+    return false;
+  };
+
   Entity.prototype.give=function(what,amount,toEntity) {
     if(this.resources[what]>=amount) {
       this.resources[what]-=amount;
       console.log("GIVE TO",toEntity,what);
       toEntity.resources[what]=(toEntity.resources[what]||0)+amount;
+      return true;
     }
+    return false;
   };
 
   return Entity;

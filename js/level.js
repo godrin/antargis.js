@@ -1,13 +1,12 @@
 define(["entity"],function(Entity) {
   var Level=function(def, scene, map, world) {
-    console.log("DEF",def, typeof(def));
     this.scene=scene;
     this.map=map;
 
     _.each(def,function(entityDef) {
-      console.log(entityDef);
-      var entity=new Entity(scene,map, entityDef);
-      entity.world=world;
+      console.log("Level: create new entity from ",entityDef);
+      var entity=new Entity(scene, map, entityDef);
+      entity.world = world;
       world.push(entity);
     });
   };

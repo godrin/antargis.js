@@ -1,7 +1,8 @@
-define(["ml/fetch","ml/move","ml/rest"], function(fetch,move,rest) {
+define(["ml/fetch", "ml/invent", "ml/move", "ml/rest"], function(fetch, invent, move, rest) {
   return {
-    Fetch:fetch,
-    Move:move,
-    Rest:rest
+    Fetch: fetch,
+    Invent: invent,
+    Move: move,
+    Rest: rest
   };
 });

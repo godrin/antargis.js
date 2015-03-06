@@ -1,12 +1,35 @@
-define(["ml"],function(ml) {
-  var Job=function(entity) {
+define(["ml"],function(ml) { 
+  var HlInventJob=function(entity) {
     this.entity = entity;
   };
 
-  Job.prototype.assignMeJob=function(e) {
-    console.log("invent - ASSIGN FETCH MLJOB",e);
+  function producable(e, needed) {
+    var producable=_.filter(needed,function(resource) {
+      if(e.production) {
+        var ok=true;
+        var prereq = e.production[resource];
+        _.each(prereq,function(amount,res) {
+          if(e.resources[res]<amount)
+            ok=false;
+        });
+      }
+    });
+    console.log("invent - PRODUCABLE",producable);
+    if(producable.length>0) {
+      return _.sample(producable);
+    }
+    return false;
   };
 
-  return Job;
 
+  HlInventJob.prototype.assignMeJob=function(e) {
+    console.log("invent - ASSIGN FETCH MLJOB",e);
+    var res= producable(this.entity, this.entity.resourcesNeeded());
+    console.log("PRODS", res);
+    e.pushJob(new ml.Invent(e, res, this.entity));
+  };
+
+  HlInventJob.applyable = producable;
+
+  return HlInventJob;
 });
