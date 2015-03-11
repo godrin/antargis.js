@@ -32,7 +32,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
     load:function(mesh, animation, entity, scene, callback) {
       var meshDef=Meshes[mesh];
       if(!meshDef) {
-      console.warn("No Mesh defined for name '"+mesh+"'");
+        console.warn("No Mesh defined for name '"+mesh+"'");
       }
       var loadfct=(meshDef.type=="json")?"loadJSON":"loadObj";
 
@@ -41,6 +41,8 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           objects=[objects];
         }
 
+        // enclose mesh within scene-node, so that it can be rotated and there can be several meshes
+        // attached to one entity
         var node=new THREE.Object3D();
         _.each(objects,function(object) {
           _.extend(object.rotation, meshDef.rotation);
@@ -50,11 +52,10 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           if(meshDef.scale) 
             object.scale.set(meshDef.scale,meshDef.scale,meshDef.scale);
 
-          var ud={entity:self};
           if(object.children.length>0)
-            object.children[0].userData=ud;
+            object.children[0].userData.entity=entity;
 
-          object.userData=ud;
+          object.userData.entity=entity;
           node.add(object);
         });
         scene.add(node);

@@ -12,14 +12,16 @@ define([],function() {
     //
     // create a Ray with origin at the mouse position
     //   and direction into the scene (camera direction)
-    var vector = new THREE.Vector3( mouse.rx, mouse.ry, 0 );
-    var myvector = vector.clone().unproject( camera );
-    var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
-    raycaster.set( myvector, direction );
+    //
+    var vec=new THREE.Vector2();
+    vec.x = mouse.rx;
+    vec.y = mouse.ry;
+    raycaster.setFromCamera( vec,camera); 
 
     // create an array containing all objects in the scene with which the ray intersects
     // intersect recursive !!! 
-    return raycaster.intersectObjects( scene.children,true);
+    var result = raycaster.intersectObjects( scene.children,true);
+    return result;
   };
 
   return Pick;

@@ -25,6 +25,8 @@ define(["ll","ml/move"
       console.log("invent - ok",ok);
       if(ok) {
         this.entity.pushJob(new ll.Rest(this.entity, 3));
+        if(this.homeEntity.incSmoke)
+          this.homeEntity.incSmoke();
         this.mode = "productionFinished";
         return true;
       } else {
@@ -34,6 +36,8 @@ define(["ll","ml/move"
     };
     Job.prototype.productionFinished=function() {
       console.log("invent - productionFinished", this.resource, 1);
+      if(this.homeEntity.decSmoke)
+        this.homeEntity.decSmoke();
       this.homeEntity.increaseBy(this.resource, 1);
       this.ready = true;
     };

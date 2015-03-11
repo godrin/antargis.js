@@ -22,6 +22,14 @@ define([],function() {
     this.outerNode.position.z = z;
   };
 
+  Model.prototype.enableParticles = function(type) {
+    console.log("ENABLE",type);
+  };
+
+  Model.prototype.disableParticles = function(type) {
+    console.log("DISABLE",type);
+  };
+
   Model.prototype.remove=function() {
     // hook to remove animation-restarter-interval
     if(this.innerMeshes && this.innerMeshes.length>0) {
