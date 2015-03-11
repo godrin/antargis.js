@@ -51,6 +51,7 @@ define([],function() {
 
       self.particleGroup.addEmitter( emitter );
       self.scene.add( self.particleGroup.mesh );
+      self.scene.particleGroup = self.particleGroup;
 
     },
     setSize:function(size) {
