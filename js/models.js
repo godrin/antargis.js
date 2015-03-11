@@ -43,31 +43,9 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
         var node=new THREE.Object3D();
         _.each(objects,function(object) {
-          var rotation=meshDef.rotation;
-          if(rotation) {
-            if(rotation.x) {
-              object.rotation.x=rotation.x;
-            }
-            if(rotation.y) {
-              object.rotation.y=rotation.y;
-            }
-            if(rotation.z) {
-              object.rotation.z=rotation.z;
-            }
-          }
+          _.extend(object.rotation, meshDef.rotation);
           
-          var position=meshDef.position;
-          if(position) {
-            if(position.x) {
-              object.position.x=position.x;
-            }
-            if(position.y) {
-              object.position.y=position.y;
-            }
-            if(position.z) {
-              object.position.z=position.z;
-            }
-          }
+          _.extend(object.position, meshDef.position);
 
           if(meshDef.scale) 
             object.scale.set(meshDef.scale,meshDef.scale,meshDef.scale);
