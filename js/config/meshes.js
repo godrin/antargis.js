@@ -206,7 +206,15 @@ define([],function() {
     workshop: {
       mesh:'workshop',
       scale:0.18,
-      rotation:{ z:-50*3.14/180 }
+      rotation:{ z:-50*3.14/180 },
+      particles: {
+        smoke: {
+          position: { x: 0,
+            y:0,
+            z:0
+          }
+        }
+      }
     }
   };
 });
