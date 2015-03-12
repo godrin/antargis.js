@@ -9,8 +9,11 @@ define(["ml"],function(ml) {
         var ok=true;
         var prereq = e.production[resource];
         console.log("invent - rule",prereq,e.resources);
+        if(!prereq)
+          return false;
         _.each(prereq,function(amount,res) {
-          if(e.resources[res]<amount)
+        
+          if(!e.resources[res] || e.resources[res]<amount)
             ok=false;
         });
         if(ok)
@@ -26,9 +29,8 @@ define(["ml"],function(ml) {
 
 
   HlInventJob.prototype.assignMeJob=function(e) {
-    console.log("invent - ASSIGN FETCH MLJOB",e);
     var res= producable(this.entity, this.entity.resourcesNeeded());
-    console.log("PRODS", res);
+    console.log("invent - PRODS", res);
     if(res)
       e.pushJob(new ml.Invent(e, res, this.entity));
     else
