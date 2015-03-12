@@ -42,7 +42,7 @@ define([],function() {
           stone:1
         }
       },
-      mixins:["boss","house"]
+      mixins:["boss","house", "smoke"]
     },
     townhall: {
       needed:{

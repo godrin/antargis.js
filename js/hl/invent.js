@@ -29,7 +29,10 @@ define(["ml"],function(ml) {
     console.log("invent - ASSIGN FETCH MLJOB",e);
     var res= producable(this.entity, this.entity.resourcesNeeded());
     console.log("PRODS", res);
-    e.pushJob(new ml.Invent(e, res, this.entity));
+    if(res)
+      e.pushJob(new ml.Invent(e, res, this.entity));
+    else
+      this.entity.clearHlJob();
   };
 
   HlInventJob.applyable = producable;

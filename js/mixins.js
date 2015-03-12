@@ -3,7 +3,8 @@ var mixins=[
   "boss",
   "animal",
   "job",
-  "house"
+  "house",
+  "smoke"
 ];
 var paths=_.map(mixins,function(n) { return "mixins/"+n;});
 
