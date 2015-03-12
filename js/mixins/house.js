@@ -23,7 +23,7 @@ define(["jobs"],function(Jobs) {
       var needed=this.resourcesNeeded();
 
       if(needed.length>0) {
-
+console.log("CHECK APPLY",needed,this);
         if(Jobs.hl.Invent.applyable(this, needed)) {
           console.log("Applyable invent");
           this.pushHlJob(new Jobs.hl.Invent(this));

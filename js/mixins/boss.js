@@ -8,6 +8,9 @@ define(["formations", "angle",
       pushHlJob:function(job) {
         this.hljob=job;
       },
+      clearHlJob:function() {
+        delete this.hljob;
+      },
       assignMeJob:function(e) {
         if(!this.hljob) {
           console.log("AIIII",this);

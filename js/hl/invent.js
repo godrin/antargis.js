@@ -8,10 +8,13 @@ define(["ml"],function(ml) {
       if(e.production) {
         var ok=true;
         var prereq = e.production[resource];
+        console.log("invent - rule",prereq,e.resources);
         _.each(prereq,function(amount,res) {
           if(e.resources[res]<amount)
             ok=false;
         });
+        if(ok)
+          return true;
       }
     });
     console.log("invent - PRODUCABLE",producable);

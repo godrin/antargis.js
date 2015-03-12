@@ -20,6 +20,7 @@ define([],function() {
     grave: {
     },
     well: {
+      provides: [ "water" ],
       resources: {
         water:100
       }
@@ -96,6 +97,7 @@ define([],function() {
       mixins:["job", "follower"]
     },
     fir: {
+      provides: [ "wood" ],
       resources: {
         wood:5
       }
@@ -103,6 +105,7 @@ define([],function() {
     tree: {
     },
     big_stone: {
+      provides: [ "stone" ],
       resources: {
         stone:20
       }
