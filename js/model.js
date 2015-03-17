@@ -23,14 +23,20 @@ define(["base"],function(Base) {
   };
 
   Model.prototype.enableParticles = function(type) {
-    this.scene.particleGroup.addEmitter( Base.makeEmitter(new THREE.Vector3(0,0,0)));
+    if(!this.emitter) {
+      console.log("model - ENABLE");
+      var emitter = this.emitter = this.scene.particleGroup.getFromPool(); //addEmitter( Base.makeEmitter(new THREE.Vector3(0,0,0)));
+//      emitter.position.copy(this.position);
+      emitter.enable();
+    }
   };
 
   Model.prototype.disableParticles = function(type) {
-    console.log("DISABLE",type);
-    this.scene.particleGroup.removeEmitter( this.emitter );
-    delete this.emitter;
-
+    if(this.emitter) {
+      this.emitter.disable();
+      console.log("model - DISABLE",type);
+      delete this.emitter;
+    }
   };
 
   Model.prototype.remove=function() {

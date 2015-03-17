@@ -5,13 +5,14 @@ requirejs.config({
     'formations',
     'll',
     'ml',
-    'hl'
+    'hl',
+    'angular'
   ],
 });
 
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
-'jobs','gui'],
-function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs, Gui) {
+'jobs', 'angular'],
+function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs, Gui, Inventory) {
   // Our Javascript will go here.
   Base.init();
 
