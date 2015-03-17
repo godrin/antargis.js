@@ -1,4 +1,4 @@
-define([],function() {
+define(["base"],function(Base) {
   var Model=function(innerMeshes,outerNode, scene) {
     this.innerMeshes = innerMeshes;
     this.outerNode = outerNode;
@@ -23,11 +23,14 @@ define([],function() {
   };
 
   Model.prototype.enableParticles = function(type) {
-    console.log("ENABLE",type);
+    this.scene.particleGroup.addEmitter( Base.makeEmitter(new THREE.Vector3(0,0,0)));
   };
 
   Model.prototype.disableParticles = function(type) {
     console.log("DISABLE",type);
+    this.scene.particleGroup.removeEmitter( this.emitter );
+    delete this.emitter;
+
   };
 
   Model.prototype.remove=function() {
