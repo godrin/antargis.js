@@ -46,13 +46,12 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
       scene.add( directionalLight );
       Skybox.add(scene);
 
-
       var threeHeightMap=map.toThreeTerrain();
 
       Terrain.create(mapOptions,scene,threeHeightMap);
 
+      // FIXME: load all models beforehand
       world.initScene(scene);
-
 
       var lastPickedEntity=null;
       var lastPos=null;
