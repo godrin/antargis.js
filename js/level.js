@@ -1,11 +1,10 @@
 define(["entity"],function(Entity) {
-  var Level=function(def, scene, map, world) {
-    this.scene=scene;
+  var Level=function(def, map, world) {
     this.map=map;
 
     _.each(def,function(entityDef) {
       console.log("Level: create new entity from ",entityDef);
-      var entity=new Entity(scene, map, entityDef);
+      var entity=new Entity(map, entityDef);
       entity.world = world;
       world.push(entity);
     });
@@ -13,10 +12,10 @@ define(["entity"],function(Entity) {
 
   return {
     Level:Level,
-    load:function(file,scene,map,world,callback) {
+    load:function(file, map, world, callback) {
       $.get("levels/"+file,function(def) {
         def=eval(def);
-        callback(new Level(def,scene,map,world));
+        callback(new Level(def, map, world));
       });
     }
   }

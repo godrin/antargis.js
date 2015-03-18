@@ -2,7 +2,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
   var uid=11110;
 
-  var Entity=function(scene, heightmap, ops) {
+  var Entity=function(heightmap, ops) {
     var entity=Entities[ops.type];
     if(!entity) {
       console.warn("Entity: No Entity-Type named "+ops.type+" found!");
@@ -12,7 +12,6 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     _.extend(this,entity);
     _.extend(this,ops);
     var self=this;
-    self.scene=scene;
     this.name=this.type;
     this.pos=new THREE.Vector2(this.pos.x,this.pos.y); //.copy(this.pos);
     this.uid=uid++;
@@ -35,6 +34,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
         }
       });
     }
+  };
+
+  Entity.prototype.setScene = function(scene) {
+    this.scene = scene;
     this.setMesh(this.meshName);
   };
 

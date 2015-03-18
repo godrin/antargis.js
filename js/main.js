@@ -23,34 +23,36 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
     var map=new HeightMap({width:w,height:w,map:{rock:data}});
     var world=new World();
 
-    // VIWE
-    Base.init();
-
-    var geometry = new THREE.BoxGeometry(1,1,1);
-    var scene=Base.scene;
-
-    var light = new THREE.AmbientLight( 0x202020 ); // soft white light
-    scene.add( light );
-
-    // White directional light at half intensity shining from the top.
-
-    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
-    directionalLight.position.set( 1, 0, 0.7 );
-    scene.add( directionalLight );
-    Skybox.add(scene);
-
-
-    var threeHeightMap=map.toThreeTerrain();
-
-    Terrain.create(mapOptions,scene,threeHeightMap);
-
     var levelName=location.hash.replace(/^#/,'');
     if(!levelName)
       levelName="tests/fetch.js";
 
     console.log("level",levelName);
 
-    Level.load(levelName,scene, map, world,function() {
+    Level.load(levelName, map, world,function() {
+      // VIWE
+      Base.init();
+
+      var geometry = new THREE.BoxGeometry(1,1,1);
+      var scene=Base.scene;
+
+      var light = new THREE.AmbientLight( 0x202020 ); // soft white light
+      scene.add( light );
+
+      // White directional light at half intensity shining from the top.
+
+      var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
+      directionalLight.position.set( 1, 0, 0.7 );
+      scene.add( directionalLight );
+      Skybox.add(scene);
+
+
+      var threeHeightMap=map.toThreeTerrain();
+
+      Terrain.create(mapOptions,scene,threeHeightMap);
+
+      world.initScene(scene);
+
 
       var lastPickedEntity=null;
       var lastPos=null;
