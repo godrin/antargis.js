@@ -11,29 +11,29 @@ define([],function() {
       return particleGroup;
     },
     emitterSettings: {
-        position: THREE.Vector3(1,1,1),
-        positionSpread: new THREE.Vector3( 0, 0, 0 ),
+      position: THREE.Vector3(1,1,1),
+      positionSpread: new THREE.Vector3( 0, 0, 0 ),
 
-        acceleration: new THREE.Vector3(0.03, 0, 0),
-        accelerationSpread: new THREE.Vector3( 0.01, 0.01, 0 ),
+      acceleration: new THREE.Vector3(0.03, 0, 0),
+      accelerationSpread: new THREE.Vector3( 0.01, 0.01, 0 ),
 
-        velocity: new THREE.Vector3(0, 0, 0.7),
-        velocitySpread: new THREE.Vector3(0.3, 0.5, 0.2),
+      velocity: new THREE.Vector3(0, 0, 0.7),
+      velocitySpread: new THREE.Vector3(0.3, 0.5, 0.2),
 
-        colorStart: new THREE.Color(0xBBBBBB),
+      colorStart: new THREE.Color(0xBBBBBB),
 
-        colorStartSpread: new THREE.Vector3(0.2, 0.1, 0.1),
-        colorEnd: new THREE.Color(0xAAAAAA),
+      colorStartSpread: new THREE.Vector3(0.2, 0.1, 0.1),
+      colorEnd: new THREE.Color(0xAAAAAA),
 
-        sizeStart: 0.5,
-        sizeEnd: 4,
-        opacityStart:1,
-        opacityEnd:0.1,
+      sizeStart: 0.5,
+      sizeEnd: 4,
+      opacityStart:1,
+      opacityEnd:0.1,
 
-        //particleCount: 2000,
-        particlesPerSecond: 100,
-        alive:0
-},
+      //particleCount: 2000,
+      particlesPerSecond: 100,
+      alive:0
+    },
 
     makeEmitter:function(pos) {
       var emitter = new SPE.Emitter(this.emitterSettings);

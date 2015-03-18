@@ -6,6 +6,7 @@ define([],function() {
   var moves=0;
 
   function updateSize() {
+    // FIXME: remove global reference to canvas
     containerWidth = $("canvas").width();
     containerHeight = $("canvas").height();
   }
