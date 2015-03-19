@@ -1,6 +1,10 @@
 define([],function() {
   var clock = new THREE.Clock();
-  var Base =function(element) {
+  var Base =function(baseElement) {
+
+    if(!baseElement)
+      baseElement = document.body;
+
     var self=this;
     console.log("INIT");
     self.scene = new THREE.Scene();
@@ -9,7 +13,7 @@ define([],function() {
     self.renderer = new THREE.WebGLRenderer();
 
     self.renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( self.renderer.domElement );
+    $(baseElement).append( self.renderer.domElement );
 
     camera.position.x = 16;
     camera.position.y = -5;

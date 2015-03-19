@@ -1,6 +1,7 @@
 define([],function() {
-  var World=function() {
-    this.entities=[];
+  var World=function(map) {
+    this.map = map;
+    this.entities = [];
   };
   World.prototype.push = function(entity) {
     this.entities.push(entity);
