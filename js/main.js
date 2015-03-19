@@ -13,7 +13,6 @@ requirejs.config({
 require(['base',"terrain","skybox","models","controls", "generator","heightmap", "level", "pick", 'world',
 'jobs', 'angular'],
 function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pick, World, Jobs, Gui, Inventory) {
-  // Our Javascript will go here.
   var w=64;
   var mapOptions={width:w,height:w};
 
@@ -30,20 +29,20 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
     console.log("level",levelName);
 
     Level.load(levelName, map, world,function() {
-      // VIWE
       Base.init();
 
       var geometry = new THREE.BoxGeometry(1,1,1);
       var scene=Base.scene;
-
-      var light = new THREE.AmbientLight( 0x202020 ); // soft white light
+      
+      // soft white light
+      var light = new THREE.AmbientLight( 0x202020 );
       scene.add( light );
 
       // White directional light at half intensity shining from the top.
-
       var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
       directionalLight.position.set( 1, 0, 0.7 );
       scene.add( directionalLight );
+
       Skybox.add(scene);
 
       var threeHeightMap=map.toThreeTerrain();
@@ -71,8 +70,7 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
             lastPickedEntity=res[0].object.userData.entity;
             if(lastPickedEntity) {
               lastPickedEntity.hovered(true);
-            } else 
-            {
+            } else {
               lastPos=new THREE.Vector2().copy(res[0].point);
             }
           }
@@ -80,13 +78,8 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
         click:function() {
           if(lastPickedEntity) {
             selectedEntity = lastPickedEntity;
-            console.log("selected",selectedEntity);
-          } else {
-            console.log("CLICK",selectedEntity);
-
-
-            if(selectedEntity && selectedEntity.pushJob) 
-              selectedEntity.pushJob(new Jobs.ml.Move(selectedEntity,lastPos));
+          } else if(selectedEntity && selectedEntity.pushJob) {
+            selectedEntity.pushJob(new Jobs.ml.Move(selectedEntity,lastPos));
           }
         },
         move:function(d) {
@@ -103,7 +96,6 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
       });
       Base.render({
         frameCallback:function(delta) {
-          //console.log("DELTA",delta);
           _.each(world.entities,function(e) {
             if(e && e.onFrame)
               e.onFrame(delta);
