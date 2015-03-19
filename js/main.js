@@ -26,13 +26,11 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
     if(!levelName)
       levelName="tests/fetch.js";
 
-    console.log("level",levelName);
-
     Level.load(levelName, map, world,function() {
-      Base.init();
 
+      var base=new Base();
       var geometry = new THREE.BoxGeometry(1,1,1);
-      var scene=Base.scene;
+      var scene=base.scene;
       
       // soft white light
       var light = new THREE.AmbientLight( 0x202020 );
@@ -58,10 +56,10 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
 
       Controls.init({
         resize:function(size) {
-          Base.setSize(size);
+          base.setSize(size);
         },
         hover:function(mouse) {
-          var res=Pick.pick(mouse, Base.camera, Base.scene);
+          var res=Pick.pick(mouse, base.camera, base.scene);
 
           if(res.length>0) {
             if(lastPickedEntity)
@@ -83,18 +81,18 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
           }
         },
         move:function(d) {
-          var x=Base.camera.position.x;
-          var y=Base.camera.position.y+5;
+          var x=base.camera.position.x;
+          var y=base.camera.position.y+5;
           var h=map.get("rock").interpolate(x,y);
           if(!h)
             h=0;
 
-          Base.camera.position.x-=d.dx*0.03;
-          Base.camera.position.y+=d.dy*0.03;
-          Base.camera.position.z=10+h;
+          base.camera.position.x-=d.dx*0.03;
+          base.camera.position.y+=d.dy*0.03;
+          base.camera.position.z=10+h;
         }
       });
-      Base.render({
+      base.render({
         frameCallback:function(delta) {
           _.each(world.entities,function(e) {
             if(e && e.onFrame)
