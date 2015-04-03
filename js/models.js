@@ -2,7 +2,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
   var manager = new THREE.LoadingManager();
   manager.onProgress = function ( item, loaded, total ) {
-    console.log("manager.onProgress", item, loaded, total );
+    console.debug("manager.onProgress", item, loaded, total );
   };
   var models={};
   var animations={};
@@ -145,7 +145,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
             animation.play(options.startFrame,1);
           };
           var stopAnimation=function() {
-            console.log("ANIMAL stopANimation",mesh,mesh.animationFinished);
+            console.debug("ANIMAL stopANimation",mesh,mesh.animationFinished);
             animation.stop();
             if(mesh.userData && mesh.userData.entity && mesh.userData.entity.animationFinished)
               mesh.userData.entity.animationFinished();
@@ -159,7 +159,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
               clearInterval(interval);
             };
           } else {
-            console.log("ANIMAL DONT LOOP",arguments);
+            console.debug("ANIMAL DONT LOOP",arguments);
             var timeout=setTimeout(stopAnimation,time);
             mesh.beforeRemove=function() {
               animation.stop();
@@ -193,7 +193,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
       else {
         callbacks[name]=[callback];
 
-        console.log("Loading model", name);
+        console.debug("Loading model", name);
 
         var texture = new THREE.Texture();
         jsonloader.load('models/'+name +'.json' , function ( geometry, materials ) {
@@ -205,11 +205,11 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           for ( var i = 0, il = materials.length; i < il; i ++ ) {
 
             var originalMaterial = materials[ i ];
-            console.log("MAT",originalMaterial);
+            console.debug("MAT",originalMaterial);
             originalMaterial.skinning = true;
             if(options.doublesided) {
               //  originalMaterial.side = THREE.DoubleSide;
-              console.log("DOUBLE");
+              console.debug("DOUBLE");
             }
           }
 
@@ -243,7 +243,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
           $.each(callbacks[name],function(ke,cb) {
             var mesh=object.clone();
-            console.log("CLONED",mesh,object);
+            console.debug("CLONED",mesh,object);
 
             self.animate(mesh,name,options);
             cb(mesh);

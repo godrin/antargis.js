@@ -13,6 +13,7 @@ define(["angle"],function(Angle) {
     if(this.lltargetPos) {
 
       var distance = this.lltargetPos.distanceTo(e.pos);
+    //console.log("JOB SPEED",this.speed);
       var togo=delta*this.speed;
 
       distance-=this.distance;

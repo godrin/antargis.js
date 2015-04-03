@@ -8,7 +8,7 @@ define(["ml"],function(ml) {
       if(e.production) {
         var ok=true;
         var prereq = e.production[resource];
-        console.log("invent - rule",prereq,e.resources);
+        console.debug("invent - rule",prereq,e.resources);
         if(!prereq)
           return false;
         _.each(prereq,function(amount,res) {
@@ -20,7 +20,7 @@ define(["ml"],function(ml) {
           return true;
       }
     });
-    console.log("invent - PRODUCABLE",producable);
+    console.debug("invent - PRODUCABLE",producable);
     if(producable.length>0) {
       return _.sample(producable);
     }
@@ -30,7 +30,7 @@ define(["ml"],function(ml) {
 
   HlInventJob.prototype.assignMeJob=function(e) {
     var res= producable(this.entity, this.entity.resourcesNeeded());
-    console.log("invent - PRODS", res);
+    console.debug("invent - PRODS", res);
     if(res)
       e.pushJob(new ml.Invent(e, res, this.entity));
     else

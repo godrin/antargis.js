@@ -27,7 +27,6 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
       levelName="tests/fetch.js";
 
     Level.load(levelName, map, world,function() {
-      console.log("GV",GameView);
       new GameView("#angular-game",world);
     });
   });

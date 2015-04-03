@@ -7,7 +7,6 @@ define(["jobs"],function(Jobs) {
       var self=this;
       var currentlyNeeded=[];
       _.each(this.needed,function(v,k) {
-        console.log("NEEDED",v,k,self.resources);
         var times=v-(self.resources[k]||0);
         if(times>0) {
           _.times(times,function() {
@@ -15,7 +14,6 @@ define(["jobs"],function(Jobs) {
           });
         }
       });
-      console.log("NEEDED",currentlyNeeded);
       return currentlyNeeded;
     },
 
@@ -23,13 +21,9 @@ define(["jobs"],function(Jobs) {
       var needed=this.resourcesNeeded();
 
       if(needed.length>0) {
-        console.log("CHECK APPLY",needed,this);
         if(Jobs.hl.Invent.applyable(this, needed)) {
-          console.log("Applyable invent");
           this.pushHlJob(new Jobs.hl.Invent(this));
         } else {
-
-          console.log("JOBS",Jobs);
           this.pushHlJob(new Jobs.hl.Fetch(this));
         }
       }

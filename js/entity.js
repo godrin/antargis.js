@@ -104,7 +104,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   Entity.prototype.give=function(what,amount,toEntity) {
     if(this.resources[what]>=amount) {
       this.resources[what]-=amount;
-      console.log("GIVE TO",toEntity,what);
+      console.debug("GIVE TO",toEntity,what);
       toEntity.resources[what]=(toEntity.resources[what]||0)+amount;
       return true;
     }

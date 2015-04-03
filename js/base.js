@@ -6,7 +6,6 @@ define([],function() {
       baseElement = document.body;
 
     var self=this;
-    console.log("INIT");
     self.scene = new THREE.Scene();
     var camera = self.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 10000 );
 
@@ -94,7 +93,6 @@ define([],function() {
       var delta =  clock.getDelta();
       var mydelta=timeDiff*0.001;
       //        delta=timeDiff*0.001;
-      //console.log("DELTA",delta,mydelta); //timeDiff*0.001, delta/(timeDiff*0.001));
       // use "Date" clock
       if(true)
         delta=mydelta;
@@ -103,14 +101,12 @@ define([],function() {
       if(options && options.frameCallback)
         options.frameCallback(delta);
 
-      //          console.log("tiick",self.particleGroup,delta);
       self.particleGroup.tick( delta );
       // animate Collada model
 
       THREE.AnimationHandler.update( delta );
       self.renderer.render(self.scene, self.camera);
     }
-    //render();
     requestAnimationFrame(render);
   };
   return Base;

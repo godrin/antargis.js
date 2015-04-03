@@ -3,7 +3,7 @@ define(["entity"],function(Entity) {
     this.map=map;
 
     _.each(def,function(entityDef) {
-      console.log("Level: create new entity from ",entityDef);
+      console.debug("Level: create new entity from ",entityDef);
       var entity=new Entity(map, entityDef);
       entity.world = world;
       world.push(entity);

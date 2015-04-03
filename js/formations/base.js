@@ -29,7 +29,6 @@ define([],function() {
   };
 
   Base.prototype.computePos=function(boss,i) {
-    console.log("COMPUTE Boss",boss);
     return new THREE.Vector2().addVectors(this.computeRelativePosCached(boss,i),boss.pos);
   };
 
@@ -37,7 +36,6 @@ define([],function() {
     var followers=this.sort(boss.followers);
 
     var i=_.indexOf(followers,follower);
-    console.log("GETPOS");
     return this.computePos(boss,i);
   };
 

@@ -13,11 +13,12 @@ define(["formations", "angle",
       },
       assignMeJob:function(e) {
         if(!this.hljob) {
-          console.log("AIIII",this);
           if(this.ai)
             this.ai();
-          if(!this.hljob) 
+          if(!this.hljob) {
             this.hljob=new Jobs.hl.Rest(this,10,false);
+            console.debug("boss - No hljob created, resting for 10 seconds");
+          }
         }
 
         if(this.hljob) {

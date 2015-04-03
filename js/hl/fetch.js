@@ -12,14 +12,14 @@ define(["ml"],function(ml) {
   FetchJob.prototype.nextEntityForResource=function(selectedResource) {
     var self=this;
     return this.entity.world.search(function(e) {
-      console.log("fetch - HAS RESOURCE",selectedResource,e,e.resources && e.resources[selectedResource]>0,e.provides,e.resources);
+      console.debug("fetch - HAS RESOURCE",selectedResource,e,e.resources && e.resources[selectedResource]>0,e.provides,e.resources);
       return e.resources && e.resources[selectedResource]>0 && e!=self.entity && e.provides && _.contains(e.provides,selectedResource);
     },this.entity.pos)[0];
   };
 
   FetchJob.prototype.assignMeJob=function(e) {
     this.count-=1;
-    console.log("fetch - ASSIGN FETCH MLJOB",e);
+    console.debug("fetch - ASSIGN FETCH MLJOB",e);
     var selectedResource=this.selectResourceToGet();
     if(selectedResource) {
       var nextEntity=this.nextEntityForResource(selectedResource);
@@ -27,7 +27,7 @@ define(["ml"],function(ml) {
         e.pushJob(new ml.Fetch(e, selectedResource, nextEntity, this.entity));
         return;
       } else {
-        console.log("fetch - NO nextentity found");
+        console.debug("fetch - NO nextentity found");
       }
     }
     e.pushJob(new ml.Rest(e,1,0));
@@ -37,7 +37,7 @@ define(["ml"],function(ml) {
   };
 
   FetchJob.prototype.onFrame=function(delta) {
-    console.log("fetch - FIXME hljob-fetch-onframe");
+    console.debug("fetch - FIXME hljob-fetch-onframe");
   };
 
   return FetchJob;

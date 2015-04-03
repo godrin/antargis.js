@@ -1,0 +1,31 @@
+User-Requirements
+=================
+Screens:
+- game
+- later:
+  - intro-screen
+  - menu-screen (load, start campaigns)
+  - won/lost screen
+
+In-game gui:
+- entity-view
+  - inventory
+  - name/age/origin, job?, calling?
+  - state (energy, hunger, exhaustian, morale)
+- job-selection (verbs: fight,pickup,invent,...)
+- highlight entites when hovering and when selected
+
+Sound:
+- sheep-sound
+- tocktock when inventing
+
+Dev-Requirements
+================
+- A-function: 
+  - A("man") - get all entites with mixins man"
+  - A("#godrin") - get entity with name godrin
+  - A(".somewhat") - get all entites with class somewhat
+- enable/disable loggin from console (default is off)
+
+Overview
+========

@@ -2,6 +2,8 @@ define([],function() {
   var World=function(map) {
     this.map = map;
     this.entities = [];
+    if(!window.World)
+      window.World=this;
   };
   World.prototype.push = function(entity) {
     this.entities.push(entity);
@@ -13,16 +15,26 @@ define([],function() {
         return param(e);
       } else {
         for(var name in param) {
-          if(e[name] instanceof Array) {
-            if(!_.contains(e[name],param[name]))
+          var val=param[name];
+          if(val instanceof Object) {
+            console.log("OBJ",val);
+          } else {
+            if(e[name] instanceof Array) {
+              if(!_.contains(e[name],val))
+                return false;
+            } else if(e[name] instanceof Object) {
+              if(!e[name][val])
+                return false;
+            } else if(e[name]!=val)
               return false;
-          } else if(e[name]!=param[name])
-            return false;
+          }
         }
       }
       return true;
     }).sortBy(function(e) {
-      return e.pos.distanceTo(origin);
+      if(origin instanceof THREE.Vector3)
+        return e.pos.distanceTo(origin);
+      return 1;
     }).value();
   };
 
@@ -31,6 +43,7 @@ define([],function() {
       e.setScene(scene);
     });
   };
+
 
   return World;
 });

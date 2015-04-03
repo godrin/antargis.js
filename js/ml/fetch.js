@@ -7,9 +7,9 @@ define(["ll"
       this.amount = 1;
       this.targetEntity = targetEntity;
       this.mltargetPos = this.targetEntity.pos;
-      console.log("fromPos",entity.pos);
+      console.debug("fromPos",entity.pos);
       this.fromPos = new THREE.Vector2().copy(entity.pos);
-      console.log("fromPos",entity.pos,this.fromPos);
+      console.debug("fromPos",entity.pos,this.fromPos);
       this.mode="gotoTarget";
       this.collectDistance=1;
     };
@@ -56,7 +56,7 @@ define(["ll"
       var done=false;
       do {
       if(!this[this.mode])
-      console.log("MODE ",this.mode, "not found");
+      console.debug("MODE ",this.mode, "not found");
         done=this[this.mode]();
       } while(!done && !this.ready);
       return delta;

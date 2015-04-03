@@ -25,7 +25,6 @@ define([],function() {
     for(x=0;x<this.options.width;x++)
       for(y=0;y<this.options.height;y++) {
         var val=Math.sin(x)*20.0;///this.options.width;
-        console.log("VAL",val);
         rock(x,y,val);
       }
   };
@@ -71,7 +70,6 @@ define([],function() {
   HeightMap.prototype.toThreeTerrain=function() {
     var self=this;
     return function(g,options) {
-      console.log("OPTIONS",g,options);
       var xl = options.xSegments + 1,
       yl = options.ySegments + 1;
       var rock=self.get("rock");
