@@ -9,7 +9,6 @@ define(["formations",
       this.entity = entity;
       this.length = length;
       this.done=false;
-      console.log("SITPOS",formatted);
       if(formatted)
         this.formation=new Formations.Rest();
       else
@@ -17,11 +16,9 @@ define(["formations",
     };
     Job.prototype.assignMeJob=function(e) {
       var newPos=this.formation.getPos(this.entity,e);
-      console.log("SITPOS",newPos,this.entity.pos);
       if(e.pos.distanceTo(newPos)>0.1)
         e.pushJob(new ml.Move(e,newPos));
       else {
-        console.log("NEW REST!");
         var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.entity.pos,e.pos));
         e.pushJob(new ml.Rest(e,5,dir)); //newMlJob("rest",5, dir);
       }
