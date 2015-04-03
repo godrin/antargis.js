@@ -1,10 +1,11 @@
 define(["base"],function(Base) {
-  var Model=function(innerMeshes,outerNode, scene) {
+  var Model=function(innerMeshes,outerNode, scene, ring) {
     this.innerMeshes = innerMeshes;
     this.outerNode = outerNode;
     this.scene = scene;
     this.position=this.outerNode.position;
     this.rotation=this.outerNode.rotation;
+    this.ring = ring;
   };
 
   Model.prototype.setEntity=function(entity) {

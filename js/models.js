@@ -46,7 +46,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
         var node=new THREE.Object3D();
         _.each(objects,function(object) {
           _.extend(object.rotation, meshDef.rotation);
-          
+
           _.extend(object.position, meshDef.position);
 
           if(meshDef.scale) 
@@ -58,8 +58,16 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           object.userData.entity=entity;
           node.add(object);
         });
+        var ring;
+        if(true) {
+          var material = new THREE.MeshLambertMaterial( { color: 0xdd9900, shading: THREE.FlatShading,transparent:true, opacity:0.5 } ) ;	
+          ring = new THREE.Mesh( new THREE.RingGeometry( 1.3, 2, 20, 5, 0, Math.PI * 2 ), material );
+          ring.position.set( 0, 0, 0.2 );
+          ring.visible = false;
+          node.add( ring );
+        }
         scene.add(node);
-        var newModel=new Model(objects, node, scene);
+        var newModel=new Model(objects, node, scene, ring);
         newModel.name=mesh;
         newModel.type=mesh;
         newModel.animation=animation;
@@ -138,7 +146,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
         //animation.update( options.startFrame);
         if(options.animate===false && false) {
           animation.stop();
-            animation.update(options.startFrame,1);
+          animation.update(options.startFrame,1);
         }
         else if(options.endFrame) { 
           var startAnimation=function() {
