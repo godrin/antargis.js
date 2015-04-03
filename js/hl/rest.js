@@ -20,7 +20,7 @@ define(["formations",
         e.pushJob(new ml.Move(e,newPos));
       else {
         var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.entity.pos,e.pos));
-        e.pushJob(new ml.Rest(e,5,dir)); //newMlJob("rest",5, dir);
+        e.pushJob(new ml.Rest(e,5,dir));
       }
     };
     Job.prototype.onFrame=function(delta) {
