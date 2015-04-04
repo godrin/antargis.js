@@ -50,7 +50,10 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
       },
       click:function() {
         if(lastPickedEntity) {
+          if(selectedEntity)
+            selectedEntity.selected(false);
           selectedEntity = lastPickedEntity;
+          selectedEntity.selected(true);
         } else if(selectedEntity && selectedEntity.pushJob) {
           selectedEntity.pushJob(new Jobs.ml.Move(selectedEntity,lastPos));
         }

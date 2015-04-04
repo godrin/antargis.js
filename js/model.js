@@ -1,17 +1,32 @@
 define(["base"],function(Base) {
-  var Model=function(innerMeshes,outerNode, scene, ring) {
+  var Model=function(innerMeshes,outerNode, scene, hoverRing, selectRing) {
     this.innerMeshes = innerMeshes;
     this.outerNode = outerNode;
     this.scene = scene;
     this.position=this.outerNode.position;
     this.rotation=this.outerNode.rotation;
-    this.ring = ring;
+    this.hoverRing = hoverRing;
+    this.selectRing = selectRing;
   };
 
   Model.prototype.setEntity=function(entity) {
     _.each(this.innerMeshes,function(m) {
       m.userData.entity=entity;
     });
+  };
+    
+  Model.prototype.hovered = function(val) {
+    if(val === true || val === false) {
+      this.hoverRing.visible = val;
+    }
+    return this.hoverRing.visible;
+  };
+
+  Model.prototype.selected= function(val) {
+    if(val === true || val === false) {
+      this.selectRing.visible = val;
+    }
+    return this.selectRing.visible;
   };
 
   Model.prototype.detachFromScene=function() {

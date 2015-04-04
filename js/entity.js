@@ -87,9 +87,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   };
 
   Entity.prototype.hovered=function(val) {
-    if(val === true || val === false) {
-      this.mesh.ring.visible = val;
-    }
+    return this.mesh.hovered(val);
+  };
+  Entity.prototype.selected=function(val) {
+    return this.mesh.selected(val);
   };
 
   Entity.prototype.increaseBy = function(what, amount) {

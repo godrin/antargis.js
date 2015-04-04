@@ -58,16 +58,23 @@ define(["model", "config/meshes"], function(Model, Meshes) {
           object.userData.entity=entity;
           node.add(object);
         });
-        var ring;
+        var hoverRing;
         if(true) {
-          var material = new THREE.MeshLambertMaterial( { color: 0xdd9900, shading: THREE.FlatShading,transparent:true, opacity:0.5 } ) ;	
-          ring = new THREE.Mesh( new THREE.RingGeometry( 1.3, 2, 20, 5, 0, Math.PI * 2 ), material );
-          ring.position.set( 0, 0, 0.2 );
-          ring.visible = false;
-          node.add( ring );
+          var material;
+          material = new THREE.MeshLambertMaterial( { color: 0xdd9900, shading: THREE.FlatShading,transparent:true, opacity:0.5 } ) ;	
+          hoverRing = new THREE.Mesh( new THREE.RingGeometry( 1.3, 2, 20, 5, 0, Math.PI * 2 ), material );
+          hoverRing.position.set( 0, 0, 0.2 );
+          hoverRing.visible = false;
+          node.add(hoverRing);
+
+          material = new THREE.MeshLambertMaterial( { color: 0xFF9900, shading: THREE.FlatShading,transparent:true, opacity:0.5 } ) ;	
+          selectRing = new THREE.Mesh( new THREE.RingGeometry( 1.3, 2, 20, 5, 0, Math.PI * 2 ), material );
+          selectRing.position.set( 0, 0, 0.2 );
+          selectRing.visible = false;
+          node.add(selectRing);
         }
         scene.add(node);
-        var newModel=new Model(objects, node, scene, ring);
+        var newModel=new Model(objects, node, scene, hoverRing, selectRing);
         newModel.name=mesh;
         newModel.type=mesh;
         newModel.animation=animation;
