@@ -55,9 +55,8 @@ define([],function() {
       });
 
       $(window).resize(function(e) {
-        console.log("RESI",e);
         updateSize();
-
+        
         if(options && options.resize)
           options.resize({width:containerWidth, height: containerHeight });
 
