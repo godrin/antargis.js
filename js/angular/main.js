@@ -1,10 +1,10 @@
 define(['angular/levels','angular/inventory'],function(LevelController, InventoryController) {
 
   var gameApp = angular.module('game-app',['ngResource']);
-  gameApp.controller('LevelController', LevelController);
-  gameApp.controller('InventoryController', InventoryController);
 
   function Gui(world, el) {
+    gameApp.controller('LevelController', LevelController);
+    gameApp.controller('InventoryController', InventoryController);
     gameApp.provider('world', function() {
       this.$get=function() {
         return world;

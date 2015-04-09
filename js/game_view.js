@@ -68,6 +68,8 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
           if(e && e.onFrame)
             e.onFrame(delta);
         });
+      if(world && world.$scope)
+        world.$scope.$apply();
       }
     });
   }
