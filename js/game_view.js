@@ -25,9 +25,7 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
     // FIXME: load all models beforehand
     world.initScene(scene);
 
-    var lastPickedEntity=null;
     var lastPos=null;
-    var selectedEntity=null;
 
     Controls.init({
       resize:function(size) {
@@ -37,25 +35,19 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
         var res=Pick.pick(mouse, base.camera, base.scene);
 
         if(res.length>0) {
-          if(lastPickedEntity)
-            lastPickedEntity.hovered(false);
+          var entity=res[0].object.userData.entity;
+          world.hover(entity);
 
-          lastPickedEntity=res[0].object.userData.entity;
-          if(lastPickedEntity) {
-            lastPickedEntity.hovered(true);
-          } else {
+          if(!entity) {
             lastPos=new THREE.Vector2().copy(res[0].point);
           }
         }
       },
       click:function() {
-        if(lastPickedEntity) {
-          if(selectedEntity)
-            selectedEntity.selected(false);
-          selectedEntity = lastPickedEntity;
-          selectedEntity.selected(true);
-        } else if(selectedEntity && selectedEntity.pushJob) {
-          selectedEntity.pushJob(new Jobs.ml.Move(selectedEntity,lastPos));
+        if(world.hoveredEntity) {
+          world.select(world.hoveredEntity);
+        } else if(world.selectedEntity && world.selectedEntity.pushJob) {
+          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
         }
       },
       move:function(d) {

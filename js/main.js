@@ -28,6 +28,7 @@ function(Base,Terrain,Skybox, Models, Controls, Generator, HeightMap, Level, Pic
 
     Level.load(levelName, map, world,function() {
       new GameView("#angular-game",world);
+      new Gui(world, "body");
     });
   });
 });

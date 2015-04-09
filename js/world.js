@@ -44,6 +44,22 @@ define([],function() {
     });
   };
 
+  World.prototype.hover = function(entity) {
+    if(this.hoveredEntity)
+      this.hoveredEntity.hovered(false);
+
+    this.hoveredEntity = entity;
+    if(this.hoveredEntity) {
+      this.hoveredEntity.hovered(true);
+    }
+  };
+  World.prototype.select = function(entity) {
+    if(this.selectedEntity)
+      this.selectedEntity.selected(false);
+    this.selectedEntity = entity;
+    if(this.selectedEntity)
+      this.selectedEntity.selected(true);
+  };
 
   return World;
 });

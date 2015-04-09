@@ -4,9 +4,18 @@ define(['angular/levels','angular/inventory'],function(LevelController, Inventor
   gameApp.controller('LevelController', LevelController);
   gameApp.controller('InventoryController', InventoryController);
 
-  angular.element(document).ready(function() {
-    angular.bootstrap(document, ['game-app']);
-  });
+  function Gui(world, el) {
+    gameApp.provider('world', function() {
+      this.$get=function() {
+        return world;
+      };
+    });
+    if(!el)
+      el=document;
+    angular.element(el).ready(function() {
+      angular.bootstrap(el, ['game-app']);
+    });
+  }
 
-  return gameApp;
+  return Gui;
 });
