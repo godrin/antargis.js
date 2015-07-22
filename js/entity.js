@@ -36,6 +36,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     }
   };
 
+  Entity.prototype.isA = function(mixin) {
+    return this.mixins[mixin];
+  };
+
   Entity.prototype.setScene = function(scene) {
     this.scene = scene;
     this.setMesh(this.meshName);
