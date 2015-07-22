@@ -14,6 +14,7 @@ define(["formations",
       else
         this.formation=new Formations.Null();
     };
+    Job.prototype.name = "hlRest";
     Job.prototype.assignMeJob=function(e) {
       var newPos=this.formation.getPos(this.entity,e);
       if(e.pos.distanceTo(newPos)>0.1)

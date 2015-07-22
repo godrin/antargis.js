@@ -4,6 +4,7 @@ define([],function() {
     this.time=time;
     this.done=0;
   };
+  Job.prototype.name="llRest";
 
   // maybe implement using setTimeout ?
   Job.prototype.onFrame=function(delta) {

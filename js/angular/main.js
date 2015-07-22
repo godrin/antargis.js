@@ -5,6 +5,22 @@ define(['angular/levels','angular/inventory'],function(LevelController, Inventor
   function Gui(world, el) {
     gameApp.controller('LevelController', LevelController);
     gameApp.controller('InventoryController', InventoryController);
+    gameApp.directive('ag',function() {
+      return {
+        controller:function($element) {
+          $element.addClass("ag");
+          $element.click(function(ev) {
+            ev.preventDefault();
+            console.log("GLCK",ev,arguments);
+            return false;
+          });
+        }
+      }
+    });
+
+    gameApp.controller('WorldController',function ($scope, world) {
+      $scope.world = world;
+    });
     gameApp.provider('world', function() {
       this.$get=function() {
         return world;

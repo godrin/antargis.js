@@ -6,6 +6,7 @@ define(["ll"],function(ll) {
       meshType = "walk";
     this.meshType = meshType;
   };
+  Job.prototype.name="mlMove";
   Job.prototype.onFrame=function(delta) {
     var distance = this.mltargetPos.distanceTo(this.entity.pos);
     if(distance<0.1) {

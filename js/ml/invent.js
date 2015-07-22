@@ -7,6 +7,7 @@ define(["ll","ml/move"
       this.resource = resource;
       this.mode="comeHome";
     };
+    Job.prototype.name="mlInvent";
     Job.prototype.comeHome=function() {
       console.debug("invent - HOME COME", this.entity);
       this.entity.pushJob(new MlMove(this.entity, this.homeEntity.pos));

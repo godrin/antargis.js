@@ -14,23 +14,24 @@ define([],function() {
   updateSize();
 
   return {
-    init:function(options) {
+    init:function(el, options) {
 
-      $(document).mouseup(function(e) {
+      $(el).mouseup(function(e) {
         mousedown=false;
       });
-      $(document).mousedown(function(e) {
+      $(el).mousedown(function(e) {
         mousedown=true;
         ox=e.pageX;
         oy=e.pageY;
         moves=0;
       });
-      $(document).click(function(e) {
+      $(el).click(function(e) {
+      console.log("CLICK",e);
         if(options && options.click && moves<4)
           options.click(e);
       });
 
-      $(document).mousemove(function(e) {
+      $(el).mousemove(function(e) {
         e.preventDefault();
         e.stopPropagation();
         moves+=1;
@@ -50,7 +51,7 @@ define([],function() {
           });
       });
 
-      $(document).keydown(function(e) {
+      $(el).keydown(function(e) {
         console.log("KEYD",e);
       });
 

@@ -3,6 +3,7 @@ define(["ml"],function(ml) {
     this.entity = entity;
     this.count = count || 3;
   };
+  FetchJob.prototype.name="hlFetch";
 
   FetchJob.prototype.selectResourceToGet=function() {
     var needed=_.shuffle(this.entity.resourcesNeeded());

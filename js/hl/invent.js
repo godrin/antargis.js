@@ -2,6 +2,7 @@ define(["ml"],function(ml) {
   var HlInventJob=function(entity) {
     this.entity = entity;
   };
+  HlInventJob.prototype.name="hlInvent";
 
   function producable(e, needed) {
     var producable=_.filter(needed,function(resource) {

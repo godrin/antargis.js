@@ -27,7 +27,7 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
 
     var lastPos=null;
 
-    Controls.init({
+    Controls.init(el,{
       resize:function(size) {
         base.setSize(size);
       },

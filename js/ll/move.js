@@ -9,6 +9,7 @@ define(["angle"],function(Angle) {
     this.distance=distance||0;
     console.log("JOB SPEED",this.speed);
   };
+  Job.prototype.name = "llMove";
 
   Job.prototype.onFrame=function(delta) {
     var e=this.entity;

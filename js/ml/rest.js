@@ -5,6 +5,7 @@ define(["ll"],function(ll) {
     this.direction = direction;
     this.done=false;
   };
+  Job.prototype.name="mlRest";
   Job.prototype.onFrame=function(delta) {
     if(this.direction && this.entity.rotation!=this.direction) {
       this.entity.rotation=this.direction;

@@ -13,6 +13,7 @@ define(["ll"
       this.mode="gotoTarget";
       this.collectDistance=1;
     };
+    Job.prototype.name="mlFetch";
     Job.prototype.gotoTarget=function() {
       var distance = this.mltargetPos.distanceTo(this.entity.pos);
       if(distance<=this.collectDistance+0.1) {

@@ -12,7 +12,8 @@ define([],function() {
     self.renderer = new THREE.WebGLRenderer();
 
     self.renderer.setSize( window.innerWidth, window.innerHeight );
-    $(baseElement).append( self.renderer.domElement );
+    $(baseElement).prepend( self.renderer.domElement );
+    $(self.renderer.domElement).addClass("game-view");
 
     camera.position.x = 16;
     camera.position.y = -5;

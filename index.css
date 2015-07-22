@@ -1,13 +1,21 @@
+.game-view {
+  position:absolute;
+}
+
 #logo { 
   position:absolute;
   bottom:0px;
+  z-index:10;
 }
 #levelSelector {
   margin-left:50%;
   position:absolute;
+  z-index:10;
+}
+.gui {
+  position:absolute;
+  z-index:1;
 }
 
-
 .inventory {
-  position:absolute;
 }
