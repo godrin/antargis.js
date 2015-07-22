@@ -25,6 +25,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     if(entity.mixins) {
       self.mixins={};
       self.mixinNames=[];
+      self.mixinDef = entity.mixins;
       _.each(entity.mixins,function(mixin) {
         var found=Mixins[mixin];
         if(found) {
@@ -37,7 +38,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   };
 
   Entity.prototype.isA = function(mixin) {
-    return this.mixins[mixin];
+    return this.mixinDef.indexOf(mixin)>=0;
   };
 
   Entity.prototype.setScene = function(scene) {
