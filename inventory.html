@@ -1,0 +1,7 @@
+<div class='ag inventory ag-border' ng-controller='InventoryController'>
+  <div class='ag-content'>
+    <h3>{{world.selectedEntity.name}}</h3>
+    <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
+  </div>
+</div>
+

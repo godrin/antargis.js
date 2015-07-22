@@ -10,9 +10,9 @@ requirejs.config({
   ],
 });
 
-require(["generator","heightmap", "level", "pick", 'world',
+require(["generator","heightmap", "level", 'world',
 'angular', 'game_view'],
-function(Generator, HeightMap, Level, Pick, World, Gui, GameView) {
+function(Generator, HeightMap, Level, World, Gui, GameView) {
   var w=64;
   var mapOptions={width:w,height:w};
 

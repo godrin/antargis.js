@@ -39,10 +39,7 @@
     <div id='logo'><img src='images/antargisLogo.png'></div>
 
     <div id="angular-game">
-      <div ng-controller='InventoryController'>
-        {{world.selectedEntity.name}}
-        <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
-      </div>
+      <div ng-include="'inventory.html'"></div>
     </div>
   </body>
 </html>

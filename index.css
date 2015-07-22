@@ -1,7 +1,43 @@
 #logo { 
   position:absolute;
+  bottom:0px;
 }
 #levelSelector {
   margin-left:50%;
+  position:absolute;
+}
+
+.ag {
+  background-color:black;
+  color:#f3ac0e;
+  font-family: Helvetica;
+  text-shadow:0px 1px 1px black;
+}
+
+.ag h3 {
+  font-size:120%;
+  margin:3px;
+  border-bottom:2px groove #333;
+}
+
+.ag-border {
+  border:2px ridge #f3ac0e;
+  border-radius:5px;
+  padding:1px;
+}
+.ag-button-content {
+  padding:5px;
+  border-radius:4px;
+  background-color:#555;
+  background-image: radial-gradient(ellipse, #54555b, #12141c);
+}
+.ag-content {
+  border:1px solid #484952;
+  margin:1px;
+  border-radius:2px;
+  background-color:#12141c;
+}
+
+.inventory {
   position:absolute;
 }
