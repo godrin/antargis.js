@@ -1,5 +1,7 @@
 define(["angle"],function(Angle) {
- 
+
+  var tmpDir = new THREE.Vector2();
+
   var Job=function(entity, pos, distance) {
     this.entity=entity;
     this.speed=entity.speed||1;
@@ -13,7 +15,6 @@ define(["angle"],function(Angle) {
     if(this.lltargetPos) {
 
       var distance = this.lltargetPos.distanceTo(e.pos);
-    //console.log("JOB SPEED",this.speed);
       var togo=delta*this.speed;
 
       distance-=this.distance;
@@ -27,9 +28,9 @@ define(["angle"],function(Angle) {
         // return rest time
         return (togo-distance)/this.speed;
       } else {
-        var dir=new THREE.Vector2().subVectors(this.lltargetPos,e.pos).setLength(togo);
-        e.pos.add(dir);
-        e.rotation=Angle.fromVector2(dir);
+        tmpDir.subVectors(this.lltargetPos,e.pos).setLength(togo);
+        e.pos.add(tmpDir);
+        e.rotation=Angle.fromVector2(tmpDir);
       }
 
       e.updateMeshPos();
