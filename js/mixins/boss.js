@@ -11,12 +11,21 @@ define(["formations", "angle",
       clearHlJob:function() {
         delete this.hljob;
       },
+      onNoJob:function() {
+        var boss = this;
+        if(this.boss)
+          boss = this.boss;
+        if(boss && boss.assignMeJob)
+          boss.assignMeJob(this);
+      },
       assignMeJob:function(e) {
+        console.log("assignMeJob",e.name,this);
         if(!this.hljob) {
-          if(this.ai)
+          if(this.ai)  {
             this.ai();
+          }
           if(!this.hljob) {
-            this.hljob=new Jobs.hl.Rest(this,10,false);
+            this.hljob=new Jobs.hl.Rest(this,10,this.isA("hero"));
             console.debug("boss - No hljob created, resting for 10 seconds");
           }
         }

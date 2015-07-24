@@ -54,7 +54,7 @@ define([],function() {
       mixins:["boss","house"]
     },
     hero: {
-      mixins: ["boss", "hero", "job"]
+      mixins: ["boss", "hero", "job", "player"]
     },
     tower: {
       mixins:["boss", "job"]
