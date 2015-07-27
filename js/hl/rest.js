@@ -17,7 +17,6 @@ define(["formations",
     Job.prototype.name = "hlRest";
     Job.prototype.assignMeJob=function(e) {
       var newPos=this.formation.getPos(this.entity,e);
-      console.log("HLREST newpos",newPos,e.name);
       if(e.pos.distanceTo(newPos)>0.1)
         e.pushJob(new ml.Move(e,newPos));
       else {
