@@ -1,11 +1,13 @@
 define(["formations",
   "angle",
-  "ml"
+  "ml",
+  "hl/base"
   ],function(Formations, 
     Angle,
-    ml
+    ml,Base
   ) {
     var Job=function(entity, dir, pos, dist) {
+      Base.apply(this, arguments);
       if(!dist)
         dist=0;
       this.entity = entity;
@@ -16,11 +18,14 @@ define(["formations",
       this.formation=new Formations.Move();
       this.waiting = [];
     };
+    Job.prototype=Object.create(Base.prototype);
     Job.prototype.name = "hlFormatAndWait";
     Job.prototype.assignMeJob=function(e) {
-      switch(this.state) {
-        case "format":
-          return this.moveToOrWait(e, this.formation.getPos(this.entity,e));
+      if(!this.commonStart()) {
+        switch(this.state) {
+          case "format":
+            return this.moveToOrWait(e, this.formation.getPos(this.entity,e));
+        }
       }
     };
     Job.prototype.moveToOrWait = function(e, newPos, dir) {
@@ -38,20 +43,8 @@ define(["formations",
     };
     Job.prototype.checkReadyFormat = function() {
       if(this.waiting.length==this.entity.followers.length+1) {
-      console.log("READY",this.waiting.length,this.entity.followers.length);
+        console.log("READY",this.waiting.length,this.entity.followers.length);
         this.ready=true;
-        }
-    };
-    Job.prototype.onFrame=function(delta) {
-      var self=this;
-      if(this.done) {
-      //  this.ready=true;
-      } else {
-        this.done=true;
-        _.each(this.entity.followers,function(e) {
-          self.assignMeJob(e);
-        });
-        this.assignMeJob(this.entity);
       }
     };
     return Job;
