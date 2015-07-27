@@ -19,7 +19,6 @@ define(["formations", "angle",
           boss.assignMeJob(this);
       },
       assignMeJob:function(e) {
-        console.log("assignMeJob",e.name,this);
         if(!this.hljob) {
           if(this.ai)  {
             this.ai();

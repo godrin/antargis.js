@@ -13,7 +13,6 @@ define(["ll"],function(ll) {
       this.ready=true;
     } else {
       this.entity.setMesh("walk");
-      console.log("E",this.entity);
       this.entity.pushJob(new ll.Move(this.entity,this.mltargetPos));
     }
     return delta;

@@ -33,6 +33,10 @@ define([],function() {
   };
 
   Base.prototype.getPos=function(boss,follower) {
+
+    if(boss == follower)
+      return new THREE.Vector2().copy(boss.pos);
+
     var followers=this.sort(boss.followers);
 
     var i=_.indexOf(followers,follower);

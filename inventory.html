@@ -3,6 +3,7 @@
     <div class='ag-content'>
       <h3>{{world.selectedEntity.name}} ({{world.selectedEntity.player}})</h3>
       <p ng-repeat="job in world.selectedEntity.jobs">{{job.name}}</p>
+      <p>hljob:{{world.selectedEntity.hljob.name}}</p>
       <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
     </div>
   </div>
