@@ -17,9 +17,11 @@ define(["formations/base"],function(Base) {
 
     var angle = boss.rotation;
 
-  console.log("REL POS",i,x,y, "-",row,block,col);
     return new THREE.Vector2(Math.sin(angle) * y + Math.cos(angle)* x, 
     Math.cos(angle) * y + Math.sin(angle) * x);
+  };
+  moveForm.prototype.getDir = function(boss,e) {
+    return boss.rotation;
   };
 
   return moveForm;

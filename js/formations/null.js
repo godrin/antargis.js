@@ -7,6 +7,9 @@ define(["formations/base"],function(Base) {
   nullForm.prototype.computeRelativePos=function(boss,i) {
     return new THREE.Vector2(0,0);
   };
+  nullForm.prototype.getDir = function(boss,e) {
+    return 0;
+  };
 
   return nullForm;
 });

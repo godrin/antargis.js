@@ -48,7 +48,8 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
           world.select(world.hoveredEntity);
         } else if(world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player=="human") {
           world.selectedEntity.resetJobs();
-          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
+//          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
+          world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity,lastPos));
         }
       },
       move:function(d) {

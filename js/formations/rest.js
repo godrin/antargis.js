@@ -1,4 +1,4 @@
-define(["formations/base"],function(Base) {
+define(["formations/base", "angle" ],function(Base, Angle) {
 
   var lines=[10,14,20,40,100];
 
@@ -27,6 +27,11 @@ define(["formations/base"],function(Base) {
     var angle=(i/count)*2*Math.PI;
     var radius=(row+1)*1.4;
     return new THREE.Vector2(Math.sin(angle)*radius,Math.cos(angle)*radius);
+  };
+
+  restForm.prototype.getDir = function(boss,e) {
+    var newPos = this.getPos(boss,e);
+    return Angle.fromVector2(new THREE.Vector2().subVectors(boss.pos,newPos));
   };
 
   return restForm;

@@ -13,7 +13,6 @@ define(["formations",
         this.formation=new Formations.Rest();
       else
         this.formation=new Formations.Null();
-      this.formation=new Formations.Move();
     };
     Job.prototype.name = "hlRest";
     Job.prototype.assignMeJob=function(e) {
@@ -21,7 +20,7 @@ define(["formations",
       if(e.pos.distanceTo(newPos)>0.1)
         e.pushJob(new ml.Move(e,newPos));
       else {
-        var dir=Angle.fromVector2(new THREE.Vector2().subVectors(this.entity.pos,e.pos));
+        var dir=this.formation.getDir(this.entity,e);
         e.pushJob(new ml.Rest(e,5,dir));
       }
     };
