@@ -12,6 +12,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     _.extend(this,entity);
     _.extend(this,ops);
     var self=this;
+    this.state= {};
     this.name=this.type;
     this.pos=new THREE.Vector2(this.pos.x,this.pos.y); //.copy(this.pos);
     this.uid=uid++;
@@ -85,6 +86,8 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
         self.updateMeshPos();
         if(self.animationFinished)
           self.mesh.animationFinished=_.bind(self.animationFinished,self);
+        self.mesh.hovered(self.state.hovered);
+        self.mesh.selected(self.state.selected);
       } else {
         mesh.remove();
       }
@@ -92,10 +95,10 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
   };
 
   Entity.prototype.hovered=function(val) {
-    return this.mesh.hovered(val);
+    return this.mesh.hovered(this.state.hovered = val);
   };
   Entity.prototype.selected=function(val) {
-    return this.mesh.selected(val);
+    return this.mesh.selected(this.state.selected = val);
   };
 
   Entity.prototype.increaseBy = function(what, amount) {
