@@ -30,11 +30,13 @@ define(["formations",
       if(this.done)
         this.ready=true;
       else {
+      alert("FIRST");
         this.done=true;
         _.each(this.entity.followers,function(e) {
           self.assignMeJob(e);
         });
-        this.entity.pushJob(new ml.Rest(e,5,dir));
+        //FIXME: Wofür ???
+        this.entity.pushJob(new ml.Rest(this.entity,5,dir));
       }
     };
     return Job;

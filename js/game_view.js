@@ -65,14 +65,16 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
     });
     base.render({
       frameCallback:function(delta) {
-        _.each(world.entities,function(e) {
-          if(e && e.onFrame)
-            e.onFrame(delta);
-        });
-      if(world && world.$scope)
-        world.$scope.$apply();
-        else
-        console.log("NO APPLY");
+        if(!world.pause) {
+          _.each(world.entities,function(e) {
+            if(e && e.onFrame)
+              e.onFrame(delta);
+          });
+          if(world && world.$scope)
+            world.$scope.$apply();
+          else
+            console.log("NO APPLY");
+        }
       }
     });
   }

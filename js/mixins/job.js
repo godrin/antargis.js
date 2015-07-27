@@ -1,7 +1,10 @@
 define(["jobs"],function(Jobs) {
+  "use strict";
   return {
-    jobs:[], 
+    jobs:null, 
     pushJob:function(job) {
+      if(!this.jobs)
+        this.jobs=[];
       this.jobs.push(job);
       this.updateCurrentJob();
     },
@@ -10,10 +13,11 @@ define(["jobs"],function(Jobs) {
       this.updateCurrentJob();
     },
     updateCurrentJob:function() {
-      this.currentJob = this.jobs[this.jobs.length-1];
+      if(this.jobs)
+        this.currentJob = this.jobs[this.jobs.length-1];
     },
     onFrame:function(delta) {
-      while(delta>0 && this.jobs.length>0) {
+      while(this.jobs && delta>0 && this.jobs.length>0) {
         var job=this.jobs[this.jobs.length-1];
         delta=job.onFrame(delta);
         if(job.ready) {

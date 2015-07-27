@@ -8,6 +8,7 @@ define(["angle"],function(Angle) {
     this.lltargetPos=pos;
     this.distance=distance||0;
     console.log("JOB SPEED",this.speed);
+
   };
   Job.prototype.name = "llMove";
 

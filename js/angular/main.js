@@ -1,9 +1,10 @@
-define(['angular/levels','angular/inventory'],function(LevelController, InventoryController) {
+define(['angular/levels','angular/inventory', 'angular/debug'],function(LevelController, InventoryController, DebugController) {
 
   var gameApp = angular.module('game-app',['ngResource']);
 
   function Gui(world, el) {
     gameApp.controller('LevelController', LevelController);
+    gameApp.controller('DebugController', DebugController);
     gameApp.controller('InventoryController', InventoryController);
     gameApp.directive('ag',function() {
       return {
