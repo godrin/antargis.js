@@ -58,6 +58,7 @@ define([],function() {
     tower: {
       mesh:"tower",
       scale:1.8,
+      rotation: { z: 3.14*7/4+3.14 },
     },
     man_pick: {
       mesh:"man_pick",
