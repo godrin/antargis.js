@@ -31,6 +31,7 @@ define(["formations",
         this.ready=true;
       }
       else {
+      alert("FIRST");
         console.log("FIRST",this.done);
         this.done=true;
         _.each(this.entity.followers,function(e) {

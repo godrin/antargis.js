@@ -24,6 +24,7 @@ define(["formations",
       }
     };
     Job.prototype.moveToOrWait = function(e, newPos, dir) {
+      e.resetNonHlJobs();
       if(e.pos.distanceTo(newPos)>0.1)
         e.pushJob(new ml.Move(e,newPos));
       else {
@@ -33,20 +34,25 @@ define(["formations",
           this.waiting.push(e);
         }
       }
+      this.checkReadyFormat();
+    };
+    Job.prototype.checkReadyFormat = function() {
+      if(this.waiting.length==this.entity.followers.length+1) {
+      console.log("READY",this.waiting.length,this.entity.followers.length);
+        this.ready=true;
+        }
     };
     Job.prototype.onFrame=function(delta) {
       var self=this;
-      if(this.done)
-        this.ready=true;
-      else {
+      if(this.done) {
+      //  this.ready=true;
+      } else {
         this.done=true;
         _.each(this.entity.followers,function(e) {
           self.assignMeJob(e);
         });
         this.assignMeJob(this.entity);
       }
-      if(this.waiting.length>50)
-        this.ready=true;
     };
     return Job;
   });
