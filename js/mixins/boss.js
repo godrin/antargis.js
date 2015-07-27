@@ -5,11 +5,13 @@ define(["formations", "angle",
   ) {
     return {
       followers:[],
+      // deprecated
       pushHlJob:function(job) {
-        this.hljob=job;
+        this.pushJob(job);
       },
+      // deprecated
       clearHlJob:function() {
-        delete this.hljob;
+        this.resetJobs();
       },
       onNoJob:function() {
         var boss = this;
@@ -18,19 +20,30 @@ define(["formations", "angle",
         if(boss && boss.assignMeJob)
           boss.assignMeJob(this);
       },
+      getHlJob:function() {
+        if(this.jobs)
+          for(var i=this.jobs.length-1;i>=0;i--) {
+            if(this.jobs[i].assignMeJob)
+              return this.jobs[i];
+          }
+      },
       assignMeJob:function(e) {
-        if(!this.hljob) {
+        var hljob=this.getHlJob();
+
+        if(!hljob) {
           if(this.ai)  {
             this.ai();
           }
-          if(!this.hljob) {
-            this.hljob=new Jobs.hl.Rest(this,10,this.isA("hero"));
+          // try again
+          hljob=this.getHlJob();
+          if(!hljob) {
+            this.pushHlJob(new Jobs.hl.Rest(this,10,this.isA("hero")));
             console.debug("boss - No hljob created, resting for 10 seconds");
           }
         }
 
-        if(this.hljob) {
-          this.hljob.assignMeJob(e);
+        if(hljob) {
+          hljob.assignMeJob(e);
         }
       },
       addFollower:function(follower) {

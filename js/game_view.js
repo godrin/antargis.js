@@ -47,6 +47,7 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
         if(world.hoveredEntity) {
           world.select(world.hoveredEntity);
         } else if(world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player=="human") {
+        console.log("assign new move job");
           world.selectedEntity.resetJobs();
 //          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
           world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity,lastPos));

@@ -16,6 +16,7 @@ define(["formations",
     };
     Job.prototype.name = "hlRest";
     Job.prototype.assignMeJob=function(e) {
+      e.resetNonHlJobs();
       var newPos=this.formation.getPos(this.entity,e);
       if(e.pos.distanceTo(newPos)>0.1)
         e.pushJob(new ml.Move(e,newPos));
@@ -26,16 +27,15 @@ define(["formations",
     };
     Job.prototype.onFrame=function(delta) {
       var self=this;
-      if(this.done)
+      if(this.done) {
         this.ready=true;
+      }
       else {
-      alert("FIRST");
+        console.log("FIRST",this.done);
         this.done=true;
         _.each(this.entity.followers,function(e) {
           self.assignMeJob(e);
         });
-        //FIXME: Wofür ???
-        this.entity.pushJob(new ml.Rest(this.entity,5,dir));
       }
     };
     return Job;

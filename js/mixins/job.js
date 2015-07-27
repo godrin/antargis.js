@@ -8,6 +8,10 @@ define(["jobs"],function(Jobs) {
       this.jobs.push(job);
       this.updateCurrentJob();
     },
+    resetNonHlJobs:function() {
+      if(this.jobs)
+        this.jobs = _.filter(this.jobs,function(job) { return job.assignMeJob; });
+    },
     resetJobs:function() {
       this.jobs=[];
       this.updateCurrentJob();
@@ -32,7 +36,6 @@ define(["jobs"],function(Jobs) {
       }
     } ,
     playAnimation:function(name) {
-      this.resetJobs();
       this.pushJob(new Jobs.ll.Rest(this,20));
       this.setMesh(name);
     },
