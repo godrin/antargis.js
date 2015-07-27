@@ -1,7 +1,8 @@
-define(["formations/base","formations/null","formations/rest"],function(Base,Null,Rest) {
+define(["formations/base", "formations/null", "formations/move", "formations/rest"],function(Base, Null, Move, Rest) {
   return {
-    Base:Base,
-    Null:Null,
-    Rest:Rest
+    Base: Base,
+    Move: Move,
+    Null: Null,
+    Rest: Rest
   };
 });

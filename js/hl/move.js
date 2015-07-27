@@ -13,9 +13,8 @@ define(["formations",
         this.formation=new Formations.Rest();
       else
         this.formation=new Formations.Null();
-      this.formation=new Formations.Move();
     };
-    Job.prototype.name = "hlRest";
+    Job.prototype.name = "hlMove";
     Job.prototype.assignMeJob=function(e) {
       var newPos=this.formation.getPos(this.entity,e);
       if(e.pos.distanceTo(newPos)>0.1)
@@ -39,3 +38,4 @@ define(["formations",
     };
     return Job;
   });
+
