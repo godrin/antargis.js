@@ -1,7 +1,7 @@
 <div class='inventory' ng-controller='InventoryController'>
   <div ag class='ag-border' ng-if="world.selectedEntity">
     <div class='ag-content'>
-      <h3>{{world.selectedEntity.name}} {{world.selectedEntity.typeName}} ({{world.selectedEntity.player}})</h3>
+      <h3>{{world.selectedEntity.name}} {{world.selectedEntity.typeName}} ({{world.selectedEntity.player}}) ({{world.selectedEntity.pos.x}},{{world.selectedEntity.pos.y}})</h3>
       <p ng-repeat="job in world.selectedEntity.jobs">{{job.name}}</p>
       <p>boss:{{world.selectedEntity.boss.name}}</p>
       <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>

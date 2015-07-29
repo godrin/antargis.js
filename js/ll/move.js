@@ -24,7 +24,8 @@ define(["angle"],function(Angle) {
       if(distance<togo) {
         if(this.distance>0)
           e.pos=new THREE.Vector2().copy(this.lltargetPos).add(new THREE.Vector2().subVectors(this.lltargetPos,e.pos).setLength(-this.distance));
-        //        e.pos=this.lltargetPos;
+        else
+          e.pos=new THREE.Vector2().copy(this.lltargetPos);
         delete this.lltargetPos;
         this.ready=true;
         // return rest time

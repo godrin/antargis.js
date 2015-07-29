@@ -6,7 +6,12 @@ define(["formations", "angle",
     return {
       postLoad:function() {
         console.log("POSTLOAD");
-        this.followers=[];
+        if(!this.followers)
+          this.followers=[];
+        else {
+          // FIXME: retrieve objects from ids
+        }
+
       },
       followers:null,
       // deprecated
