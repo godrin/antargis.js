@@ -18,7 +18,6 @@ define([],function() {
             this.boss.addFollower(this);
           }
         }
-
       }
     },
     onNoJob:function() {

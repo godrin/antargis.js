@@ -4,7 +4,11 @@ define(["formations", "angle",
     Jobs
   ) {
     return {
-      followers:[],
+      postLoad:function() {
+        console.log("POSTLOAD");
+        this.followers=[];
+      },
+      followers:null,
       // deprecated
       pushHlJob:function(job) {
         this.pushJob(job);
