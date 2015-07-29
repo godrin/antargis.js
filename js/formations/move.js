@@ -17,9 +17,10 @@ define(["formations/base"],function(Base) {
     var y = row + block;
 
     var angle = this.angle;
+    var d = 0.8;
 
-    return new THREE.Vector2(Math.cos(angle)* x - Math.sin(angle) * y, 
-    Math.sin(angle) * x + Math.cos(angle) * y );
+    return new THREE.Vector2(d * Math.cos(angle) * x - d * Math.sin(angle) * y, 
+    d * Math.sin(angle) * x + d * Math.cos(angle) * y );
   };
   moveForm.prototype.getDir = function(boss,e) {
     return this.angle;

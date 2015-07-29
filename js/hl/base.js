@@ -19,22 +19,6 @@ define([],function() {
         console.log("ONFRAME",this.ready);
         this.assignMeJob(this.entity);
       }
-      /*
-
-
-      var self=this;
-      if(this.done) {
-      self.assignMeJob(e);
-      alert("HLREADY");
-      this.ready=true;
-      }
-      else {
-      console.log("FIRST",this.done);
-      this.done=true;
-      _.each(this.entity.followers,function(e) {
-      self.assignMeJob(e);
-      });
-      }*/
   };
 
   return Base;
