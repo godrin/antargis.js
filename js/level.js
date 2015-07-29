@@ -8,6 +8,7 @@ define(["entity"],function(Entity) {
       entity.world = world;
       world.push(entity);
     });
+    _.each(world.entities,function(e) { e.postLoad(); });
   };
 
   return {

@@ -1,7 +1,7 @@
 <div class='inventory' ng-controller='WorldController'>
   <div ag class='ag-border'>
     <div class='ag-content' ng-repeat="entity in world.entities">
-      <h3 ng-click="world.select(entity)">{{entity.name}}</h3>
+      <h3 ng-click="world.select(entity)">{{entity.name||entity.typeName}}</h3>
     </div>
   </div>
 </div>

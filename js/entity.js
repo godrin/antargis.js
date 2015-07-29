@@ -11,12 +11,12 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
 
     _.extend(this,entity);
     _.extend(this,ops);
-    var self=this;
-    this.state= {};
-    this.name=this.type;
-    this.pos=new THREE.Vector2(this.pos.x,this.pos.y); //.copy(this.pos);
-    this.uid=uid++;
-    this.map=heightmap;
+    var self = this;
+    this.state = {};
+    this.typeName = this.type;
+    this.pos = new THREE.Vector2(this.pos.x,this.pos.y);
+    this.uid = uid++;
+    this.map = heightmap;
     // clone
     this.resources=_.extend({},this.resources);
     this.type=entity;
@@ -36,6 +36,13 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
         }
       });
     }
+  };
+
+  Entity.prototype.postLoad = function() {
+    _.each(self.mixins,function(mixin) {
+      if(mixin.postLoad)
+        mixin.postLoad.apply(this,[]);
+    });
   };
 
   Entity.prototype.isA = function(mixin) {
@@ -71,7 +78,7 @@ define(["models", "config/entities", "mixins"],function(Models, Entities, Mixins
     } else if(entity.mesh)
       meshType=entity.mesh;
     else
-      meshType=this.name;
+      meshType=this.typeName;
 
     self.meshType=meshType;
     self.animation=animation;
