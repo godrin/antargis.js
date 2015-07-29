@@ -28,7 +28,13 @@ define(["formations",
     };
     Job.prototype.assignMeJob=function(e) {
       if(!this.commonStart()) {
-        e.pushJob(new ml.Move(e, this.formation.getPos(this.entity, e, this.pos)));
+        var targetPos = this.formation.getPos(this.entity, e, this.pos);
+        var curDist = targetPos.distanceTo(e.pos);
+        if(Math.abs(curDist-this.dist)<0.03)
+          this.ready=true;
+        else {
+          e.pushJob(new ml.Move(e, targetPos));
+        }
       }
     };
     return Job;

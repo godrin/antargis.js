@@ -28,17 +28,16 @@ define(["formations",
       else {
         var dir=this.formation.getDir(this.entity,e);
         e.pushJob(new ml.Stand(e,5,dir));
-        if(!_.has(this.waiting,e)) {
-          this.waiting.push(e);
-        }
+        this.waiting = _.union(this.waiting,[e.uid]);
       }
       this.checkReadyFormat();
     };
     Job.prototype.checkReadyFormat = function() {
-      if(this.waiting.length>=this.entity.followers.length+1) {
-        console.log("READY",this.waiting.length,this.entity.followers.length);
+      if(this.waiting.length>=this.entity.followers.length+1 && this.waiting.length<40) {
+        console.log("READY",this.waiting.length,this.entity.followers.length, this.waiting);
 //        alert("READY");
         this.ready=true;
+        this.entity.resetNonHlJobs();
       }
     };
     return Job;

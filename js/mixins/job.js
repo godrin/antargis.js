@@ -5,6 +5,9 @@ define(["jobs"],function(Jobs) {
     pushJob:function(job) {
       if(!this.jobs)
         this.jobs=[];
+      if(this.jobs[this.jobs.length-1] && this.jobs[this.jobs.length-1].ready) {
+        throw "Job is ready - dont' push!";
+      }
       this.jobs.push(job);
       this.updateCurrentJob();
       if(this.currentJob.init)
@@ -27,6 +30,9 @@ define(["jobs"],function(Jobs) {
         var job=this.jobs[this.jobs.length-1];
         delta=job.onFrame(delta);
         if(job.ready) {
+          if(job.assignMeJob) {
+            console.log("JOB READY!!!", this.jobs);
+          }
           this.jobs.pop();
           this.updateCurrentJob();
         }
