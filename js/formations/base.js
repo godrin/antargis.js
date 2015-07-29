@@ -28,19 +28,22 @@ define([],function() {
     return new THREE.Vector2(col*d-d*2,row*d);
   };
 
-  Base.prototype.computePos=function(boss,i) {
-    return new THREE.Vector2().addVectors(this.computeRelativePosCached(boss,i),boss.pos);
+  Base.prototype.computePos=function(boss, i, basePos) {
+    return new THREE.Vector2().addVectors(this.computeRelativePosCached(boss,i), basePos);
   };
 
-  Base.prototype.getPos=function(boss,follower) {
+  Base.prototype.getPos=function(boss, follower, basePos) {
+
+    if(!basePos)
+      basePos = boss.pos;
 
     if(boss == follower)
-      return new THREE.Vector2().copy(boss.pos);
+      return new THREE.Vector2().copy(basePos);
 
     var followers=this.sort(boss.followers);
 
     var i=_.indexOf(followers,follower);
-    return this.computePos(boss,i);
+    return this.computePos(boss, i, basePos);
   };
 
   return Base;

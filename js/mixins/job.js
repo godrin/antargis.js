@@ -7,6 +7,8 @@ define(["jobs"],function(Jobs) {
         this.jobs=[];
       this.jobs.push(job);
       this.updateCurrentJob();
+      if(this.currentJob.init)
+        this.currentJob.init();
     },
     resetNonHlJobs:function() {
       if(this.jobs)

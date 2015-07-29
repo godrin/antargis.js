@@ -14,8 +14,17 @@ define([],function() {
     }
   };
   Base.prototype.onFrame=function(delta) {
+if(!this.commonStart()) {
+console.log("ONFRAME",this.ready);
+this.assignMeJob(this.entity);
+}
+/*
+
+
     var self=this;
     if(this.done) {
+        self.assignMeJob(e);
+    alert("HLREADY");
       this.ready=true;
     }
     else {
@@ -24,7 +33,7 @@ define([],function() {
       _.each(this.entity.followers,function(e) {
         self.assignMeJob(e);
       });
-    }
+    }*/
   };
 
   return Base;

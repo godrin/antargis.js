@@ -1,7 +1,8 @@
 define(["formations/base"],function(Base) {
 
-  var moveForm=function() {
+  var moveForm=function(angle) {
     Base.apply(this,arguments);
+    this.angle = angle;
   };
   moveForm.prototype=Object.create(Base.prototype);
   moveForm.prototype.computeRelativePos=function(boss,i) {
@@ -15,13 +16,13 @@ define(["formations/base"],function(Base) {
     var x = col - 2;
     var y = row + block;
 
-    var angle = boss.rotation;
+    var angle = this.angle;
 
-    return new THREE.Vector2(Math.sin(angle) * y + Math.cos(angle)* x, 
-    Math.cos(angle) * y + Math.sin(angle) * x);
+    return new THREE.Vector2(Math.cos(angle)* x - Math.sin(angle) * y, 
+    Math.sin(angle) * x + Math.cos(angle) * y );
   };
   moveForm.prototype.getDir = function(boss,e) {
-    return boss.rotation;
+    return this.angle;
   };
 
   return moveForm;
