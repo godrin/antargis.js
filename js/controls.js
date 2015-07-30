@@ -51,13 +51,15 @@ define([],function() {
           });
       });
 
-      $(el).keydown(function(e) {
+      $(document).keydown(function(e) {
+        if(options && options.keydown)
+          return options.keydown({keyCode:e.keyCode,e:e},e);
         console.log("KEYD",e);
       });
 
       $(window).resize(function(e) {
         updateSize();
-        
+
         if(options && options.resize)
           options.resize({width:containerWidth, height: containerHeight });
 

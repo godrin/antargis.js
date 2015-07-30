@@ -63,6 +63,11 @@ define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, 
         base.camera.position.x-=d.dx*0.03;
         base.camera.position.y+=d.dy*0.03;
         base.camera.position.z=10+h;
+      },
+      keydown:function(e) {
+        if(e.keyCode == 27) {
+          world.select(null);
+        }
       }
     });
     base.render({
