@@ -1,8 +1,10 @@
-define(["ml", "ll"],function(ml, ll) {
-  var FetchJob=function(entity,count) {
+define(["hl/base", "ml", "ll"],function(Base, ml, ll) {
+  var FetchJob=function(entity, count) {
+    Base.apply(this, arguments);
     this.entity = entity;
     this.count = count || 3;
   };
+  FetchJob.prototype=Object.create(Base.prototype);
   FetchJob.prototype.name="hlFetch";
 
   FetchJob.prototype.selectResourceToGet=function() {
@@ -41,10 +43,10 @@ define(["ml", "ll"],function(ml, ll) {
       this.entity.clearHlJob();
     }
   };
-
+/*
   FetchJob.prototype.onFrame=function(delta) {
     console.debug("fetch - FIXME hljob-fetch-onframe");
   };
-
+*/
   return FetchJob;
 });
