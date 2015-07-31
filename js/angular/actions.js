@@ -2,6 +2,7 @@ define([],function() {
 
   function Controller($scope, world) {
     $scope.world = world;
+    $scope.actions = ["dismiss", "recruit"];
 
     $scope.doAction = function(which) {
       var job;

@@ -6,6 +6,7 @@
       <p ng-repeat="job in world.selectedEntity.jobs">{{job.name}}</p>
       <p>boss:{{world.selectedEntity.boss.name}}</p>
       <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
+      <div ng-if="world.selectedEntity.followers.length>0">Followers:{{world.selectedEntity.followers.length}}</div>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@ define([],function() {
       }
     },
     fishing_hut: {
-      mixins:["boss"]
+      mixins:["boss", "job"]
     },
     workshop: {
       needed:{
@@ -42,7 +42,7 @@ define([],function() {
           stone:1
         }
       },
-      mixins:["boss","house", "smoke"]
+      mixins:["boss", "job", "house", "smoke"]
     },
     townhall: {
       needed:{
@@ -51,7 +51,7 @@ define([],function() {
         water:1,
         food:1
       },
-      mixins:["boss","house"]
+      mixins:["boss", "job", "house"]
     },
     hero: {
       mixins: ["boss", "hero", "job", "player"]

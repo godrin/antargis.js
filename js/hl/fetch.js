@@ -1,4 +1,4 @@
-define(["ml"],function(ml) {
+define(["ml", "ll"],function(ml, ll) {
   var FetchJob=function(entity,count) {
     this.entity = entity;
     this.count = count || 3;
@@ -19,6 +19,11 @@ define(["ml"],function(ml) {
   };
 
   FetchJob.prototype.assignMeJob=function(e) {
+    if(!e.isA("follower")) {
+      e.pushJob(new ll.Rest(e,10));
+      return;
+    }
+
     this.count-=1;
     console.debug("fetch - ASSIGN FETCH MLJOB",e);
     var selectedResource=this.selectResourceToGet();
