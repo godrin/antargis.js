@@ -13,6 +13,10 @@
   margin:3px;
   border-bottom:2px groove #333;
 }
+.ag-border {
+  padding:0px;
+  background-color:black;
+}
 
 .ag-border, .ag li {
   border:2px ridge #f3ac0e;
@@ -42,4 +46,6 @@
 .ag li {
   margin:0px;
 }
-
+.pull-right {
+  float:right;
+}

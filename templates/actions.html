@@ -1,2 +1,5 @@
-<div>
+<div ng-controller="ActionController" class='actions ag'>
+  <div class='ag-border' ng-repeat="action in actions">
+    <div class='ag-content' ng-click="doAction(action)">{{action}}</div>
+  </div>
 </div>

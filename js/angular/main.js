@@ -1,4 +1,6 @@
-define(['angular/levels','angular/inventory', 'angular/debug'],function(LevelController, InventoryController, DebugController) {
+define(['angular/levels', 'angular/inventory', 
+'angular/debug', 'angular/actions'],
+function(LevelController, InventoryController, DebugController, ActionController) {
 
   var gameApp = angular.module('game-app',['ngResource']);
 
@@ -6,6 +8,7 @@ define(['angular/levels','angular/inventory', 'angular/debug'],function(LevelCon
     gameApp.controller('LevelController', LevelController);
     gameApp.controller('DebugController', DebugController);
     gameApp.controller('InventoryController', InventoryController);
+    gameApp.controller('ActionController', ActionController);
     gameApp.directive('ag',function() {
       return {
         controller:function($element) {
