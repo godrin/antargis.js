@@ -11,7 +11,6 @@ define(["formations", "angle",
       else {
         // FIXME: retrieve objects from ids
       }
-
     },
     followers: null,
     // deprecated
@@ -60,7 +59,7 @@ define(["formations", "angle",
     },
     dismiss: function(follower) {
       this.followers = _.without(this.followers, follower);
-      console.log("dismissed",follower, this.followers.length);
+      console.log("dismissed", follower, this.followers.length);
       delete follower.boss;
       follower.resetJobs();
     }
