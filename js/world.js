@@ -61,5 +61,12 @@ define([], function() {
       this.selectedEntity.selected(true);
   };
 
+  World.prototype.getSelectedHero = function() {
+    if (!this.selectedHero) {
+      this.selectedHero = this.search({player:"human"})[0];
+    }
+    return this.selectedHero;
+  };
+
   return World;
 });

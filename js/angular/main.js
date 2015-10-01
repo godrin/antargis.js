@@ -1,5 +1,8 @@
-define(['angular/levels', 'angular/inventory', 
-'angular/debug', 'angular/actions'],
+define(['angular/levels', 
+  'angular/inventory', 
+  'angular/debug', 
+  'angular/actions'
+],
 function(LevelController, InventoryController, DebugController, ActionController) {
 
   var gameApp = angular.module('game-app',['ngResource']);

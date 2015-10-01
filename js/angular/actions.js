@@ -6,17 +6,20 @@ define(["jobs"], function(Jobs) {
 
     $scope.doAction = function(which) {
       var job;
+      var hero = $scope.world.getSelectedHero();
       console.log("doAction", which);
       if (which == "dismiss") {
-        job = new Jobs.hl.Dismiss(world.selectedEntity);
+        job = new Jobs.hl.Dismiss(hero);
+      } else if (which == "recruit") {
+        job = new Jobs.hl.Recruit(hero, world.selectedEntity);
       } else if (which == "rest") {
-        job = new Jobs.hl.Rest(world.selectedEntity, 10, true);
+        job = new Jobs.hl.Rest(hero, 10, true);
         //      job = new Jobs.ml.Move(world.selectedEntity,lastPos);
       }
       console.log("JOB",job);
-      world.selectedEntity.resetJobs();
+      hero.resetJobs();
       if (job)
-        world.selectedEntity.pushHlJob(job);
+        hero.pushHlJob(job);
       return false;
     }
   }
