@@ -1,0 +1,156 @@
+<style>
+  .credits {
+    position: 
+  }
+  @-webkit-keyframes scroll {
+    0%   { -webkit-transform:translate(0em,50em); }
+    100% {-webkit-transform:translate(0em,-200em); }
+  }
+
+  .credits{
+    position:absolute;
+    animation: scroll 30s infinite;
+    -webkit-animation: scroll 30s 1;
+    -webkit-animation-timing-function: linear;
+    width:100% ;
+    text-align:center;
+  }
+  .credits-container{
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    overflow:hidden;
+  }
+  .credits-container:before {
+    content:'';
+    position:absolute;
+    height:10em;
+    width:100%;
+    z-index:1;
+
+    background: rgba(0,0,0,1);
+    background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,0)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+  }
+  .credits-container:after{
+    content:'';
+    position:absolute;
+    bottom:0px;
+    height:10em;
+    width:100%;
+    z-index:1;
+
+    background: rgba(0,0,0,0);
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,1)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
+  }
+</style>
+
+<div class='ag credits-container'>
+  <div class='credits'>
+    <h1>Design & Programming</h1>
+    <p>David Kamphausen</p>
+
+    <h1>Arts</h1>
+    <p>David Kamphausen</p>
+    <p>Jason Lutes (portraits from Wesnoth)</p>
+
+    <h1>Music & Sounds</h1>
+    <p>Mr.Maudaline</p>
+
+    <h1>Story</h1>
+    <p>David Kamphausen (Godrin)</p>
+    <p>Gonzalo Baltanás (Nerian)</p>
+    <p>Alexandru Lazar</p>
+
+    <h1>Level design</h1>
+    <p>Gonzalo Baltanás (Nerian)</p>
+    <p>David Kamphausen (Godrin)</p>
+
+    <h1>Packaging</h1>
+    <p>Andreas Bresser (Pscho)</p>
+
+    <h1>Contributions</h1>
+    <p>Alexandru Lazar (std)</p>
+    <p>Yura Semashko (Yurand)</p>
+    <p>Chris Smith (Sparky)</p>
+    <p>Andreas Bresser (Pscho)</p>
+    <p>Toby Haynes (Nexus6)</p>
+    <p>others to be found in AUTHORS</p>
+
+    <h1>Translators</h1>
+    <p>Gonzalo Baltanás (Nerian)</p>
+    <p>Andreas Bresser (Pscho)</p>
+
+
+    <h1>PPC testing</h1>
+    <p>Cyril Brulebois (KiBi)</p>
+
+    <h1>Testing</h1>
+    <p>Shevegen (on many,many platforms)</p>
+    <p>Sebastian Bertho</p>
+    <p>Martin Kamphausen</p>
+    <p>Maik-David Kroyer</p>
+    <p>and many, many more</p>
+
+    <h1>Thanks for inspiration go to</h1>
+    <p>Bullfrog</p>
+    <p>Battle for Wesnoth</p>
+    <p>(www.wesnoth.org)</p>
+
+    <p>Daimonin</p>
+    <p>(www.daimonin.net)</p>
+
+    <h1>Special thanks for their support go to</h1>
+    <p>Claudia Kamphausen</p>
+    <p>Maik-David Kroyer</p>
+    <p>Charles Goodwin (charlieg)</p>
+    <p>Visit his freegamer.blogspot.com</p>
+
+    <h1>Thanks go to these for opening their source</h1>
+    <h1>and thus helping understand</h1>
+    <p>Lee Thomason</p>
+    <p>(http://www.grinninglizard.com)</p>
+
+    <p>Glest</p>
+    <p>(www.glest.org)</p>
+
+    <p>ParaGUI</p>
+    <p>(www.paragui.org)</p>
+
+    <p>If we have forgotten you,</p>
+    <p>give us a note.</p>
+
+
+
+
+
+
+
+
+    <p>You're still there?</p>
+
+
+
+
+
+
+
+    <p>Come on. If you are that interested,</p>
+    <p>come over to the forums and help!</p>
+
+
+  </div>
+</div>

@@ -6,6 +6,9 @@ define(['angular-resource', 'angular-route', 'underscore'],function(r) {
       templateUrl:'intro.html',
       controller: 'IntroController'
     })
+    .when('/credits', {
+      templateUrl: 'credits.html'
+    })
     .when('/menu', {
       templateUrl: 'menu.html'
     })

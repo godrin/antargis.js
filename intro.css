@@ -28,4 +28,8 @@ body {
   width:100%;
   text-align:center;
 }
-
+.page-intro .skip {
+  position:absolute;
+  bottom:2em;
+  right:2em;
+}
