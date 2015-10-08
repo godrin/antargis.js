@@ -6,6 +6,11 @@ body {
   color:white;
 }
 
+@-webkit-keyframes fade {
+  0%   { top:40%; opacity: 0; }
+  50% { top:50%;opacity: 1.0; }
+  100% { top:55%; opacity: 0; }
+}
 @keyframes fade {
   0%   { top:40%; opacity: 0; }
   50% { top:50%;opacity: 1.0; }
@@ -19,6 +24,7 @@ body {
   color:#f3ac0e;
   text-shadow:1px 0px 0px #996d09, -1px 0px 0px #ffb40f, 0px -1px 0px #ffb40f, 0px 1px 0px #996d09;
   animation: fade 3s infinite;
+  -webkit-animation: fade 3s infinite;
   width:100%;
   text-align:center;
 }

@@ -1,10 +1,16 @@
-define(['angular-resource', 'angular-route'],function(r) {
+define(['angular-resource', 'angular-route', 'underscore'],function(r) {
   var app = angular.module("App",['ngRoute']);
 
   app.config(function($routeProvider) {
     $routeProvider.when('/intro', {
       templateUrl:'intro.html',
       controller: 'IntroController'
+    })
+    .when('/menu', {
+      templateUrl: 'menu.html'
+    })
+    .otherwise({
+      redirectTo: '/intro'
     });
   });
 
@@ -15,17 +21,19 @@ define(['angular-resource', 'angular-route'],function(r) {
         $scope.screen = 0;
         $(".screen",$element).hide();
         $($(".screen",$element)[0]).show();
-        $(".screen").on("animationiteration",function() {
-          $($(".screen",$element)[$scope.screen]).hide();
-          $scope.$apply(function() {
-            $scope.screen = $scope.screen + 1;
-            if($scope.screen >= $(".screen",$element).length) {
-              location.hash="xy";
-            } else {
-              $($(".screen",$element)[$scope.screen]).show();
-            }
-          });
+        _.each(['webkitAnimationIteration','animationiteration'],function(evName) {
+          $(".screen").on(evName, function() {
+            $($(".screen",$element)[$scope.screen]).hide();
+            $scope.$apply(function() {
+              $scope.screen = $scope.screen + 1;
+              if($scope.screen >= $(".screen",$element).length) {
+                location.hash="/menu";
+              } else {
+                $($(".screen",$element)[$scope.screen]).show();
+              }
+            });
 
+          });
         });
       }
     };
