@@ -10,7 +10,8 @@ define(['angular-resource', 'angular-route', 'underscore'],function(r) {
       templateUrl: 'credits.html'
     })
     .when('/campaign/:name', {
-      templateUrl: 'game.html'
+      templateUrl: 'game.html',
+      controller:'GameController'
     })
     .when('/menu', {
       templateUrl: 'menu.html'

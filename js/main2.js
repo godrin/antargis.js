@@ -1,7 +1,7 @@
 requirejs.config({
   baseUrl:"js",
   paths: {
-    jquery: '../bower_components/jquery/dist/jquery',
+/*    jquery: '../bower_components/jquery/dist/jquery',
     underscore: '../bower_components/underscore/underscore',
     three: '../bower_components/threejs/build/three',
     objloader: 'libs/OBJLoader.js',
@@ -9,16 +9,17 @@ requirejs.config({
     shader_particles: 'libs/ShaderParticles.js',
     angularjs: '../bower_components/angular/angular',
     'angular-resource': '../bower_components/angular-resource/angular-resource',
-    'angular-route': '../bower_components/angular-route/angular-route.min'
+    'angular-route': '../bower_components/angular-route/angular-route.min',
+    three: '../bower_components/threejs/build/three',*/
   },
   shim: {
-    angular: {  'exports' : 'angular'},
+  /*  angular: {  'exports' : 'angular'},
     app2:{
       deps: ['jquery', 'angularjs']
     },
     'angular-resource': {
       deps: [ 'angularjs' ]
-    }
+    }*/
   },
   packages:[
     'jobs',
@@ -29,7 +30,7 @@ requirejs.config({
     'angular'
   ],
 });
-require(['app2'],function(app2) {
+require(['app2', 'ng_game'],function(app2) {
   console.log("APP",app2);
   // bootstrap angular 
   angular.bootstrap(document, ['App']);
