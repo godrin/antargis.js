@@ -1,5 +1,5 @@
-define(['angular-resource', 'angular-route', 'underscore'],function(r) {
-  var app = angular.module("App",['ngRoute']);
+define([],function(r) {
+  var app = angular.module("App",['ngRoute','angularSoundManager']);
 
   app.config(function($routeProvider) {
     $routeProvider.when('/intro', {

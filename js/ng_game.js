@@ -1,4 +1,4 @@
-define(["app2", "three","base"], function(app,_three, Base) {
+define(["app2", "base"], function(app,_three, Base) {
 
   app.controller('GameController', function($scope) {});
 
