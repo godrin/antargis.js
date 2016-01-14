@@ -87,10 +87,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
               if (e && e.onFrame)
                 e.onFrame(delta);
             });
-            if (world && world.$scope)
-              world.$scope.$apply();
-            else
-              console.log("NO APPLY");
+            $scope.$apply();
           }
         }
       });
