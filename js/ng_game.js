@@ -11,6 +11,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       description: 'Back to menu',
       callback: tomenu
     })
+
   });
 
   app.factory('World', function($q) {
@@ -60,6 +61,14 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
 
     $element.on("click",function() {
       console.log("CLICK",arguments);
+    });
+        
+    angular.element(window).on("resize",function(e) {
+      var size = {
+        width : $element.width(),
+        height : $element.height() 
+      };
+      data.setSize(size);
     });
 
     // FIXME: make scene a separate object
