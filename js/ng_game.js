@@ -51,8 +51,72 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     });
   });
 
-  app.controller('GameView', function($scope, $element) {
+  app.factory('Controls', function() {
+    return {
+      init:function($scope, $element) {
+        var controls = $scope.controls = {
+          mousedown:false,
+          ox: null,
+          oy: null,
+          moves:0,
+          containerWidth:$element.width(),
+          containerHeight:$element.height(),
+        };
+
+        $element.on("mouseup", function(e) {
+          controls.mousedown = false;
+        });
+        $element.on("mousedown", function(e) {
+          _.extend(controls, {
+            mousedown : true,
+            ox: e.pageX,
+            oy: e.pageY,
+            moves: 0
+          });
+        });
+        $element.on("click", function(e) {
+          console.log("CLICK",e);
+          if(controls.moves<4)
+            $scope.$emit("click",e);
+        });
+
+        $element.on("mousemove", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          controls.moves+=1;
+          if(controls.mousedown) {
+            $scope.$emit("move", {dx:e.pageX-controls.ox, dy:e.pageY-controls.oy});
+
+            ox=e.pageX;
+            oy=e.pageY;
+          }
+          $scope.$emit("hover", {
+            x:e.pageX,
+            y:e.pageY, 
+            rx:e.pageX/controls.containerWidth*2-1,
+            ry:-e.pageY/controls.containerHeight*2+1,
+          });
+        });
+      }
+    };
+  });
+
+  app.controller('GameView', function($scope, $element, Controls) {
     var data = new Base($element);
+
+    $scope.$on("click",function(e) {
+      console.log("click",e);
+    });
+    $scope.$on("hover",function(e) {
+      console.log("hover",e);
+    });
+    $scope.$on("move",function(e) {
+      console.log("MVOE",e);
+    });
+
+    $scope.$on("$destroy",function() {
+      data.destroy();
+    });
 
     $scope.$watch("world", function() {
       if ($scope.world)
@@ -62,7 +126,11 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     $element.on("click",function() {
       console.log("CLICK",arguments);
     });
-        
+
+    // mouse handling
+    Controls.init($scope,$element);
+
+    // handle resize of window and thus resize of the canvas
     angular.element(window).on("resize",function(e) {
       var size = {
         width : $element.width(),

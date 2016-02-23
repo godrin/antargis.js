@@ -79,14 +79,19 @@ define([],function() {
 
     self.renderer.setSize( window.innerWidth, window.innerHeight );
   };
+  Base.prototype.destroy = function() {
+    this.destroyed = true;
+  };
 
   Base.prototype.render = function(options) {
     var self = this;
     var lastTime=0;
 
     function render() {
+      console.log("RENDER");
 
-      requestAnimationFrame(render);
+      if(!self.destroyed)
+        requestAnimationFrame(render);
       var time = (new Date()).getTime();
       var timeDiff = time - lastTime;
       lastTime = time;
