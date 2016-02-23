@@ -28,7 +28,6 @@ define([],function(r) {
         $scope.screen = 0;
 
         function finish() {
-          console.log("FINISH");
           location.hash="/menu";
         }
 

@@ -1,5 +1,5 @@
 define([],function() {
-
+alert("CONtroLS");
   var mousedown=false;
   var containerWidth, containerHeight;
   var ox,oy;

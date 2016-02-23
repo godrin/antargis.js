@@ -1,15 +1,13 @@
 define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain) {
 
   app.controller('GameController', function($scope, hotkeys) {
-    console.log("HOTKEYS",hotkeys);
     var tomenu = function() {
-    console.log("TOMENU");
       location.hash="/menu";
     };
     hotkeys.bindTo($scope)
     .add({
       combo: 'esc',
-      description: 'blah blah',
+      description: 'Back to menu',
       callback: tomenu
     })
   });
@@ -55,7 +53,6 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var data = new Base($element);
 
     $scope.$watch("world", function() {
-      console.log("WWWWORLD", $scope.world);
       if ($scope.world)
         initScene($scope.world);
     });
