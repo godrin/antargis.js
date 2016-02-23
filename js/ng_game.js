@@ -1,5 +1,6 @@
 define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain) {
 
+  // game controller is the main controller used by the router doing only global things
   app.controller('GameController', function($scope, hotkeys) {
     var tomenu = function() {
       location.hash="/menu";
@@ -57,6 +58,11 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
         initScene($scope.world);
     });
 
+    $element.on("click",function() {
+      console.log("CLICK",arguments);
+    });
+
+    // FIXME: make scene a separate object
     function initScene(world) {
       var base = data;
       var geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -80,6 +86,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       Terrain.create(map, scene, threeHeightMap);
 
       // FIXME: load all models beforehand
+      // FIXME: support more than one scene
       world.initScene(scene);
 
       render();

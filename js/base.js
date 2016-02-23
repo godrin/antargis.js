@@ -91,12 +91,14 @@ define([],function() {
       var timeDiff = time - lastTime;
       lastTime = time;
 
-      var delta =  clock.getDelta();
-      var mydelta=timeDiff*0.001;
-      //        delta=timeDiff*0.001;
-      // use "Date" clock
-      if(true)
-        delta=mydelta;
+      var delta;
+      var use3jsTime=false;
+      
+      if(use3jsTime)
+        delta =  clock.getDelta();
+      else
+        delta=timeDiff*0.001;
+
       if(delta>0.1)
         delta=0.1;
       if(options && options.frameCallback)

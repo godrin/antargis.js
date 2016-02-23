@@ -1,3 +1,4 @@
+// deprecated - to be included into ng_game
 define([],function() {
 alert("CONtroLS");
   var mousedown=false;
@@ -26,7 +27,7 @@ alert("CONtroLS");
         moves=0;
       });
       $(el).click(function(e) {
-      console.log("CLICK",e);
+        console.log("CLICK",e);
         if(options && options.click && moves<4)
           options.click(e);
       });
