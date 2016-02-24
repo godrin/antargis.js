@@ -1,7 +1,7 @@
 define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain, Pick) {
 
   // game controller is the main controller used by the router doing only global things
-  app.controller('GameController', function($scope, hotkeys) {
+  app.controller('GameController', function($scope, hotkeys, World) {
     var tomenu = function() {
       location.hash="/menu";
     };
@@ -11,6 +11,9 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       description: 'Back to menu',
       callback: tomenu
     })
+    World.createWorld(64, "tests/fetch.js").then(function(world) {
+      $scope.world = world;
+    });
 
   });
 
@@ -43,14 +46,6 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
         });
       }
     };
-  });
-
-
-  // Store world in rootScope
-  app.run(function($rootScope, World) {
-    World.createWorld(64, "tests/fetch.js").then(function(world) {
-      $rootScope.world = world;
-    });
   });
 
   app.factory('Controls', function() {
@@ -121,27 +116,27 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       console.log("click",e,$scope.lastPos);
     });
     $scope.$on("hover",function(e,mouse) {
-        var res=Pick.pick(mouse, data.camera, data.scene);
+      var res=Pick.pick(mouse, data.camera, data.scene);
 
-        if(res.length>0) {
-          var entity=res[0].object.userData.entity;
-          $scope.world.hover(entity);
+      if(res.length>0) {
+        var entity=res[0].object.userData.entity;
+        $scope.world.hover(entity);
 
-          if(!entity) {
-            $scope.lastPos=new THREE.Vector2().copy(res[0].point);
-          }
+        if(!entity) {
+          $scope.lastPos=new THREE.Vector2().copy(res[0].point);
         }
+      }
     });
     $scope.$on("move",function(e,d) {
-        var x=data.camera.position.x;
-        var y=data.camera.position.y+5;
-        var h=$scope.world.map.get("rock").interpolate(x,y);
-        if(!h)
-          h=0;
+      var x=data.camera.position.x;
+      var y=data.camera.position.y+5;
+      var h=$scope.world.map.get("rock").interpolate(x,y);
+      if(!h)
+        h=0;
 
-        data.camera.position.x-=d.dx*0.03;
-        data.camera.position.y+=d.dy*0.03;
-        data.camera.position.z=10+h;
+      data.camera.position.x-=d.dx*0.03;
+      data.camera.position.y+=d.dy*0.03;
+      data.camera.position.z=10+h;
     });
 
     $scope.$on("$destroy",function() {
