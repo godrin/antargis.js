@@ -1,3 +1,5 @@
+
+alert("OLD GAME VIEW - DEPRECATED");
 define(["base", "terrain", "controls", "skybox", "pick", "jobs"],function(Base, Terrain, Controls, Skybox, Pick, Jobs) {
   "use strict";
   function GameView(el, world) {

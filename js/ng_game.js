@@ -1,4 +1,4 @@
-define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain) {
+define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain, Pick) {
 
   // game controller is the main controller used by the router doing only global things
   app.controller('GameController', function($scope, hotkeys) {
@@ -14,8 +14,10 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
 
   });
 
+
   app.factory('World', function($q) {
     return {
+      // FIXME: add facility to load worlds 
       createWorld: function(w, levelName) {
         return $q(function(resolve, reject) {
           var mapOptions = {
@@ -116,10 +118,19 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var data = new Base($element);
 
     $scope.$on("click",function(e) {
-      console.log("click",e);
+      console.log("click",e,$scope.lastPos);
     });
-    $scope.$on("hover",function(e,data) {
-      console.log("hover",data);
+    $scope.$on("hover",function(e,mouse) {
+        var res=Pick.pick(mouse, data.camera, data.scene);
+
+        if(res.length>0) {
+          var entity=res[0].object.userData.entity;
+          $scope.world.hover(entity);
+
+          if(!entity) {
+            $scope.lastPos=new THREE.Vector2().copy(res[0].point);
+          }
+        }
     });
     $scope.$on("move",function(e) {
       console.log("MVOE",e);
