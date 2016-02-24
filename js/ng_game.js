@@ -132,8 +132,16 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
           }
         }
     });
-    $scope.$on("move",function(e) {
-      console.log("MVOE",e);
+    $scope.$on("move",function(e,d) {
+        var x=data.camera.position.x;
+        var y=data.camera.position.y+5;
+        var h=$scope.world.map.get("rock").interpolate(x,y);
+        if(!h)
+          h=0;
+
+        data.camera.position.x-=d.dx*0.03;
+        data.camera.position.y+=d.dy*0.03;
+        data.camera.position.z=10+h;
     });
 
     $scope.$on("$destroy",function() {
