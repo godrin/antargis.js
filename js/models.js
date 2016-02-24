@@ -10,7 +10,6 @@ define(["model", "config/meshes"], function(Model, Meshes) {
   var jsonloader = new THREE.JSONLoader( manager );
   var imageloader = new THREE.ImageLoader( manager );
 
-  var callbacks={};
   function ensureLoop( animation ) {
     return;
     for ( var i = 0; i < animation.hierarchy.length; i ++ ) {
@@ -35,8 +34,14 @@ define(["model", "config/meshes"], function(Model, Meshes) {
         console.warn("No Mesh defined for name '"+mesh+"'");
       }
       var loadfct=(meshDef.type=="json")?"loadJSON":"loadObj";
+      if(!scene.models)
+        scene.models={callbacks:[]};
 
-      this[loadfct](mesh, animation, function(objects) {
+      var models = scene.models;
+
+
+      this[loadfct](mesh, animation, models, function(objects) {
+      console.log("LOADED",objects);
         if(!(objects instanceof Array)) {
           objects=[objects];
         }
@@ -82,11 +87,11 @@ define(["model", "config/meshes"], function(Model, Meshes) {
       });
     },
 
-    loadObj:function(name, dummy, callback) {
+    loadObj:function(name, dummy, models, callback) {
       var options = Meshes[name];
       var key=name;
       var mesh=options.mesh||name;
-
+      var callbacks = models.callbacks;
 
       if(models[key])
         return callback(models[key].clone());
@@ -187,7 +192,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
         animation.update( Math.random()*10 );
     },
 
-    loadJSON:function(name, animation, callback) {
+    loadJSON:function(name, animation, models, callback) {
       var options=_.extend({},Meshes[name]);
       if(Meshes[name].animations[animation])
         options=_.extend(options,Meshes[name].animations[animation]);
@@ -201,6 +206,7 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
       }
 
+      var callbacks = models.callbacks;
       if(callbacks[name]) {
         callbacks[name].push(callback);
         return;

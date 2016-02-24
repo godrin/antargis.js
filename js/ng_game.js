@@ -113,7 +113,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var data = new Base($element);
 
     $scope.$on("click",function(e) {
-      console.log("click",e,$scope.lastPos);
+      console.log("click",e,$scope.lastPos, $scope.world);
     });
     $scope.$on("hover",function(e,mouse) {
       var res=Pick.pick(mouse, data.camera, data.scene);
@@ -199,6 +199,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       var base = data;
       var world = $scope.world;
       base.render({
+        // do an update of the world on each frame
         frameCallback: function(delta) {
           if (!world.pause) {
             _.each(world.entities, function(e) {

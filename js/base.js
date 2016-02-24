@@ -88,8 +88,7 @@ define([],function() {
     var lastTime=0;
 
     function render() {
-      console.log("RENDER");
-
+      // stop this rendering - because the scope / canvas is destroyed
       if(!self.destroyed)
         requestAnimationFrame(render);
       var time = (new Date()).getTime();
