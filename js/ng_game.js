@@ -58,10 +58,19 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
           mousedown:false,
           ox: null,
           oy: null,
-          moves:0,
-          containerWidth:$element.width(),
-          containerHeight:$element.height(),
+          moves:0
         };
+        function setSize() {
+          _.extend(controls, {
+            containerWidth:$element.width(),
+            containerHeight:$element.height()
+          });
+        }
+        setSize();
+        var resizer = angular.element(window).on("resize",setSize);
+        $scope.$on("$destroy", function() {
+          resizer.off(); 
+        });
 
         $element.on("mouseup", function(e) {
           controls.mousedown = false;
@@ -83,18 +92,20 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
         $element.on("mousemove", function(e) {
           e.preventDefault();
           e.stopPropagation();
+          var rx = e.pageX / controls.containerWidth * 2 - 1;
+          var ry = - e.pageY / controls.containerHeight * 2 + 1;
           controls.moves+=1;
           if(controls.mousedown) {
-            $scope.$emit("move", {dx:e.pageX-controls.ox, dy:e.pageY-controls.oy});
+            $scope.$emit("move", {dx: e.pageX-controls.ox, dy: e.pageY-controls.oy});
 
-            ox=e.pageX;
-            oy=e.pageY;
+            controls.ox = e.pageX;
+            controls.oy = e.pageY;
           }
           $scope.$emit("hover", {
-            x:e.pageX,
-            y:e.pageY, 
-            rx:e.pageX/controls.containerWidth*2-1,
-            ry:-e.pageY/controls.containerHeight*2+1,
+            x: e.pageX,
+            y: e.pageY, 
+            rx: rx,
+            ry: ry
           });
         });
       }
@@ -107,8 +118,8 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     $scope.$on("click",function(e) {
       console.log("click",e);
     });
-    $scope.$on("hover",function(e) {
-      console.log("hover",e);
+    $scope.$on("hover",function(e,data) {
+      console.log("hover",data);
     });
     $scope.$on("move",function(e) {
       console.log("MVOE",e);
