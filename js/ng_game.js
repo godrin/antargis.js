@@ -1,4 +1,4 @@
-define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick"], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain, Pick) {
+define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick", 'jobs'], function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain, Pick, Jobs) {
 
   // game controller is the main controller used by the router doing only global things
   app.controller('GameController', function($scope, hotkeys, World) {
@@ -11,7 +11,10 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       description: 'Back to menu',
       callback: tomenu
     })
-    World.createWorld(64, "tests/fetch.js").then(function(world) {
+    var levelName;
+    levelName = "tests/fetch.js";
+    levelName = "tests/hero_move.js";
+    World.createWorld(64, levelName).then(function(world) {
       $scope.world = world;
     });
 
@@ -113,7 +116,16 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var data = new Base($element);
 
     $scope.$on("click",function(e) {
-      console.log("click",e,$scope.lastPos, $scope.world);
+      var world = $scope.world;
+      console.log("click",e,$scope.lastPos, $scope.world, world.hoveredEntity, world.selectedEntity);
+      if(world.hoveredEntity) {
+        world.select(world.hoveredEntity);
+      } else if(world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player=="human") {
+        console.log("assign new move job");
+        world.selectedEntity.resetJobs();
+        //          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
+        world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity,lastPos));
+      }
     });
     $scope.$on("hover",function(e,mouse) {
       var res=Pick.pick(mouse, data.camera, data.scene);
