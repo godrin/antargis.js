@@ -121,10 +121,10 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       if(world.hoveredEntity) {
         world.select(world.hoveredEntity);
       } else if(world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player=="human") {
-        console.log("assign new move job");
+        console.log("assign new move job",$scope.lastPos);
         world.selectedEntity.resetJobs();
         //          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
-        world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity,lastPos));
+        world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity,$scope.lastPos));
       }
     });
     $scope.$on("hover",function(e,mouse) {
@@ -205,7 +205,6 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
 
       render();
     }
-    var lastPos = null;
 
     function render() {
       var base = data;
