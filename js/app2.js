@@ -4,8 +4,7 @@ define([],function() {
 
   app.config(function($routeProvider) {
     $routeProvider.when('/intro', {
-      templateUrl:'intro.html',
-      controller: 'IntroController'
+      templateUrl:'intro.html'
     })
     .when('/credits', {
       templateUrl: 'credits.html'

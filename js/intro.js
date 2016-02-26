@@ -39,7 +39,5 @@ define(["app2"], function(app) {
       }
     };
   });
-  app.controller('IntroController',function($scope) {
-  });
   return {};
 });
