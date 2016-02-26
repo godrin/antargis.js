@@ -41,7 +41,6 @@ define(["model", "config/meshes"], function(Model, Meshes) {
 
 
       this[loadfct](mesh, animation, models, function(objects) {
-      console.log("LOADED",objects);
         if(!(objects instanceof Array)) {
           objects=[objects];
         }
