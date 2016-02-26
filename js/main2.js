@@ -11,8 +11,7 @@ requirejs.config({
     'angular'
   ],
 });
-require(['app2', 'ng_game'],function(app2) {
-  console.log("APP",app2);
+require(['app2', 'ng_game', 'intro'],function(app2) {
   // bootstrap angular 
   angular.bootstrap(document, ['App']);
 });
