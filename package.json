@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "browserify": "browserify main.js -o bundle.js"
   },
   "repository": "",
   "author": "",
@@ -12,5 +13,8 @@
   "dependencies": {
     "gulp": "~3.8.10",
     "main-bower-files": "~2.5.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0"
   }
 }

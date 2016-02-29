@@ -28,8 +28,9 @@ body {
   width:100%;
   text-align:center;
 }
-.page-intro .skip {
+.skip {
   position:absolute;
   bottom:2em;
   right:2em;
+  z-index:2;
 }
