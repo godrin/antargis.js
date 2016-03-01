@@ -7,8 +7,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     };
     hotkeys.bindTo($scope)
     .add({
-      combo: 'f10',
-      //combo: 'esc',
+      combo: 'q',
       description: 'Back to menu',
       callback: tomenu
     })
