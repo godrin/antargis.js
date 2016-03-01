@@ -23,13 +23,17 @@ body {
 .gui {
   position:absolute;
   z-index:1;
-}
-
-.inventory {
+  height:100%;
+  width:100%;
+  overflow:scroll;
+  pointer-events:none;
 }
 
 .fullscreen-toggle {
   position:fixed;
   bottom:10px;
   left:10px;
+}
+.pull-left {
+  float:left;
 }

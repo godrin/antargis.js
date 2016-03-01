@@ -7,7 +7,8 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     };
     hotkeys.bindTo($scope)
     .add({
-      combo: 'esc',
+      combo: 'f10',
+      //combo: 'esc',
       description: 'Back to menu',
       callback: tomenu
     })
@@ -19,6 +20,18 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     });
 
   });
+    app.directive('ag',function() {
+      return {
+        controller:function($element) {
+          $element.addClass("ag");
+          $element.click(function(ev) {
+            ev.preventDefault();
+            console.log("GLCK",ev,arguments);
+            return false;
+          });
+        }
+      }
+    });
 
 
   app.factory('World', function($q) {
