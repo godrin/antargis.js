@@ -15,7 +15,7 @@ define(["app2"], function(app) {
           combo: 'esc',
           description: 'blah blah',
           callback: finish
-        })
+        });
       }
     };
   });
@@ -38,18 +38,11 @@ define(["app2"], function(app) {
             $($(".screen",$element)[$scope.screen]).show();
           }
         }
-
-        hotkeys.bindTo($scope)
-        .add({
-          combo: 'esc',
-          description: 'blah blah',
-          callback: finish
-        })
-
         $scope.finish = finish;
 
         $(".screen",$element).hide();
         $($(".screen",$element)[0]).show();
+
         _.each(['webkitAnimationIteration','animationiteration'],function(evName) {
           $(".screen").on(evName, function() {
             $($(".screen",$element)[$scope.screen]).hide();

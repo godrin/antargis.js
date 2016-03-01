@@ -26,8 +26,5 @@
 
 </style>
 <div class='menu ag'>
-  <a class='ag-border gradient' href='#/intro'>Intro</a>
-  <a class='ag-border gradient' href='#/campaign/tutorial'>Tutorial</a>
-  <a class='ag-border' href='#/campaign/first'>Campaign</a>
-  <a class='ag-border gradient' href='#/credits'>Credits</a>
+  <a ng-repeat="entry in menu" class='ag-border gradient' ng-href='{{entry.href}}'>{{entry.title}}</a>
 </div>

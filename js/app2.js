@@ -14,12 +14,35 @@ define([],function() {
       controller:'GameController'
     })
     .when('/menu', {
-      templateUrl: 'menu.html'
+      templateUrl: 'menu.html',
+      controller:'MenuController'
     })
     .otherwise({
       redirectTo: '/intro'
     });
   });
+
+  app.controller('MenuController', function(hotkeys, $scope) {
+    $scope.menu = [
+      {href:'#/intro', title:'Intro'},
+      {href:'#/campaign/tutorial', title:'Tutorial'},
+      {href:'#/campaign/first', title:'Campaign'},
+      {href:'#/credits', title:'Credits'}
+   ]; 
+
+   var hkbind = hotkeys.bindTo($scope);
+
+   _.each($scope.menu, function(entry,index) {
+     hkbind.add({
+       combo: ''+(index+1),
+       description: entry.title,
+       callback: function() {
+         location.href = entry.href;
+       }
+     });
+   });
+  });
+
 
   return app;
 });
