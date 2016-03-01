@@ -28,6 +28,9 @@ body {
   overflow:scroll;
   pointer-events:none;
 }
+.gui-el {
+  pointer-events:all;
+}
 
 .fullscreen-toggle {
   position:fixed;

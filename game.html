@@ -1,10 +1,10 @@
 <div ag class='gui'>
-  <div class='ag-border pull-left'>
+  <div class='ag-border pull-left gui-el'>
     <div class='ag-content' ng-repeat="entity in world.entities">
       <h3 ng-click="world.select(entity)">{{entity.name||entity.typeName}}</h3>
     </div>
   </div>
-  <div class='inventory'>
+  <div class='inventory pull-left gui-el'>
     <div ag class='ag-border' ng-if="world.selectedEntity">
       <div class='ag-content'>
         <h3>{{world.selectedEntity.name}} {{world.selectedEntity.typeName}} ({{world.selectedEntity.player}})</h3>
