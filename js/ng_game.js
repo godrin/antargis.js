@@ -5,12 +5,27 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var tomenu = function() {
       location.hash="/menu";
     };
-    hotkeys.bindTo($scope)
-    .add({
+    var selectEntity = function(id) {
+      return function() {
+        $scope.world.select($scope.world.entities[id-1]);
+      };
+    };
+
+    var hkbind = hotkeys.bindTo($scope);
+
+    hkbind.add({
       combo: 'q',
       description: 'Back to menu',
       callback: tomenu
-    })
+    });
+    _.range(0,9).forEach(function(v) {
+      hkbind.add({
+        combo: ''+v,
+        description: 'Select entity',
+        callback: selectEntity(v)
+      });
+    });
+
     var levelName;
     levelName = "tests/fetch.js";
     levelName = "tests/hero_move.js";
@@ -19,18 +34,19 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     });
 
   });
-    app.directive('ag',function() {
-      return {
-        controller:function($element) {
-          $element.addClass("ag");
-          $element.click(function(ev) {
-            ev.preventDefault();
-            console.log("GLCK",ev,arguments);
-            return false;
-          });
-        }
+
+  app.directive('ag',function() {
+    return {
+      controller:function($element) {
+        $element.addClass("ag");
+        $element.click(function(ev) {
+          ev.preventDefault();
+          console.log("GLCK",ev,arguments);
+          return false;
+        });
       }
-    });
+    }
+  });
 
 
   app.factory('World', function($q) {
