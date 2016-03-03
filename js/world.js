@@ -2,11 +2,18 @@ define([], function() {
   var World = function(map) {
     this.map = map;
     this.entities = [];
+    this.entitiesByType = {};
     if (!window.World)
       window.World = this;
   };
   World.prototype.push = function(entity) {
+  var self = this;
     this.entities.push(entity);
+    entity.mixinNames.forEach(function(name) {
+      if(!self.entitiesByType[name])
+        self.entitiesByType[name]=[];
+      self.entitiesByType[name].push(entity);
+    });
   };
   World.prototype.search = function(param, origin) {
     var self = this;

@@ -5,6 +5,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     var tomenu = function() {
       location.hash="/menu";
     };
+
     var selectEntity = function(id) {
       return function() {
         $scope.world.select($scope.world.entities[id-1]);
@@ -32,7 +33,12 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
     World.createWorld(64, levelName).then(function(world) {
       $scope.world = world;
     });
-
+/*
+    $scope.$watch("world.entities", function(entities) {
+    FIXME
+    console.log("EEEEE",entities);
+    });
+*/
   });
 
   app.directive('ag',function() {

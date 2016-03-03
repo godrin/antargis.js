@@ -1,6 +1,6 @@
 <div ag class='gui'>
   <div class='ag-border pull-left gui-el'>
-    <div class='ag-content' ng-repeat="entity in world.entities">
+    <div class='ag-content' ng-repeat="entity in world.entitiesByType['boss']">
       <h3 ng-click="world.select(entity)">{{entity.name||entity.typeName}}</h3>
     </div>
   </div>
