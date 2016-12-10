@@ -1,7 +1,7 @@
 define([],function() {
+  var Pick={};
 
   var projector = new THREE.Projector();
-  var Pick={};
   var raycaster = new THREE.Raycaster();
 
   /*
@@ -25,5 +25,4 @@ define([],function() {
   };
 
   return Pick;
-
 });

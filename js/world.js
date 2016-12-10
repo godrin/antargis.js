@@ -9,11 +9,15 @@ define([], function() {
   World.prototype.push = function(entity) {
   var self = this;
     this.entities.push(entity);
-    entity.mixinNames.forEach(function(name) {
-      if(!self.entitiesByType[name])
-        self.entitiesByType[name]=[];
-      self.entitiesByType[name].push(entity);
-    });
+    if(!entity.mixinNames)
+      console.warn("No mixins for ",entity);
+    else {
+      entity.mixinNames.forEach(function(name) {
+        if(!self.entitiesByType[name])
+          self.entitiesByType[name]=[];
+        self.entitiesByType[name].push(entity);
+      });
+    }
   };
   World.prototype.search = function(param, origin) {
     var self = this;

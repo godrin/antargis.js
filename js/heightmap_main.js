@@ -1,6 +1,6 @@
 require(['heightmap','generator','processor'],function(HeightMap, Generator, Proc) {
   var w=32;
-  var sw=w*4;
+  var sw=w*8;
   var map=new HeightMap({width:w,height:w});
 
   map.generate();
@@ -14,14 +14,27 @@ require(['heightmap','generator','processor'],function(HeightMap, Generator, Pro
   console.log(map.get("rock").interpolate(1.5,1));
 
 
+  function toCanvas(data, el) {
+    var map2=new HeightMap({width:w,height:w,map:{rock:data}});
+    var canvas=map2.toCanvas();
+    console.log("C",canvas,data,el);
+    $(el).append(canvas).css({width:sw,height:sw});
+  }
+
+  function unit8ToUint32(a) {
+    var b = new Uint32Array(a.length/4);
+    for(var i=0;i<a.length/4;i++) {
+    var j=i*4;
+      b[i]=(a[j]<<24)+(a[j+1]<<16)+(a[j+2]<<8)+a[j+3];
+    }
+    return b;
+  }
+
   Generator(function(w,h,data) {
 
     data=map.pickGreen(w,h,data)
 
-    var map2=new HeightMap({width:w,height:w,map:{rock:data}});
-    var canvas=map2.toCanvas();
-    console.log("C",canvas);
-    $("#image").append(canvas).css({width:sw,height:sw});
+    toCanvas(data,"#image");
 
   });
 
@@ -33,6 +46,10 @@ require(['heightmap','generator','processor'],function(HeightMap, Generator, Pro
       var p=new Proc.Pass("simplex3d", t);
       p.run({},function() {
         console.log("PROC ready");
+        var data = t.readData();
+        data = unit8ToUint32(data);
+        console.log("DATA",data);
+        toCanvas(data,"#image2");
       });
     });
   }

@@ -101,12 +101,14 @@ define([],function() {
     for (var y = 0; y < this.options.height; y++) {
       for (var x = 0; x < this.options.width; x++) {
         var v=accessor(x,y);
+
         if(!min || min>v)
           min=v;
         if(!max || max<v)
           max=v;
       }
     }
+    console.log("MMMM",min,max);
 
     for (var y = 0; y < this.options.height; y++) {
       for (var x = 0; x < this.options.width; x++) {

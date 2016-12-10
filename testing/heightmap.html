@@ -4,14 +4,16 @@
     <style>canvas { width: 100%; height: 100% }
       body { margin:0px;}
     </style>
+    <base href='/ant/'>
   </head>
   <body>
-    <script src="jquery.min.js"></script>
-    <script src="underscore-min.js"></script>
-    <script src="bower_components/threejs/build/three.min.js"></script>
-    <script src="bower_components/threejs-examples/examples/js/loaders/OBJLoader.js"></script>
-    <script data-main="heightmap_main" src="bower_components/requirejs/require.js"></script>
+    <script src="js/libs/jquery.js"></script>
+    <script src="js/libs/underscore.js"></script>
+    <script src="js/libs/three.min.js"></script>
+   <script src="bower_components/threejs-examples/examples/js/loaders/OBJLoader.js"></script>
+    <script data-main="js/heightmap_main" src="js/libs/require.js"></script>
     <div id="image"></div>
+    <div id="image2"></div>
     <div id="container"></div>
   </body>
 </html>
