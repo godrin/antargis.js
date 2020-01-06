@@ -1,0 +1,8 @@
+== Constraints
+
+Constraints:
+
+* the game must run in webgl
+* the game must not use any big framework (like angular) through all of the code
+* the game must be able to run on standard commodity hardware (intel integrated graphics)
+* the game must run on firefox, chrome & safari (opera and IE are optional)

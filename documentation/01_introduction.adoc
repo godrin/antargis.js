@@ -1,0 +1,12 @@
+== Introduction & goals
+
+Antargis.js should/will be a rewrite of https://github.com/godrin/antargis which had major drawbacks, being implemented in C++ and ruby.
+This new version takes into account that the whole web-technology has gone through the roof and it's far enough to handle a
+RTS-game on it's own.
+
+So major goals in this rewrite are:
+
+* give many devs the chance to collaborate (javascript is a well-known language)
+* get players on board simply by surfing on the website - no downloads required
+* include mobile users as well - simply by surfing on the site
+* a possibility to generate apps from JS-code should still be kept in mind (webgl works on android, too)

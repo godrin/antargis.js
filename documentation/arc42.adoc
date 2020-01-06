@@ -1,0 +1,14 @@
+== Antargis.js
+
+https://arc42.org/ like documentation
+
+include::01_introduction.adoc[]
+
+include::02_constraints.adoc[]
+
+include::03_context.adoc[]
+
+include::04_solution.adoc[]
+
+include::05_blocks.adoc[]
+

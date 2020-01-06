@@ -1,0 +1,19 @@
+== Building blocks
+
+[plantuml]
+....
+actor Player
+package Antargis {
+[GameUI]
+[3D-View]
+[Menus]
+interface "Gamestate-API" as stateapi
+[GameUI] -- stateapi
+[3D-View] -- stateapi
+stateapi -- [GameEngine]
+
+}
+Player -- [GameUI]
+Player -- [3D-View]
+Player -- [Menus]
+....
