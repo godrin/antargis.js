@@ -9209,7 +9209,7 @@ THREE.BufferGeometry.prototype = {
 		/* Create a copy of all attributes for reordering. */
 		var sortedAttributes = {};
 		for ( var attr in this.attributes ) {
-			if ( attr == 'index' )
+			if ( attr == 'index.scss' )
 				continue;
 			var sourceArray = this.attributes[ attr ].array;
 			sortedAttributes[ attr ] = new sourceArray.constructor( this.attributes[ attr ].itemSize * vertexCount );
@@ -9219,7 +9219,7 @@ THREE.BufferGeometry.prototype = {
 		for ( var new_vid = 0; new_vid < vertexCount; new_vid ++ ) {
 			var vid = indexMap[ new_vid ];
 			for ( var attr in this.attributes ) {
-				if ( attr == 'index' )
+				if ( attr == 'index.scss' )
 					continue;
 				var attrArray = this.attributes[ attr ].array;
 				var attrSize = this.attributes[ attr ].itemSize;
@@ -9230,9 +9230,9 @@ THREE.BufferGeometry.prototype = {
 		}
 
 		/* Carry the new sorted buffers locally */
-		this.attributes[ 'index' ].array = indexBuffer;
+		this.attributes[ 'index.scss' ].array = indexBuffer;
 		for ( var attr in this.attributes ) {
-			if ( attr == 'index' )
+			if ( attr == 'index.scss' )
 				continue;
 			this.attributes[ attr ].array = sortedAttributes[ attr ];
 			this.attributes[ attr ].numItems = this.attributes[ attr ].itemSize * vertexCount;
@@ -16018,7 +16018,7 @@ THREE.Sprite = ( function () {
 	var uvs = new Float32Array( [ 0, 0,   1, 0,   1, 1,   0, 1 ] );
 
 	var geometry = new THREE.BufferGeometry();
-	geometry.addAttribute( 'index', new THREE.BufferAttribute( indices, 1 ) );
+	geometry.addAttribute( 'index.scss', new THREE.BufferAttribute( indices, 1 ) );
 	geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 	geometry.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );
 
@@ -21339,7 +21339,7 @@ THREE.WebGLRenderer = function ( parameters ) {
 
 				if ( attribute.needsUpdate === true ) {
 
-					var bufferType = ( key === 'index' ) ? _gl.ELEMENT_ARRAY_BUFFER : _gl.ARRAY_BUFFER;
+					var bufferType = ( key === 'index.scss' ) ? _gl.ELEMENT_ARRAY_BUFFER : _gl.ARRAY_BUFFER;
 
 					_gl.bindBuffer( bufferType, attribute.buffer );
 					_gl.bufferData( bufferType, attribute.array, _gl.STATIC_DRAW );
@@ -31504,7 +31504,7 @@ THREE.PlaneBufferGeometry = function ( width, height, widthSegments, heightSegme
 
 	}
 
-	this.addAttribute( 'index', new THREE.BufferAttribute( indices, 1 ) );
+	this.addAttribute( 'index.scss', new THREE.BufferAttribute( indices, 1 ) );
 	this.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 	this.addAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
 	this.addAttribute( 'uv', new THREE.BufferAttribute( uvs, 2 ) );

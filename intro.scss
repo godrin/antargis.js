@@ -1,0 +1,65 @@
+@import 'ag.css';
+body {
+  background-color: black;
+}
+
+.page-intro {
+  color: white;
+}
+
+@-webkit-keyframes fade {
+  0% {
+    top: 40%;
+    opacity: 0;
+  }
+  50% {
+    top: 50%;
+    opacity: 1.0;
+  }
+  100% {
+    top: 55%;
+    opacity: 0;
+  }
+}
+
+@keyframes fade {
+  0% {
+    top: 40%;
+    opacity: 0;
+  }
+  50% {
+    top: 50%;
+    opacity: 1.0;
+  }
+  100% {
+    top: 55%;
+    opacity: 0;
+  }
+}
+
+ag-intro {
+  pointer-events: none;
+}
+
+intro-screen {
+  opacity:0;
+  position: absolute;
+  font-family: Helvetica, sans-serif;
+  font-size: 3em;
+  color: #f3ac0e;
+  text-shadow: 1px 0px 0px #996d09, -1px 0px 0px #ffb40f, 0px -1px 0px #ffb40f, 0px 1px 0px #996d09;
+  width: 100%;
+  text-align: center;
+}
+
+intro-screen.active {
+  animation: fade 3s infinite;
+}
+
+.skip {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  z-index: 2;
+}
+

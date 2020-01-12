@@ -1,6 +1,9 @@
+body.ag {
+  background-color: black;
+  font-family: Helvetica;
+}
 .ag, .ag * {
   color:#f3ac0e;
-  font-family: Helvetica;
   text-shadow:0px 1px 1px black;
 }
 

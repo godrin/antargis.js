@@ -2,19 +2,30 @@
   "name": "ant3",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "browserify": "browserify main.js -o bundle.js"
+    "build": "./node_modules/.bin/webpack"
   },
   "repository": "",
   "author": "",
   "license": "BSD",
   "dependencies": {
     "gulp": "~3.8.10",
+    "lodash": "^4.17.15",
     "main-bower-files": "~2.5.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0"
+    "autoprefixer": "^9.7.3",
+    "browserify": "^13.0.0",
+    "css-loader": "^3.4.1",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^5.0.2",
+    "node-sass": "^4.13.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.1.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }

@@ -1,69 +1,10 @@
-<script>
-  setTimeout(function() {
-    location.hash="#/menu";
-  },30000);
-</script>
-<style>
-  .credits {
-    position: 
-  }
-  @-webkit-keyframes scroll {
-    0%   { -webkit-transform:translate(0em,50em); }
-    100% {-webkit-transform:translate(0em,-200em); }
-  }
-
-  .credits{
-    position:absolute;
-    animation: scroll 30s infinite;
-    -webkit-animation: scroll 30s 1;
-    -webkit-animation-timing-function: linear;
-    width:100% ;
-    text-align:center;
-  }
-  .credits-container{
-    position:absolute;
-    top:0px;
-    bottom:0px;
-    left:0px;
-    right:0px;
-    overflow:hidden;
-  }
-  .credits-container:before {
-    content:'';
-    position:absolute;
-    height:10em;
-    width:100%;
-    z-index:1;
-
-    background: rgba(0,0,0,1);
-    background: -moz-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,0)));
-    background: -webkit-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    background: -o-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    background: -ms-linear-gradient(top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
-  }
-  .credits-container:after{
-    content:'';
-    position:absolute;
-    bottom:0px;
-    height:10em;
-    width:100%;
-    z-index:1;
-
-    background: rgba(0,0,0,0);
-    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,1)));
-    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 );
-  }
-</style>
-
-<div class='ag credits-container' skip-to-menu="'#/menu'">
+<head>
+<head>
+  <title>Battles of Antargis</title>
+  <link rel="stylesheet" type="text/css" href="dist/credits.css"/>
+</head>
+<body class="ag">
+<ag-credits class='ag credits-container' onfinished="location.href='menu.html'">
   <div class='credits'>
     <h1>Design & Programming</h1>
     <p>David Kamphausen</p>
@@ -156,6 +97,8 @@
     <p>Come on. If you are that interested,</p>
     <p>come over to the forums and help!</p>
 
-
   </div>
-</div>
+</ag-credits>
+<script src="main.js"></script>
+</body>
+</html>
