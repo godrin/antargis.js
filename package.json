@@ -13,7 +13,9 @@
   "dependencies": {
     "gulp": "~3.8.10",
     "lodash": "^4.17.15",
-    "main-bower-files": "~2.5.0"
+    "main-bower-files": "~2.5.0",
+    "three": "^0.112.1",
+    "three.terrain.js": "^1.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.7.3",
