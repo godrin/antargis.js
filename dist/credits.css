@@ -1,0 +1,59 @@
+body.ag {
+  background-color: black;
+  font-family: Helvetica;
+}
+.ag, .ag * {
+  color:#f3ac0e;
+  text-shadow:0px 1px 1px black;
+}
+
+a {
+  text-decoration:none;
+}
+
+.ag p,h1,h2,h3,li{
+  background-color:black;
+}
+
+.ag h3 {
+  font-size:120%;
+  margin:3px;
+  border-bottom:2px groove #333;
+}
+.ag-border {
+  padding:0px;
+  background-color:black;
+}
+
+.ag-border, .ag li {
+  border:2px ridge #f3ac0e;
+  border-radius:5px;
+  padding:1px;
+}
+.ag-button-content {
+  padding:5px;
+  border-radius:4px;
+  background-color:#555;
+  background-image: radial-gradient(ellipse, #54555b, #12141c);
+}
+.ag-content {
+  border:1px solid #484952;
+  margin:1px;
+  border-radius:2px;
+  background-color:#12141c;
+}
+
+.ag ul {
+  background:none;
+  list-style-type:none;
+  margin:0px;
+  padding:0px;
+  -webkit-margin-before:0px;
+}
+.ag li {
+  margin:0px;
+}
+.pull-right {
+  float:right;
+}
+.credits{position:static}@-webkit-keyframes scroll{0%{-webkit-transform:translate(0em, 50em)}100%{-webkit-transform:translate(0em, -200em)}}.credits{position:absolute;animation:scroll 30s infinite;-webkit-animation:scroll 30s infinite;-webkit-animation-timing-function:linear;width:100%;text-align:center}.credits-container{position:absolute;top:0px;bottom:0px;left:0px;right:0px;overflow:hidden}.credits-container:before{content:'';position:absolute;height:10em;width:100%;z-index:1;background:#000;background:-webkit-gradient(left top, left bottom, color-stop(0%, #000), color-stop(100%, rgba(0,0,0,0)));background:-webkit-gradient(linear, left top, left bottom, from(#000), to(rgba(0,0,0,0)));background:linear-gradient(to bottom, #000 0%, rgba(0,0,0,0) 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 )}.credits-container:after{content:'';position:absolute;bottom:0px;height:10em;width:100%;z-index:1;background:rgba(0,0,0,0);background:-webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, #000));background:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(#000));background:linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000', GradientType=0 )}
