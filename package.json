@@ -11,21 +11,18 @@
   "author": "",
   "license": "BSD",
   "dependencies": {
-    "gulp": "~3.8.10",
-    "lodash": "^4.17.15",
-    "main-bower-files": "~2.5.0",
     "three": "^0.112.1",
     "three.terrain.js": "^1.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^9.7.3",
     "browserify": "^13.0.0",
-    "css-loader": "^3.4.1",
+    "css-loader": "^3.4.2",
     "extract-loader": "^3.1.0",
     "file-loader": "^5.0.2",
     "node-sass": "^4.13.0",
     "postcss-loader": "^3.0.0",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^8.0.1",
     "style-loader": "^1.1.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
