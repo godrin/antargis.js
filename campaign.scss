@@ -1,2 +1,9 @@
-@import 'ag.css';
+@import 'ag';
 
+ag-game-view {
+  position: absolute;
+  top: 0;
+  bottom:0;
+  left:0;
+  right:0;
+}

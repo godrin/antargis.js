@@ -1,3 +1,3 @@
 David Kamphausen <david.kamphausen76@googlemail.com>
 
-models/*.jpg temporarily taken from three.terrain.js
+models/*.jpg temporarily taken from three.terrain_builder.js

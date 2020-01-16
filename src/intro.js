@@ -1,5 +1,3 @@
-import '../intro.scss';
-
 class Intro extends HTMLElement {
     connectedCallback() {
         this.current_screen = -1;

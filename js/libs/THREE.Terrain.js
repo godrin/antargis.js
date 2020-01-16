@@ -1,5 +1,5 @@
 /**
- * THREE.Terrain.js 1.2.0-20150204
+ * terrain_builder.js 1.2.0-20150204
  *
  * @author Isaac Sukin (http://www.isaacsukin.com/)
  * @license MIT

@@ -1,7 +1,7 @@
 /**
  * A terrain object for use with the Three.js library.
  *
- * Usage: `var terrainScene = THREE.Terrain();`
+ * Usage: `var terrainScene = Terrain();`
  *
  * @param {Object} [options]
  *   An optional map of settings that control how the terrain is constructed
@@ -10,21 +10,21 @@
  *   - `after`: A function to run after other transformations on the terrain
  *     produce the highest-detail heightmap, but before optimizations and
  *     visual properties are applied. Takes two parameters, which are the same
- *     as those for {@link THREE.Terrain.DiamondSquare}: an array of `THREE.Vector3`
+ *     as those for {@link Terrain.DiamondSquare}: an array of `THREE.Vector3`
  *     objects representing the vertices of the terrain, and a map of options
  *     with the same available properties as the `options` parameter for the
- *     `THREE.Terrain` function.
+ *     `Terrain` function.
  *   - `easing`: A function that affects the distribution of slopes by
  *     interpolating the height of each vertex along a curve. Valid values
- *     include `THREE.Terrain.Linear`, `THREE.Terrain.EaseInOut`,
- *     `THREE.Terrain.InEaseOut`, and any custom function that accepts a float
+ *     include `Terrain.Linear`, `Terrain.EaseInOut`,
+ *     `Terrain.InEaseOut`, and any custom function that accepts a float
  *     between 0 and 1 and returns a float between 0 and 1.
  *   - `heightmap`: Either a pre-loaded image (from the same domain as the
  *     webpage or served with a CORS-friendly header) representing terrain
  *     height data (lighter pixels are higher); or a function used to generate
  *     random height data for the terrain. Valid random functions include
- *     `THREE.Terrain.DiamondSquare` (the default), `THREE.Terrain.Perlin`,
- *     `THREE.Terrain.Simplex`, `THREE.Terrain.PerlinDiamond`, or a custom
+ *     `Terrain.DiamondSquare` (the default), `Terrain.Perlin`,
+ *     `Terrain.Simplex`, `Terrain.PerlinDiamond`, or a custom
  *     function with the same signature. (Ideally heightmap images have the
  *     same number of pixels as the terrain has vertices, as determined by the
  *     `xSegments` and `ySegments` options, but this is not required: if the
@@ -59,17 +59,17 @@
  *     `options.ySegments + 1`.
  */
 
-const THREE = require('three')
+import * as THREE from 'three'
 
-THREE.Terrain = function(options) {
+const Terrain = function(options) {
     var defaultOptions = {
         after: null,
-        easing: THREE.Terrain.Linear,
-        heightmap: THREE.Terrain.DiamondSquare,
+        easing: Terrain.Linear,
+        heightmap: Terrain.DiamondSquare,
         material: null,
         maxHeight: 100,
         minHeight: -100,
-        optimization: THREE.Terrain.NONE,
+        optimization: Terrain.NONE,
         frequency: 0.4,
         steps: 1,
         stretch: true,
@@ -105,7 +105,7 @@ THREE.Terrain = function(options) {
     var v = mesh.geometry.vertices;
     // It's actually possible to pass a canvas with heightmap data instead of an image.
     if (options.heightmap instanceof HTMLCanvasElement || options.heightmap instanceof Image) {
-        THREE.Terrain.fromHeightmap(v, options);
+        Terrain.fromHeightmap(v, options);
     }
     else if (typeof options.heightmap === 'function') {
         options.heightmap(v, options);
@@ -114,15 +114,15 @@ THREE.Terrain = function(options) {
         console.warn('An invalid value was passed for `options.heightmap`: ' + options.heightmap);
     }
     if (options.turbulent) {
-        THREE.Terrain.Turbulence(v, options);
+        Terrain.Turbulence(v, options);
     }
     if (options.steps > 1) {
-        THREE.Terrain.Step(v, options.steps);
-        THREE.Terrain.Smooth(v, options);
+        Terrain.Step(v, options.steps);
+        Terrain.Smooth(v, options);
     }
     if(options.clamp) {
       // Keep the terrain within the allotted height range if necessary, and do easing.
-      THREE.Terrain.Clamp(v, options);
+      Terrain.Clamp(v, options);
     }
     // Call the "after" callback
     if (typeof options.after === 'function') {
@@ -176,7 +176,7 @@ THREE.Terrain = function(options) {
  * (similar to combining with geomipmapping).
  *
  * If these do get implemented, here is the option description to add to the
- * `THREE.Terrain` docblock:
+ * `Terrain` docblock:
  *
  *    - `optimization`: the type of optimization to apply to the terrain. If
  *      an optimization is applied, the number of segments along each axis that
@@ -184,20 +184,20 @@ THREE.Terrain = function(options) {
  *      equal (n * 2^(LODs-1))^2 - 1, for arbitrary n, where LODs is the number
  *      of levels of detail desired. Valid values include:
  *
- *          - `THREE.Terrain.NONE`: Don't apply any optimizations. This is the
+ *          - `Terrain.NONE`: Don't apply any optimizations. This is the
  *            default.
- *          - `THREE.Terrain.GEOMIPMAP`: Divide the terrain into evenly-sized
+ *          - `Terrain.GEOMIPMAP`: Divide the terrain into evenly-sized
  *            sections with multiple levels of detail. For each section,
  *            display a level of detail dependent on how close the camera is.
- *          - `THREE.Terrain.GEOCLIPMAP`: Divide the terrain into donut-shaped
+ *          - `Terrain.GEOCLIPMAP`: Divide the terrain into donut-shaped
  *            sections, where detail decreases as the radius increases. The
  *            rings then morph to "follow" the camera around so that the camera
  *            is always at the center, surrounded by the most detail.
  */
-THREE.Terrain.NONE = 0;
-THREE.Terrain.GEOMIPMAP = 1;
-THREE.Terrain.GEOCLIPMAP = 2;
-THREE.Terrain.POLYGONREDUCTION = 3;
+Terrain.NONE = 0;
+Terrain.GEOMIPMAP = 1;
+Terrain.GEOCLIPMAP = 2;
+Terrain.POLYGONREDUCTION = 3;
 
 /**
  * Generate a material that blends together textures based on vertex height.
@@ -207,7 +207,7 @@ THREE.Terrain.POLYGONREDUCTION = 3;
  * Usage:
  *
  *    // Assuming the textures are already loaded
- *    var material = THREE.Terrain.generateBlendedMaterial([
+ *    var material = Terrain.generateBlendedMaterial([
  *      {texture: THREE.ImageUtils.loadTexture('img1.jpg')},
  *      {texture: THREE.ImageUtils.loadTexture('img2.jpg'), levels: [-80, -35, 20, 50]},
  *      {texture: THREE.ImageUtils.loadTexture('img3.jpg'), levels: [20, 50, 60, 85]},
@@ -236,7 +236,7 @@ THREE.Terrain.POLYGONREDUCTION = 3;
  *   contains the coordinates in Three-space of the texel currently being
  *   rendered.
  */
-THREE.Terrain.generateBlendedMaterial = function(textures) {
+Terrain.generateBlendedMaterial = function(textures) {
     var uniforms = THREE.UniformsUtils.merge([THREE.ShaderLib.lambert.uniforms]),
         declare = '',
         assign = '';
@@ -366,9 +366,9 @@ THREE.Terrain.generateBlendedMaterial = function(textures) {
  * @param {Object} options
  *    An optional map of settings that control how the terrain is constructed
  *    and displayed. Valid values are the same as those for the `options`
- *    parameter of {@link THREE.Terrain}().
+ *    parameter of {@link Terrain}().
  */
-THREE.Terrain.fromHeightmap = function(g, options) {
+Terrain.fromHeightmap = function(g, options) {
     var canvas = document.createElement('canvas'),
         context = canvas.getContext('2d'),
         rows = options.ySegments + 1,
@@ -390,7 +390,7 @@ THREE.Terrain.fromHeightmap = function(g, options) {
 /**
  * Convert a terrain plane into an image-based heightmap.
  *
- * Parameters are the same as for {@link THREE.Terrain.fromHeightmap} except
+ * Parameters are the same as for {@link Terrain.fromHeightmap} except
  * that if `options.heightmap` is a canvas element then the image will be
  * painted onto that canvas; otherwise a new canvas will be created.
  *
@@ -402,7 +402,7 @@ THREE.Terrain.fromHeightmap = function(g, options) {
  * @return {HTMLCanvasElement}
  *   A canvas with the relevant heightmap painted on it.
  */
-THREE.Terrain.toHeightmap = function(g, options) {
+Terrain.toHeightmap = function(g, options) {
     var canvas = options.heightmap instanceof HTMLCanvasElement ? options.heightmap : document.createElement('canvas'),
         context = canvas.getContext('2d'),
         rows = options.ySegments + 1,
@@ -427,18 +427,18 @@ THREE.Terrain.toHeightmap = function(g, options) {
 /**
  * Generate a 1D array containing random heightmap data.
  *
- * This is like {@link THREE.Terrain.toHeightmap} except that instead of
+ * This is like {@link Terrain.toHeightmap} except that instead of
  * generating the Three.js mesh and material information you can just get the
  * height data.
  *
  * @param {Function} method
  *   The method to use to generate the heightmap data. Works with function that
  *   would be an acceptable value for the `heightmap` option for the
- *   {@link THREE.Terrain} function.
+ *   {@link Terrain} function.
  * @param {Number} options
- *   The same as the options parameter for the {@link THREE.Terrain} function.
+ *   The same as the options parameter for the {@link Terrain} function.
  */
-THREE.Terrain.heightmapArray = function(method, options) {
+Terrain.heightmapArray = function(method, options) {
     var arr = new Array((options.xSegments+1) * (options.ySegments+1)),
         l = arr.length,
         i;
@@ -454,7 +454,7 @@ THREE.Terrain.heightmapArray = function(method, options) {
     options.maxHeight = typeof options.maxHeight === 'undefined' ? 1 : options.maxHeight;
     options.stretch = options.stretch || false;
     method(arr, options);
-    THREE.Terrain.Clamp(arr, options);
+    Terrain.Clamp(arr, options);
     for (i = 0; i < l; i++) {
         arr[i] = arr[i].z;
     }
@@ -464,9 +464,9 @@ THREE.Terrain.heightmapArray = function(method, options) {
 /**
  * Smooth the terrain by setting each point to the mean of its neighborhood.
  *
- * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+ * Parameters are the same as those for {@link Terrain.DiamondSquare}.
  */
-THREE.Terrain.Smooth = function(g, options) {
+Terrain.Smooth = function(g, options) {
     var heightmap = new Array(g.length);
     for (var i = 0, xl = options.xSegments + 1; i < xl; i++) {
         for (var j = 0; j < options.ySegments + 1; j++) {
@@ -497,7 +497,7 @@ THREE.Terrain.Smooth = function(g, options) {
  *   The number of steps to divide the terrain into. Defaults to
  *   (g.length/2)^(1/4).
  */
-THREE.Terrain.Step = function(g, levels) {
+Terrain.Step = function(g, levels) {
     // Calculate the max, min, and avg values for each bucket
     var i = 0,
         j = 0,
@@ -550,7 +550,7 @@ THREE.Terrain.Step = function(g, levels) {
  * @param {Object} options
  *    An optional map of settings that control how the terrain is constructed
  *    and displayed. Valid values are the same as those for the `options`
- *    parameter of {@link THREE.Terrain}().
+ *    parameter of {@link Terrain}().
  * @param {Boolean} direction
  *    `true` if the edges should be turned up; `false` if they should be turned
  *    down.
@@ -558,7 +558,7 @@ THREE.Terrain.Step = function(g, levels) {
  *    The distance from the edge at which the edges should begin to be affected
  *    by this operation.
  */
-THREE.Terrain.Edges = function(g, options, direction, distance, easing) {
+Terrain.Edges = function(g, options, direction, distance, easing) {
     var numXSegments = Math.floor(distance / (options.xSize / options.xSegments)) || 1,
         numYSegments = Math.floor(distance / (options.ySize / options.ySegments)) || 1,
         peak = direction ? options.maxHeight : options.minHeight,
@@ -566,7 +566,7 @@ THREE.Terrain.Edges = function(g, options, direction, distance, easing) {
         xl = options.xSegments + 1,
         yl = options.ySegments + 1,
         i, j, multiplier, target, k1, k2;
-    easing = easing || THREE.Terrain.EaseInOut;
+    easing = easing || Terrain.EaseInOut;
     for (i = 0; i < xl; i++) {
         for (j = 0; j < numYSegments; j++) {
             multiplier = easing(1 - j / numYSegments);
@@ -592,9 +592,9 @@ THREE.Terrain.Edges = function(g, options, direction, distance, easing) {
 /**
  * Transform to turbulent noise.
  *
- * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+ * Parameters are the same as those for {@link Terrain.DiamondSquare}.
  */
-THREE.Terrain.Turbulence = function(g, options) {
+Terrain.Turbulence = function(g, options) {
     var range = options.maxHeight - options.minHeight;
     for (var i = 0, l = g.length; i < l; i++) {
         g[i].z = options.minHeight + Math.abs((g[i].z - options.minHeight) * 2 - range);
@@ -612,9 +612,9 @@ THREE.Terrain.Turbulence = function(g, options) {
  * @param {Object} options
  *    An optional map of settings that control how the terrain is constructed
  *    and displayed. Valid values are the same as those for the `options`
- *    parameter of {@link THREE.Terrain}().
+ *    parameter of {@link Terrain}().
  */
-THREE.Terrain.DiamondSquare = function(g, options) {
+Terrain.DiamondSquare = function(g, options) {
     // Set the segment length to the smallest power of 2 that is greater than
     // the number of vertices in either dimension of the plane
     var segments = Math.max(options.xSegments, options.ySegments) + 1, n;
@@ -685,9 +685,9 @@ THREE.Terrain.DiamondSquare = function(g, options) {
  * anywhere. This produces some nice shapes that look terrain-like, but can
  * look repetitive from above.
  *
- * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+ * Parameters are the same as those for {@link Terrain.DiamondSquare}.
  */
-THREE.Terrain.Weierstrass = function(g, options) {
+Terrain.Weierstrass = function(g, options) {
     var range = (options.maxHeight - options.minHeight) * 0.5,
         dir1 = Math.random() < 0.5 ? 1 : -1,
         dir2 = Math.random() < 0.5 ? 1 : -1,
@@ -710,15 +710,15 @@ THREE.Terrain.Weierstrass = function(g, options) {
             g[j * xl + i].z += sum * range;
         }
     }
-    THREE.Terrain.Clamp(g, options);
+    Terrain.Clamp(g, options);
 };
 
 /**
  * Generate random terrain using value noise.
  *
- * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+ * Parameters are the same as those for {@link Terrain.DiamondSquare}.
  */
-THREE.Terrain.Value = function(g, options) {
+Terrain.Value = function(g, options) {
     // Set the segment length to the smallest power of 2 that is greater than
     // the number of vertices in either dimension of the plane
     var segments = Math.max(options.xSegments, options.ySegments) + 1, n;
@@ -773,17 +773,17 @@ THREE.Terrain.Value = function(g, options) {
         WhiteNoise(Math.pow(2, i), Math.pow(2, 2.4-i*1.2));
     }
     //for (var j = 0; j < g.length; j++) g[j].z += options.minHeight;
-    THREE.Terrain.Smooth(g, options);
+    Terrain.Smooth(g, options);
     options.stretch = true;
-    //THREE.Terrain.Clamp(g, options);
+    //Terrain.Clamp(g, options);
 };
 
 /**
  * Generate random terrain using Worley noise.
  *
- * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+ * Parameters are the same as those for {@link Terrain.DiamondSquare}.
  */
-THREE.Terrain.Worley = function(g, options) {
+Terrain.Worley = function(g, options) {
     var points = generatePoints(),
         coords = {x: 0, y: 0},
         distanceFunc = distance;
@@ -796,7 +796,7 @@ THREE.Terrain.Worley = function(g, options) {
         }
     }
     options.stretch = true;
-    //THREE.Terrain.Clamp(g, options);
+    //Terrain.Clamp(g, options);
 
     function distance(a, b) {
         return a.distanceTo(b);
@@ -851,9 +851,9 @@ if (window.noise && window.noise.perlin) {
     /**
      * Generate random terrain using the Perlin Noise method.
      *
-     * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+     * Parameters are the same as those for {@link Terrain.DiamondSquare}.
      */
-    THREE.Terrain.Perlin = function(g, options) {
+    Terrain.Perlin = function(g, options) {
         noise.seed(Math.random());
         var range = options.maxHeight - options.minHeight * 0.5,
             divisor = (Math.min(options.xSegments, options.ySegments) + 1) * options.frequency;
@@ -869,12 +869,12 @@ if (window.noise && window.noise.simplex) {
     /**
      * Generate random terrain using the Simplex Noise method.
      *
-     * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+     * Parameters are the same as those for {@link Terrain.DiamondSquare}.
      *
      * See https://github.com/mrdoob/three.js/blob/master/examples/webgl_terrain_dynamic.html
      * for an interesting comparison where the generation happens in GLSL.
      */
-    THREE.Terrain.Simplex = function(g, options) {
+    Terrain.Simplex = function(g, options) {
         noise.seed(Math.random());
         var range = (options.maxHeight - options.minHeight) * 0.5,
             divisor = (Math.min(options.xSegments, options.ySegments) + 1) * options.frequency * 2;
@@ -895,7 +895,7 @@ if (window.noise && window.noise.simplex) {
  * @param {Object} [options]
  *    An optional map of settings that control how the terrain is constructed
  *    and displayed. Valid values are the same as those for the `options`
- *    parameter of {@link THREE.Terrain}().
+ *    parameter of {@link Terrain}().
  * @param {Object[]} passes
  *   Determines which heightmap functions to compose to create a new one.
  *   Consists of an array of objects with a `method` property containing
@@ -905,7 +905,7 @@ if (window.noise && window.noise.simplex) {
  *   pass that will be applied before adding it to the result of previous
  *   passes.
  */
-THREE.Terrain.MultiPass = function(g, options, passes) {
+Terrain.MultiPass = function(g, options, passes) {
     var clonedOptions = {};
     for (var opt in options) {
         if (options.hasOwnProperty(opt)) {
@@ -932,15 +932,15 @@ THREE.Terrain.MultiPass = function(g, options, passes) {
  * @param {Object} options
  *   A map of settings that control how the terrain is constructed and
  *   displayed. Valid values are the same as those for the `options` parameter
- *   of {@link THREE.Terrain}() but only `maxHeight`, `minHeight`, and `easing`
+ *   of {@link Terrain}() but only `maxHeight`, `minHeight`, and `easing`
  *   are used.
  */
-THREE.Terrain.Clamp = function(g, options) {
+Terrain.Clamp = function(g, options) {
     var min = Infinity,
         max = -Infinity,
         l = g.length,
         i;
-    options.easing = options.easing || THREE.Terrain.Linear;
+    options.easing = options.easing || Terrain.Linear;
     for (i = 0; i < l; i++) {
         if (g[i].z < min) min = g[i].z;
         if (g[i].z > max) max = g[i].z;
@@ -963,74 +963,74 @@ THREE.Terrain.Clamp = function(g, options) {
 /**
  * Randomness interpolation functions.
  */
-THREE.Terrain.Linear = function(x) {
+Terrain.Linear = function(x) {
     return x;
 };
 
 // x = [0, 1], x^2
-THREE.Terrain.EaseIn = function(x) {
+Terrain.EaseIn = function(x) {
     return x*x;
 };
 
 // x = [0, 1], -x(x-2)
-THREE.Terrain.EaseOut = function(x) {
+Terrain.EaseOut = function(x) {
     return -x * (x - 2);
 };
 
 // x = [0, 1], x^2(3-2x)
 // Nearly identical alternatives: 0.5+0.5*cos(x*pi-pi), x^a/(x^a+(1-x)^a) (where a=1.6 seems nice)
 // For comparison: http://www.wolframalpha.com/input/?i=x^1.6%2F%28x^1.6%2B%281-x%29^1.6%29%2C+x^2%283-2x%29%2C+0.5%2B0.5*cos%28x*pi-pi%29+from+0+to+1
-THREE.Terrain.EaseInOut = function(x) {
+Terrain.EaseInOut = function(x) {
     return x*x*(3-2*x);
 };
 
 // x = [0, 1], 0.5*(2x-1)^3+0.5
-THREE.Terrain.InEaseOut = function(x) {
+Terrain.InEaseOut = function(x) {
     var y = 2*x-1;
     return 0.5 * y*y*y + 0.5;
 };
 
-if (THREE.Terrain.Perlin) {
+if (Terrain.Perlin) {
     /**
      * Generate random terrain using the Perlin and Diamond-Square methods composed.
      *
-     * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+     * Parameters are the same as those for {@link Terrain.DiamondSquare}.
      */
-    THREE.Terrain.PerlinDiamond = function(g, options) {
-        THREE.Terrain.MultiPass(g, options, [
-            {method: THREE.Terrain.Perlin},
-            {method: THREE.Terrain.DiamondSquare, amplitude: 0.75},
+    Terrain.PerlinDiamond = function(g, options) {
+        Terrain.MultiPass(g, options, [
+            {method: Terrain.Perlin},
+            {method: Terrain.DiamondSquare, amplitude: 0.75},
         ]);
     };
 
     /**
      * Generate random terrain using layers of Perlin noise.
      *
-     * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+     * Parameters are the same as those for {@link Terrain.DiamondSquare}.
      */
-    THREE.Terrain.PerlinLayers = function(g, options) {
-        THREE.Terrain.MultiPass(g, options, [
-            {method: THREE.Terrain.Perlin,                  frequency: 0.8},
-            {method: THREE.Terrain.Perlin, amplitude: 0.05, frequency: 0.4},
-            {method: THREE.Terrain.Perlin, amplitude: 0.35, frequency: 0.2},
-            {method: THREE.Terrain.Perlin, amplitude: 0.15, frequency: 0.1},
+    Terrain.PerlinLayers = function(g, options) {
+        Terrain.MultiPass(g, options, [
+            {method: Terrain.Perlin,                  frequency: 0.8},
+            {method: Terrain.Perlin, amplitude: 0.05, frequency: 0.4},
+            {method: Terrain.Perlin, amplitude: 0.35, frequency: 0.2},
+            {method: Terrain.Perlin, amplitude: 0.15, frequency: 0.1},
         ]);
     };
 }
 
-if (THREE.Terrain.Simplex) {
+if (Terrain.Simplex) {
     /**
      * Generate random terrain using layers of Simplex noise.
      *
-     * Parameters are the same as those for {@link THREE.Terrain.DiamondSquare}.
+     * Parameters are the same as those for {@link Terrain.DiamondSquare}.
      */
-    THREE.Terrain.SimplexLayers = function(g, options) {
-        THREE.Terrain.MultiPass(g, options, [
-            {method: THREE.Terrain.Simplex,                    frequency: 0.8},
-            {method: THREE.Terrain.Simplex, amplitude: 0.5,    frequency: 0.4},
-            {method: THREE.Terrain.Simplex, amplitude: 0.25,   frequency: 0.2},
-            {method: THREE.Terrain.Simplex, amplitude: 0.125,  frequency: 0.1},
-            {method: THREE.Terrain.Simplex, amplitude: 0.0625, frequency: 0.05},
+    Terrain.SimplexLayers = function(g, options) {
+        Terrain.MultiPass(g, options, [
+            {method: Terrain.Simplex,                    frequency: 0.8},
+            {method: Terrain.Simplex, amplitude: 0.5,    frequency: 0.4},
+            {method: Terrain.Simplex, amplitude: 0.25,   frequency: 0.2},
+            {method: Terrain.Simplex, amplitude: 0.125,  frequency: 0.1},
+            {method: Terrain.Simplex, amplitude: 0.0625, frequency: 0.05},
         ]);
     };
 }
@@ -1053,14 +1053,14 @@ if (THREE.Terrain.Simplex) {
  *     Defaults to 0.025.
  *   - `scene`: A `THREE.Object3D` instance to which the scattered meshes will
  *     be added. This is expected to be either a return value of a call to
- *     `THREE.Terrain()` or added to that return value; otherwise the position
+ *     `Terrain()` or added to that return value; otherwise the position
  *     and rotation of the meshes will be wrong.
  *   - `sizeVariance`: The percent by which instances of the mesh can be scaled
  *     up or down when placed on the terrain.
  *   - `randomness`: If `options.spread` is a number, then this property is a
  *     function that determines where meshes are placed. Valid values include
  *     `Math.random` and the return value of a call to
- *     `THREE.Terrain.ScatterHelper`.
+ *     `Terrain.ScatterHelper`.
  *   - `maxSlope`: The angle in radians between the normal of a face of the
  *     terrain and the "up" vector above which no mesh will be placed on the
  *     related face. Defaults to ~0.63, which is 36 degrees.
@@ -1069,22 +1069,22 @@ if (THREE.Terrain.Simplex) {
  *     and `y` properties indicate the upper-left corner of the box and the `w`
  *     and `h` properties indicate its width and height, respectively, in units
  *     of terrain segments (like those specified in the `options` parameter for
- *     the `THREE.Terrain` function). `x` and `y` default to zero, but `w` and
+ *     the `Terrain` function). `x` and `y` default to zero, but `w` and
  *     `h` are required.
  *
  * @return {THREE.Object3D}
  *   An Object3D containing the scattered meshes. This is the value of the
  *   `options.scene` parameter if passed. This is expected to be either a
- *   return value of a call to `THREE.Terrain()` or added to that return value;
+ *   return value of a call to `Terrain()` or added to that return value;
  *   otherwise the position and rotation of the meshes will be wrong.
  */
-THREE.Terrain.ScatterMeshes = function(geometry, options) {
+Terrain.ScatterMeshes = function(geometry, options) {
     if (!options.mesh) {
-        console.error('options.mesh is required for THREE.Terrain.ScatterMeshes but was not passed');
+        console.error('options.mesh is required for Terrain.ScatterMeshes but was not passed');
         return;
     }
     if (geometry instanceof THREE.BufferGeometry) {
-        console.warn('The terrain mesh is using BufferGeometry but THREE.Terrain.ScatterMeshes can only work with Geometry.');
+        console.warn('The terrain mesh is using BufferGeometry but Terrain.ScatterMeshes can only work with Geometry.');
         return;
     }
     if (!options.scene) {
@@ -1175,11 +1175,11 @@ THREE.Terrain.ScatterMeshes = function(geometry, options) {
  *
  * @param {Function} method
  *   A random terrain generation function (i.e. a valid value for the
- *   `options.heightmap` parameter of the `THREE.Terrain` function).
+ *   `options.heightmap` parameter of the `Terrain` function).
  * @param {Object} options
  *   A map of settings that control how the resulting noise should be generated
  *   (with the same parameters as the `options` parameter to the
- *   `THREE.Terrain` function). `options.minHeight` must equal `0` and
+ *   `Terrain` function). `options.minHeight` must equal `0` and
  *   `options.maxHeight` must equal `1` if they are specified.
  * @param {Number} skip
  *   The number of sequential faces to skip between faces that are candidates
@@ -1187,10 +1187,10 @@ THREE.Terrain.ScatterMeshes = function(geometry, options) {
  *
  * @return {Function}
  *   Returns a function that can be passed as the value of the
- *   `options.randomness` parameter to the {@link THREE.Terrain.ScatterMeshes}
+ *   `options.randomness` parameter to the {@link Terrain.ScatterMeshes}
  *   function.
  */
-THREE.Terrain.ScatterHelper = function(method, options, skip, threshold) {
+Terrain.ScatterHelper = function(method, options, skip, threshold) {
     skip = skip || 1;
     threshold = threshold || 0.25;
     options.frequency = options.frequency || 0.4;
@@ -1204,7 +1204,7 @@ THREE.Terrain.ScatterHelper = function(method, options, skip, threshold) {
 
     clonedOptions.xSegments *= 2;
     clonedOptions.stretch = true;
-    var heightmap = THREE.Terrain.heightmapArray(method, clonedOptions);
+    var heightmap = Terrain.heightmapArray(method, clonedOptions);
 
     for (var i = 0, l = heightmap.length; i < l; i++) {
         if (i % skip || Math.random() > threshold) {
@@ -1226,12 +1226,12 @@ THREE.Terrain.ScatterHelper = function(method, options, skip, threshold) {
  * @param {Object} options
  *   A map of settings that control how the resulting noise should be generated
  *   (with the same parameters as the `options` parameter to the
- *   `THREE.Terrain` function).
+ *   `Terrain` function).
  *
  * @return {THREE.Vector2[]}
  *   An array of points.
  */
-THREE.Terrain.PoissonDisks = function(options) {
+Terrain.PoissonDisks = function(options) {
     function removeAndReturnRandomElement(arr) {
         return arr.splice(Math.floor(Math.random() * arr.length), 1)[0];
     }
@@ -1314,3 +1314,5 @@ THREE.Terrain.PoissonDisks = function(options) {
     }
     return samplePoints;
 };
+
+export default Terrain

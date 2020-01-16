@@ -1,1 +1,3 @@
 == Solution strategy
+
+For Jobs mixins could be used: https://javascript.info/mixins#a-mixin-example

@@ -1,5 +1,3 @@
-import '../credits.scss';
-
 class Credits extends HTMLElement {
     connectedCallback() {
 

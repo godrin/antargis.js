@@ -1,8 +1,13 @@
-const Base = require('./base3d/base.js');
+import Base from './base3d/base.js'
+import addSkybox from './base3d/skybox'
+import * as THREE from 'three'
+import TerrainBuilder from './terrain_builder'
+import _ from 'lodash'
 
 
 function GameView(el, world) {
     var base = new Base(el);
+    console.log("BASE",base)
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var scene = base.scene;
 
@@ -15,62 +20,64 @@ function GameView(el, world) {
     directionalLight.position.set(1, 0, 0.7);
     scene.add(directionalLight);
 
-    Skybox.add(scene);
+    addSkybox(scene);
 
     var map = world.map;
 
     var threeHeightMap = map.toThreeTerrain();
 
-    Terrain.create(map, scene, threeHeightMap);
+    TerrainBuilder.create(map, scene, threeHeightMap);
 
     // FIXME: load all models beforehand
     world.initScene(scene);
 
     var lastPos = null;
 
-    Controls.init($(".game-view", el), {
-        resize: function (size) {
-            base.setSize(size);
-        },
-        hover: function (mouse) {
-            var res = Pick.pick(mouse, base.camera, base.scene);
+    if(false) {
+        Controls.init($(".game-view", el), {
+            resize: function (size) {
+                base.setSize(size);
+            },
+            hover: function (mouse) {
+                var res = Pick.pick(mouse, base.camera, base.scene);
 
-            if (res.length > 0) {
-                var entity = res[0].object.userData.entity;
-                world.hover(entity);
+                if (res.length > 0) {
+                    var entity = res[0].object.userData.entity;
+                    world.hover(entity);
 
-                if (!entity) {
-                    lastPos = new THREE.Vector2().copy(res[0].point);
+                    if (!entity) {
+                        lastPos = new THREE.Vector2().copy(res[0].point);
+                    }
+                }
+            },
+            click: function () {
+                if (world.hoveredEntity) {
+                    world.select(world.hoveredEntity);
+                } else if (world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player == "human") {
+                    console.log("assign new move job");
+                    world.selectedEntity.resetJobs();
+//          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
+                    world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity, lastPos));
+                }
+            },
+            move: function (d) {
+                var x = base.camera.position.x;
+                var y = base.camera.position.y + 5;
+                var h = map.get("rock").interpolate(x, y);
+                if (!h)
+                    h = 0;
+
+                base.camera.position.x -= d.dx * 0.03;
+                base.camera.position.y += d.dy * 0.03;
+                base.camera.position.z = 10 + h;
+            },
+            keydown: function (e) {
+                if (e.keyCode == 27) {
+                    world.select(null);
                 }
             }
-        },
-        click: function () {
-            if (world.hoveredEntity) {
-                world.select(world.hoveredEntity);
-            } else if (world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player == "human") {
-                console.log("assign new move job");
-                world.selectedEntity.resetJobs();
-//          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
-                world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity, lastPos));
-            }
-        },
-        move: function (d) {
-            var x = base.camera.position.x;
-            var y = base.camera.position.y + 5;
-            var h = map.get("rock").interpolate(x, y);
-            if (!h)
-                h = 0;
-
-            base.camera.position.x -= d.dx * 0.03;
-            base.camera.position.y += d.dy * 0.03;
-            base.camera.position.z = 10 + h;
-        },
-        keydown: function (e) {
-            if (e.keyCode == 27) {
-                world.select(null);
-            }
-        }
-    });
+        });
+    }
     base.render({
         frameCallback: function (delta) {
             if (!world.pause) {
@@ -78,13 +85,11 @@ function GameView(el, world) {
                     if (e && e.onFrame)
                         e.onFrame(delta);
                 });
-                if (world && world.$scope)
-                    world.$scope.$apply();
-                else
-                    console.log("NO APPLY");
+                // $apply hook
             }
         }
     });
+    return base;
 }
 
-module.exports = GameView;
+export default GameView;
