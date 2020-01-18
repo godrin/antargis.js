@@ -88,8 +88,15 @@ class Base {
 
         function dorender() {
             // stop this rendering - because the scope / canvas is destroyed
-            if (!self.destroyed)
-                requestAnimationFrame(dorender);
+            if (!self.destroyed) {
+                if (self.hidden) {
+                    setTimeout(dorender, 50);
+                } else {
+                    setTimeout(function () {
+                        requestAnimationFrame(dorender);
+                    }, 50);
+                }
+            }
             var time = (new Date()).getTime();
             var timeDiff = time - lastTime;
             lastTime = time;

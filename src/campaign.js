@@ -5,12 +5,13 @@ import * as THREE from "three";
 import addSkybox from "./base3d/skybox";
 import TerrainBuilder from "./terrain_builder";
 import _ from "lodash";
+import Pick from './base3d/pick'
 
 class AgGameView extends HTMLElement {
     connectedCallback() {
         this.setupThree();
 
-        this.setupWorld(new World(new HeightMap()))
+        this.setupWorld(new World(this.map = new HeightMap()));
 
 
         console.log("AgGameView connected");
@@ -19,12 +20,19 @@ class AgGameView extends HTMLElement {
         window.addEventListener("mousedown", this.mousedown.bind(this));
         window.addEventListener("mouseup", this.mouseup.bind(this));
         window.addEventListener("mousemove", this.mousemove.bind(this));
+        window.addEventListener("wheel", this.wheel.bind(this));
         window.addEventListener("click", this.click.bind(this));
         document.addEventListener("keydown", this.keydown.bind(this));
+        document.addEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this));
+
+        this.viewCenter = {x: 0, y: 0, z: 10};
 
         this.moves = 0;
-        this.updateSize({target: window})
-        this.base.render({})
+        this.updateSize({target: window});
+        this.base.render({frameCallback: this.frameCallback.bind(this)})
+    }
+
+    frameCallback(e) {
     }
 
     disconnectedCallback() {
@@ -32,8 +40,25 @@ class AgGameView extends HTMLElement {
         window.removeEventListener("mousedown", this.mousedown.bind(this));
         window.removeEventListener("mouseup", this.mouseup.bind(this));
         window.removeEventListener("mousemove", this.mousemove.bind(this));
+        window.removeEventListener("wheel", this.wheel.bind(this));
         window.removeEventListener("click", this.click.bind(this));
         document.removeEventListener("keydown", this.keydown.bind(this));
+        document.removeEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this))
+    }
+
+    getVisibilityChangeEvent() {
+        var hidden, visibilityChange;
+        if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+            hidden = "hidden";
+            visibilityChange = "visibilitychange";
+        } else if (typeof document.msHidden !== "undefined") {
+            hidden = "msHidden";
+            visibilityChange = "msvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+            hidden = "webkitHidden";
+            visibilityChange = "webkitvisibilitychange";
+        }
+        return {visibilityChange, hidden};
     }
 
     setupThree() {
@@ -53,7 +78,7 @@ class AgGameView extends HTMLElement {
     }
 
     setupWorld(world) {
-        this.world = world
+        this.world = world;
         const map = world.map;
 
         const threeHeightMap = map.toThreeTerrain();
@@ -74,15 +99,23 @@ class AgGameView extends HTMLElement {
         }
     }
 
+    visibilityChange(ev) {
+        if(ev.target[this.getVisibilityChangeEvent().hidden]) {
+            // hidden
+        } else {
+            // visible
+        }
+    }
+
 
     updateSize(ev) {
-        console.log("resize", ev);
         this.base.setSize({});
         this.containerWidth = ev.target.innerWidth;
         this.containerHeight = ev.target.innerHeight
     }
 
     mouseup(e) {
+        console.log("mouseup", e);
         this.mouseisdown = false;
     }
 
@@ -91,6 +124,15 @@ class AgGameView extends HTMLElement {
         this.ox = e.pageX;
         this.oy = e.pageY;
         this.moves = 0;
+    }
+
+    wheel(e) {
+        console.log("wheel", e, this.viewCenter);
+        this.viewCenter.z += e.deltaY * 0.1;
+        if (this.viewCenter.z < 5) {
+            this.viewCenter.z = 5
+        }
+        this.updateCamera()
     }
 
     click(e) {
@@ -123,32 +165,37 @@ class AgGameView extends HTMLElement {
         });
     }
 
-    hover(rect) {
-        console.log("hover", rect);
-        var res = Pick.pick(mouse, base.camera, base.scene);
+    hover(mouse) {
+        //console.log("hover", mouse);
+        var res = Pick.pick(mouse, this.base.camera, this.base.scene);
 
         if (res.length > 0) {
             var entity = res[0].object.userData.entity;
-            world.hover(entity);
+            this.world.hover(entity);
 
             if (!entity) {
-                lastPos = new THREE.Vector2().copy(res[0].point);
+                this.lastPos = new THREE.Vector2().copy(res[0].point);
             }
         }
     }
 
     move(d) {
-        console.log("MOVE", d);
+
+        this.viewCenter.x -= d.dx * 0.03;
+        this.viewCenter.y += d.dy * 0.03;
+
+        this.updateCamera()
+    }
+
+    updateCamera() {
         var base = this.base;
-        var x = base.camera.position.x;
-        var y = base.camera.position.y + 5;
-        var h = map.get("rock").interpolate(x, y);
+        var h = this.map.get("rock").interpolate(this.viewCenter.x, this.viewCenter.y + this.viewCenter.z / 2);
         if (!h)
             h = 0;
 
-        base.camera.position.x -= d.dx * 0.03;
-        base.camera.position.y += d.dy * 0.03;
-        base.camera.position.z = 10 + h;
+        base.camera.position.x = this.viewCenter.x;
+        base.camera.position.y = this.viewCenter.y;
+        base.camera.position.z = this.viewCenter.z + h;
     }
 
     keydown(e) {
