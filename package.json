@@ -1,6 +1,6 @@
 {
   "name": "ant3",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "private": true,
   "scripts": {
@@ -8,15 +8,16 @@
     "build": "./node_modules/.bin/faucet",
     "serve": "./node_modules/.bin/http-server"
   },
-  "repository": "",
-  "author": "",
-  "license": "BSD",
+  "repository": "https://github.com/godrin/antargis.js",
+  "author": "David Kamphausen<david.kamphausen76@gmail.com>",
+  "license": "GPLv3",
   "dependencies": {
     "lodash": "^4.17.15",
     "three": "^0.112.1",
     "three.terrain.js": "^1.6.0"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.0.1",
     "autoprefixer": "^9.7.3",
     "browserify": "^13.0.0",
     "css-loader": "^3.4.2",

@@ -1,27 +1,25 @@
-import World from './world'
-import HeightMap from './game/heightmap'
-import Base from "./base3d/base";
+import World from '../game/world'
+import HeightMap from '../game/heightmap'
+import Base from "../base3d/base";
 import * as THREE from "three";
-import addSkybox from "./base3d/skybox";
-import TerrainBuilder from "./terrain_builder";
+import addSkybox from "../base3d/skybox";
+import TerrainBuilder from "../terrain_builder";
 import _ from "lodash";
-import Pick from './base3d/pick'
+import Pick from '../base3d/pick'
 
 class AgGameView extends HTMLElement {
     connectedCallback() {
         this.setupThree();
 
-        this.setupWorld(new World(this.map = new HeightMap()));
-
-
         console.log("AgGameView connected");
 
         window.addEventListener("resize", this.updateSize.bind(this));
-        window.addEventListener("mousedown", this.mousedown.bind(this));
-        window.addEventListener("mouseup", this.mouseup.bind(this));
-        window.addEventListener("mousemove", this.mousemove.bind(this));
-        window.addEventListener("wheel", this.wheel.bind(this));
-        window.addEventListener("click", this.click.bind(this));
+        this.addEventListener("mousedown", this.mousedown.bind(this));
+        this.addEventListener("mouseup", this.mouseup.bind(this));
+        this.addEventListener("mousemove", this.mousemove.bind(this));
+        this.addEventListener("wheel", this.wheel.bind(this));
+        this.addEventListener("click", this.click.bind(this));
+        this.addEventListener("world",this.worldCreated.bind(this));
         document.addEventListener("keydown", this.keydown.bind(this));
         document.addEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this));
 
@@ -37,13 +35,26 @@ class AgGameView extends HTMLElement {
 
     disconnectedCallback() {
         window.removeEventListener("resize", this.updateSize.bind(this));
-        window.removeEventListener("mousedown", this.mousedown.bind(this));
-        window.removeEventListener("mouseup", this.mouseup.bind(this));
-        window.removeEventListener("mousemove", this.mousemove.bind(this));
-        window.removeEventListener("wheel", this.wheel.bind(this));
-        window.removeEventListener("click", this.click.bind(this));
+        this.removeEventListener("mousedown", this.mousedown.bind(this));
+        this.removeEventListener("mouseup", this.mouseup.bind(this));
+        this.removeEventListener("mousemove", this.mousemove.bind(this));
+        this.removeEventListener("wheel", this.wheel.bind(this));
+        this.removeEventListener("click", this.click.bind(this));
+        this.removeEventListener("world",this.worldCreated.bind(this));
         document.removeEventListener("keydown", this.keydown.bind(this));
         document.removeEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this))
+    }
+
+    worldCreated(e) {
+        this.world = e.world;
+        const map = this.world.map;
+
+        const threeHeightMap = map.toThreeTerrain();
+
+        TerrainBuilder.create(map, this.scene, threeHeightMap);
+
+        // FIXME: load all models beforehand
+        this.world.initScene(this.scene);
     }
 
     getVisibilityChangeEvent() {
@@ -77,17 +88,6 @@ class AgGameView extends HTMLElement {
         addSkybox(this.scene);
     }
 
-    setupWorld(world) {
-        this.world = world;
-        const map = world.map;
-
-        const threeHeightMap = map.toThreeTerrain();
-
-        TerrainBuilder.create(map, this.scene, threeHeightMap);
-
-        // FIXME: load all models beforehand
-        world.initScene(this.scene);
-    }
 
     tick(delta) {
         if (!world.pause) {
@@ -106,7 +106,6 @@ class AgGameView extends HTMLElement {
             // visible
         }
     }
-
 
     updateSize(ev) {
         this.base.setSize({});
@@ -136,6 +135,7 @@ class AgGameView extends HTMLElement {
     }
 
     click(e) {
+        //FIXME: move to world
         console.log("CLICK", e);
         const world = this.world;
         if (world.hoveredEntity) {
@@ -189,10 +189,12 @@ class AgGameView extends HTMLElement {
 
     updateCamera() {
         var base = this.base;
-        var h = this.map.get("rock").interpolate(this.viewCenter.x, this.viewCenter.y + this.viewCenter.z / 2);
+        // FIXME: move to world
+        var h = this.world.map.get("rock").interpolate(this.viewCenter.x, this.viewCenter.y + this.viewCenter.z / 2);
         if (!h)
             h = 0;
 
+        // FIXME: move to base
         base.camera.position.x = this.viewCenter.x;
         base.camera.position.y = this.viewCenter.y;
         base.camera.position.z = this.viewCenter.z + h;

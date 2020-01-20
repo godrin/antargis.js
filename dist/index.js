@@ -2985,17 +2985,15 @@ class AgGameView extends HTMLElement {
     connectedCallback() {
         this.setupThree();
 
-        this.setupWorld(new World(this.map = new HeightMap()));
-
-
         console.log("AgGameView connected");
 
         window.addEventListener("resize", this.updateSize.bind(this));
-        window.addEventListener("mousedown", this.mousedown.bind(this));
-        window.addEventListener("mouseup", this.mouseup.bind(this));
-        window.addEventListener("mousemove", this.mousemove.bind(this));
-        window.addEventListener("wheel", this.wheel.bind(this));
-        window.addEventListener("click", this.click.bind(this));
+        this.addEventListener("mousedown", this.mousedown.bind(this));
+        this.addEventListener("mouseup", this.mouseup.bind(this));
+        this.addEventListener("mousemove", this.mousemove.bind(this));
+        this.addEventListener("wheel", this.wheel.bind(this));
+        this.addEventListener("click", this.click.bind(this));
+        this.addEventListener("world",this.worldCreated.bind(this));
         document.addEventListener("keydown", this.keydown.bind(this));
         document.addEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this));
 
@@ -3011,13 +3009,26 @@ class AgGameView extends HTMLElement {
 
     disconnectedCallback() {
         window.removeEventListener("resize", this.updateSize.bind(this));
-        window.removeEventListener("mousedown", this.mousedown.bind(this));
-        window.removeEventListener("mouseup", this.mouseup.bind(this));
-        window.removeEventListener("mousemove", this.mousemove.bind(this));
-        window.removeEventListener("wheel", this.wheel.bind(this));
-        window.removeEventListener("click", this.click.bind(this));
+        this.removeEventListener("mousedown", this.mousedown.bind(this));
+        this.removeEventListener("mouseup", this.mouseup.bind(this));
+        this.removeEventListener("mousemove", this.mousemove.bind(this));
+        this.removeEventListener("wheel", this.wheel.bind(this));
+        this.removeEventListener("click", this.click.bind(this));
+        this.removeEventListener("world",this.worldCreated.bind(this));
         document.removeEventListener("keydown", this.keydown.bind(this));
         document.removeEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this));
+    }
+
+    worldCreated(e) {
+        this.world = e.world;
+        const map = this.world.map;
+
+        const threeHeightMap = map.toThreeTerrain();
+
+        TerrainBuilder.create(map, this.scene, threeHeightMap);
+
+        // FIXME: load all models beforehand
+        this.world.initScene(this.scene);
     }
 
     getVisibilityChangeEvent() {
@@ -3051,17 +3062,6 @@ class AgGameView extends HTMLElement {
         addSkybox(this.scene);
     }
 
-    setupWorld(world) {
-        this.world = world;
-        const map = world.map;
-
-        const threeHeightMap = map.toThreeTerrain();
-
-        TerrainBuilder.create(map, this.scene, threeHeightMap);
-
-        // FIXME: load all models beforehand
-        world.initScene(this.scene);
-    }
 
     tick(delta) {
         if (!world.pause) {
@@ -3076,7 +3076,6 @@ class AgGameView extends HTMLElement {
     visibilityChange(ev) {
         if(ev.target[this.getVisibilityChangeEvent().hidden]) ;
     }
-
 
     updateSize(ev) {
         this.base.setSize({});
@@ -3106,6 +3105,7 @@ class AgGameView extends HTMLElement {
     }
 
     click(e) {
+        //FIXME: move to world
         console.log("CLICK", e);
         const world = this.world;
         if (world.hoveredEntity) {
@@ -3159,10 +3159,12 @@ class AgGameView extends HTMLElement {
 
     updateCamera() {
         var base = this.base;
-        var h = this.map.get("rock").interpolate(this.viewCenter.x, this.viewCenter.y + this.viewCenter.z / 2);
+        // FIXME: move to world
+        var h = this.world.map.get("rock").interpolate(this.viewCenter.x, this.viewCenter.y + this.viewCenter.z / 2);
         if (!h)
             h = 0;
 
+        // FIXME: move to base
         base.camera.position.x = this.viewCenter.x;
         base.camera.position.y = this.viewCenter.y;
         base.camera.position.z = this.viewCenter.z + h;
@@ -3179,6 +3181,396 @@ class AgGameView extends HTMLElement {
 
 if (!customElements.get('ag-game-view')) {
     customElements.define('ag-game-view', AgGameView);
+}
+
+function ajax(url, method = "GET", data = {}) {
+    return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+
+        request.onreadystatechange = () => {
+            if (request.readyState === XMLHttpRequest.DONE) {
+
+                if (request.status <= 299 && request.status !== 0) {
+                    console.log("RESPONSE", request, typeof request.response);
+                    var result = request.response;
+                    try {
+                        result = JSON.parse(result);
+                    } catch (e) {
+
+                    }
+
+                    resolve(result);
+                } else {
+                    reject(request);
+                }
+            }
+        };
+
+        request.onerror = () => {
+            reject(Error('Network Error'));
+        };
+
+        request.open(method, url, true);
+
+        request.send(data);
+    });
+}
+
+var EntityTypes = {
+  "bakery": {
+  },
+  "crop": {
+    "meshName": "tiny",
+    "meshes": {
+      "high": {
+        "mesh": "crop_high"
+      },
+      "med": {
+        "mesh": "crop_med"
+      },
+      "small": {
+        "mesh": "crop_small"
+      },
+      "tiny": {
+        "mesh": "crop_tiny"
+      }
+    }
+  },
+  "mill": {
+  },
+  "mine": {
+  },
+  "farm": {
+  },
+  "grave": {
+  },
+  "well": {
+    "provides": [
+      "water"
+    ],
+    "resources": {
+      "water": 100
+    }
+  },
+  "fishing_hut": {
+    "mixins": [
+      "boss",
+      "job"
+    ]
+  },
+  "workshop": {
+    "needed": {
+      "wood": 1,
+      "stone": 1,
+      "water": 1,
+      "food": 1,
+      "tool": 10
+    },
+    "production": {
+      "tool": {
+        "wood": 1,
+        "stone": 1
+      }
+    },
+    "mixins": [
+      "boss",
+      "job",
+      "house",
+      "smoke"
+    ]
+  },
+  "townhall": {
+    "needed": {
+      "wood": 1,
+      "stone": 1,
+      "water": 1,
+      "food": 1
+    },
+    "mixins": [
+      "boss",
+      "job",
+      "house"
+    ]
+  },
+  "hero": {
+    "mixins": [
+      "boss",
+      "hero",
+      "job",
+      "player"
+    ]
+  },
+  "tower": {
+    "mixins": [
+      "boss",
+      "job",
+      "house"
+    ]
+  },
+  "man": {
+    "meshes": {
+      "sit": {
+        "mesh": "man_e_walk",
+        "animation": "sit"
+      },
+      "sitdown": {
+        "mesh": "man_e_walk",
+        "animation": "sitdown"
+      },
+      "stand": {
+        "mesh": "man_e_walk",
+        "animation": "stand"
+      },
+      "walk": {
+        "mesh": "man_e_walk",
+        "animation": "walk"
+      },
+      "default": {
+        "mesh": "man_e_walk",
+        "animation": "stand"
+      },
+      "fight": {
+        "mesh": "man_fight",
+        "animation": "fight"
+      },
+      "pick": {
+        "mesh": "man_pick",
+        "animation": "pick"
+      },
+      "axe": {
+        "mesh": "man_axe",
+        "animation": "axe"
+      }
+    },
+    "mixins": [
+      "job",
+      "follower"
+    ]
+  },
+  "fir": {
+    "provides": [
+      "wood"
+    ],
+    "resources": {
+      "wood": 5
+    }
+  },
+  "tree": {
+  },
+  "big_stone": {
+    "provides": [
+      "stone"
+    ],
+    "resources": {
+      "stone": 20
+    }
+  },
+  "sheep": {
+    "mixins": [
+      "job",
+      "animal"
+    ],
+    "speed": 0.5,
+    "meshes": {
+      "default": {
+        "mesh": "sheep",
+        "animation": "eat"
+      },
+      "eat": {
+        "mesh": "sheep",
+        "animation": "eat"
+      },
+      "walk": {
+        "mesh": "sheep",
+        "animation": "walk"
+      }
+    }
+  }
+};
+
+//FIXME
+const Mixins = {};
+
+var uid = 11110;
+
+class Entity {
+    constructor(heightmap, ops) {
+        var entity = EntityTypes[ops.type];
+        if (!entity) {
+            console.warn("Entity: No Entity-Type named " + ops.type + " found!");
+            entity = {};
+        }
+
+        _.extend(this, entity);
+        _.extend(this, ops);
+        this.state = {};
+        this.typeName = this.type;
+        this.uid = uid++;
+        this.map = heightmap;
+        // clone
+        this.resources = _.extend({}, this.resources);
+        this.type = entity;
+        if (!this.meshName)
+            this.meshName = "default";
+
+        if (entity.mixins) {
+            this.mixins = {};
+            this.mixinNames = [];
+            this.mixinDef = entity.mixins;
+            entity.mixins.forEach(mixin => {
+                var found = Mixins[mixin];
+                if (found) {
+                    this.mixins[mixin] = found;
+                    this.mixinNames.push(mixin);
+                    _.extend(this, found);
+                } else {
+                    console.log("Mixin not found", mixin);
+                }
+            });
+        }
+    };
+
+    postLoad() {
+        this.mixins.each(mixin => {
+            if (mixin.postLoad) {
+                mixin.postLoad.apply(this, []);
+            }
+        });
+    };
+
+    isA(mixin) {
+        return this.mixinDef.indexOf(mixin) >= 0;
+    }
+
+    setScene(scene) {
+        this.scene = scene;
+        this.setMesh(this.meshName);
+    };
+
+    updateMeshPos() {
+        if (this.mesh) {
+            if (this.mesh && this.mesh.rotation && this.rotation)
+                this.mesh.rotation.z = this.rotation;
+            this.mesh.setPos(this.pos.x, this.pos.y, this.map.get("rock").interpolate(this.pos.x, this.pos.y));
+        }
+    };
+
+    setMesh(name) {
+
+        var entity = this.type;
+        var meshType;
+        var animation;
+        this.meshName = name;
+
+        if (entity.meshes) {
+            var def = entity.meshes[name];
+            if (!def)
+                console.warn("No Mesh of name '" + name + "' found in entity-def", entity);
+            meshType = def.mesh;
+            animation = def.animation;
+        } else if (entity.mesh)
+            meshType = entity.mesh;
+        else
+            meshType = this.typeName;
+
+        this.meshType = meshType;
+        this.animation = animation;
+
+        Models.load(meshType, animation, this, self.scene, (mesh) => {
+            if (this.mesh) {
+                this.mesh.remove();
+            }
+            if (mesh.type == self.meshType && mesh.animation == self.animation) {
+                this.mesh = mesh;
+                mesh.setEntity(self);
+                this.updateMeshPos();
+                if (this.animationFinished)
+                    this.mesh.animationFinished = self.animationFinished.bind(this);
+                this.mesh.hovered(self.state.hovered);
+                this.mesh.selected(self.state.selected);
+            } else {
+                mesh.remove();
+            }
+        });
+    };
+
+    hovered(val) {
+        return this.mesh.hovered(this.state.hovered = val);
+    };
+
+    selected(val) {
+        return this.mesh.selected(this.state.selected = val);
+    };
+
+    increaseBy(what, amount) {
+        this.resources[what] = (this.resources[what] || 0) + amount;
+    };
+
+    take(what, amount) {
+        if (this.resources[what] >= amount) {
+            this.resources[what] -= amount;
+            return true;
+        }
+        return false;
+    };
+
+    give(what, amount, toEntity) {
+        if (this.resources[what] >= amount) {
+            this.resources[what] -= amount;
+            console.debug("GIVE TO", toEntity, what);
+            toEntity.resources[what] = (toEntity.resources[what] || 0) + amount;
+            return true;
+        }
+        return false;
+    }
+}
+
+class WorldLoader {
+    static load(world, data) {
+        data.forEach(entityDefinition=>
+            world.push(new Entity(world.map, entityDefinition))
+        );
+    }
+}
+
+class WorldEvent extends Event {
+    constructor(world) {
+        super("world");
+        this.world = world;
+    }
+}
+
+class AgWorld extends HTMLElement {
+    connectedCallback() {
+        this.map = new HeightMap();
+        this.world = new World(this.map);
+
+        if (this.getAttribute("load")) {
+            this.loadWorld(this.getAttribute("load"));
+        }
+
+
+        document[this.exposeName] = this.world;
+
+        setTimeout(() =>
+            this.querySelectorAll("*[world-accessor]").forEach(e =>
+                e.dispatchEvent(new WorldEvent(this.world)))
+        );
+    }
+
+    disconnectedCallback() {
+        delete document[this.exposeName];
+    }
+
+    loadWorld(url) {
+        ajax(url).then(data =>
+            WorldLoader.load(this.world, data)
+        );
+    }
+}
+
+if (!customElements.get('ag-world')) {
+    customElements.define('ag-world', AgWorld);
 }
 
 }(THREE, _));
