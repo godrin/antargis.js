@@ -1,5 +1,4 @@
 import EntityTypes from '../config/entities'
-import Meshes from '../config/meshes'
 import _ from 'lodash'
 
 //FIXME
@@ -8,7 +7,7 @@ const Mixins = {};
 var uid = 11110;
 
 class Entity {
-    constructor(heightmap, ops) {
+    constructor(heightmap, ops, models) {
         var entity = EntityTypes[ops.type];
         if (!entity) {
             console.warn("Entity: No Entity-Type named " + ops.type + " found!");
@@ -17,6 +16,8 @@ class Entity {
 
         _.extend(this, entity);
         _.extend(this, ops);
+        // FIXME: reduce complexity and references by removing models, map and so ???
+        this.models = models;
         this.state = {};
         this.typeName = this.type;
         this.uid = uid++;
@@ -45,11 +46,12 @@ class Entity {
     };
 
     postLoad() {
-        this.mixins.each(mixin => {
+        _.each(this.mixins, mixin => {
             if (mixin.postLoad) {
                 mixin.postLoad.apply(this, []);
             }
-        })
+        });
+        console.log("MESHES", this)
     };
 
     isA(mixin) {
@@ -57,6 +59,7 @@ class Entity {
     }
 
     setScene(scene) {
+        console.log("Entity", this, "setScene", this.scene, "mesh:", this.meshName);
         this.scene = scene;
         this.setMesh(this.meshName);
     };
@@ -70,6 +73,9 @@ class Entity {
     };
 
     setMesh(name) {
+
+        if (!name)
+            name = this.meshName;
 
         var entity = this.type;
         var meshType;
@@ -90,21 +96,22 @@ class Entity {
         this.meshType = meshType;
         this.animation = animation;
 
-        Models.load(meshType, animation, this, self.scene, (mesh) => {
+        this.models.load(meshType, animation).then((mesh) => {
+            console.log("MODEL loaded", mesh, meshType, animation, this.scene);
+            mesh.attachToScene(this.scene);
+            //, this, self.scene, (mesh) => {
+
             if (this.mesh) {
                 this.mesh.remove();
             }
-            if (mesh.type == self.meshType && mesh.animation == self.animation) {
-                this.mesh = mesh;
-                mesh.setEntity(self);
-                this.updateMeshPos();
-                if (this.animationFinished)
-                    this.mesh.animationFinished = self.animationFinished.bind(this);
-                this.mesh.hovered(self.state.hovered);
-                this.mesh.selected(self.state.selected);
-            } else {
-                mesh.remove();
+            this.mesh = mesh;
+            mesh.setEntity(this);
+            this.updateMeshPos();
+            if (this.animationFinished) {
+                this.mesh.animationFinished = this.animationFinished.bind(this);
             }
+            this.mesh.hovered(this.state.hovered);
+            this.mesh.selected(this.state.selected);
         });
     };
 

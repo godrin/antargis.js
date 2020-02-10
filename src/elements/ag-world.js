@@ -16,16 +16,16 @@ class AgWorld extends HTMLElement {
         this.world = new World(this.map);
 
         if (this.getAttribute("load")) {
-            this.loadWorld(this.getAttribute("load"))
+            this.loadWorld(this.getAttribute("load")).then(this.inform.bind(this))
         }
 
 
         document[this.exposeName] = this.world;
+    }
 
-        setTimeout(() =>
-            this.querySelectorAll("*[world-accessor]").forEach(e =>
-                e.dispatchEvent(new WorldEvent(this.world)))
-        )
+    inform() {
+        this.querySelectorAll("*[world-accessor]").forEach(e =>
+            e.dispatchEvent(new WorldEvent(this.world)))
     }
 
     disconnectedCallback() {
@@ -33,7 +33,7 @@ class AgWorld extends HTMLElement {
     }
 
     loadWorld(url) {
-        ajax(url).then(data =>
+        return ajax(url).then(data =>
             WorldLoader.load(this.world, data)
         )
     }

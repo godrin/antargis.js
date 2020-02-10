@@ -8,26 +8,32 @@
 <ag-world load="levels/tests/entities.json">
 
     <div ag class='gui'>
-        <div class='ag-border pull-left gui-el'>
-            <div class='ag-content' ng-repeat="entity in world.entitiesByType['boss']">
-                <h3 ng-click="world.select(entity)">{{entity.name||entity.typeName}}</h3>
+        <ag-entity-view world-accessor event="hovered">
+            TYPE hovered:${this.entity.typeName}
+        </ag-entity-view>
+        <ag-entity-view world-accessor event="selected">
+            TYPE selected:${this.entity.typeName}
+            <div class='ag-border pull-left gui-el'>
+                <div class='ag-content' ng-repeat="entity in world.entitiesByType['boss']">
+                    <h3 ng-click="world.select(entity)">{{entity.name||entity.typeName}}</h3>
+                </div>
             </div>
-        </div>
-        <div class='inventory pull-left gui-el'>
-            <div ag class='ag-border' ng-if="world.selectedEntity">
-                <div class='ag-content'>
-                    <h3>{{world.selectedEntity.name}} {{world.selectedEntity.typeName}}
-                        ({{world.selectedEntity.player}})</h3>
-                    <p> ({{world.selectedEntity.pos.x}}, {{world.selectedEntity.pos.y}})</p>
-                    <p ng-repeat="job in world.selectedEntity.jobs">{{job.name}}</p>
-                    <p>boss:{{world.selectedEntity.boss.name}}</p>
-                    <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
-                    <div ng-if="world.selectedEntity.followers.length>0">
-                        Followers:{{world.selectedEntity.followers.length}}
+            <div class='inventory pull-left gui-el'>
+                <div ag class='ag-border' ng-if="world.selectedEntity">
+                    <div class='ag-content'>
+                        <h3>{{world.selectedEntity.name}} {{world.selectedEntity.typeName}}
+                            ({{world.selectedEntity.player}})</h3>
+                        <p> ({{world.selectedEntity.pos.x}}, {{world.selectedEntity.pos.y}})</p>
+                        <p ng-repeat="job in world.selectedEntity.jobs">{{job.name}}</p>
+                        <p>boss:{{world.selectedEntity.boss.name}}</p>
+                        <div ng-repeat='(name,value) in world.selectedEntity.resources'>{{name}}:{{value}}</div>
+                        <div ng-if="world.selectedEntity.followers.length>0">
+                            Followers:{{world.selectedEntity.followers.length}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ag-entity-view>
     </div>
 
     <ag-game-view world-accessor></ag-game-view>
