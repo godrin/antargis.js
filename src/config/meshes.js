@@ -1,13 +1,9 @@
 export default {
   "bakery": {
-    "mesh": "bakery",
-    "rotation": {
-      "z": "-3.14*1/8"
-    }
+    "mesh": "bakery2"
   },
   "big_stone": {
-    "mesh": "big_stone",
-    "scale": 1
+    "mesh": "big_stone3"
   },
   "crop_small": {
     "transparent": true,
@@ -33,11 +29,7 @@ export default {
     }
   },
   "fishing_hut": {
-    "mesh": "fishing_hut",
-    "rotation": {
-      "z": "3.14*1/8"
-    },
-    "scale": 1.5
+    "mesh": "fishing_hut2",
   },
   "grave": {
     "mesh": "grave",
@@ -56,10 +48,7 @@ export default {
     "scale": 1
   },
   "townhall": {
-    "mesh": "townhall_try2",
-    "rotation": {
-      "z": "3.14*6/4+3.14"
-    }
+    "mesh": "townhall_try3"
   },
   "tower": {
     "mesh": "tower",
@@ -176,6 +165,9 @@ export default {
     }
   },
   "fir": {
+    "mesh": "fir4"
+  },
+  "fir_old": {
     "mesh": "fir2",
     "texture": "fir5.png",
     "scale": 0.42,

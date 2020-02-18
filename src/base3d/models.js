@@ -3,6 +3,7 @@ import Model from "./model"
 import * as THREE from 'three'
 import _ from 'lodash'
 import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // FIXME: not needed anymore?
 function ensureLoop(animation) {
@@ -46,12 +47,16 @@ class Models {
             this.imageLoader = new THREE.ImageLoader(manager);
         }
 
+        if(!this.gltfLoader) {
+            this.gltfLoader = new GLTFLoader();
+        }
+
         // FIXME: add caching later on
 
         this.textureLoader = new THREE.TextureLoader();
 
     }
-
+/*
     static assignTexture(object, texture, options) {
         if(object.traverse) {
             object.traverse(function (child) {
@@ -81,15 +86,21 @@ class Models {
             }
         }
     }
-
+*/
     async load(meshName, animationName) {
         return this.loadUncached(meshName, animationName).then(this.packIntoNode.bind(this))
     }
 
     packIntoNode(options) {
         const {meshDef, mesh, meshName} = options;
-        let objects = mesh.clone();
-
+        console.log("MESH", mesh)
+        var objects;
+        if(mesh.scene) {
+            objects = mesh.scene;
+        } else {
+            objects = mesh.clone();
+        }
+//let objects = mesh.scene
         console.log("PACK", meshDef, objects, options);
 
         objects = _.flatten([objects]);
@@ -97,21 +108,23 @@ class Models {
         // enclose mesh within scene-node, so that it can be rotated and there can be several meshes
         // attached to one entity
         const node = new THREE.Object3D();
-        _.each(objects, function (object) {
-            console.log("PRE rotation", meshDef.rotation)
-            Models.fixPositions(meshDef.rotation)
-            console.log("POST rotation", meshDef.rotation)
-            _.extend(object.rotation, meshDef.rotation);
 
+        _.each(objects, function (object) {
+
+   //         console.log("PRE rotation", meshDef.rotation)
+  //          Models.fixPositions(meshDef.rotation)
+            console.log("POST rotation", meshDef.rotation)
+ //           _.extend(object.rotation, meshDef.rotation);
+            object.rotateX(Math.PI / 2);
+/*
             _.extend(object.position, meshDef.position);
 
             if (meshDef.scale && object.scale && object.scale.set) {
                 object.scale.set(meshDef.scale, meshDef.scale, meshDef.scale);
             }
-
+*/
             node.add(object);
         });
-
         const newModel = new Model(objects, node);
         this.addRings(node, newModel);
         newModel.name = mesh;
@@ -192,13 +205,23 @@ class Models {
 
         return new Promise((resolve, reject) => {
 
-            this.objLoader.load(
-                'models/' + meshName + '.obj',
-                mesh => {
-                    resolve({mesh, meshName})
-                },
-                null,
-                reject);
+            if(this.gltfLoader) {
+                this.gltfLoader.load(
+                    'models/' + meshName + '.gltf',
+                    mesh => {
+                        resolve({mesh, meshName})
+                    },
+                    null,
+                    reject);
+            } else {
+                this.objLoader.load(
+                    'models/' + meshName + '.obj',
+                    mesh => {
+                        resolve({mesh, meshName})
+                    },
+                    null,
+                    reject);
+            }
         });
     }
 
@@ -209,12 +232,14 @@ class Models {
         const meshName = (meshDef && meshDef.mesh) || name;
         const texName = this.makeTextureName(meshName, meshDef);
         console.log("Load texture", name, meshName, texName);
-        const texture = await this.loadImage(texName)
         const meshObject = await this.loadObj(meshName)
 
         console.log("MODELOBJECT ", name, meshObject)
 
-        //Models.assignTexture(meshObject.mesh, texture, meshDef);
+        if(!this.gltfLoader) {
+            const texture = await this.loadImage(texName)
+            Models.assignTexture(meshObject.mesh, texture, meshDef);
+        }
 
         return Object.assign({meshDef}, meshObject);
     }

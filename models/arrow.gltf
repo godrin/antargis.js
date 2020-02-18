@@ -1,0 +1,167 @@
+{
+  "accessors": [
+    {
+      "name": "something0_0_positions",
+      "componentType": 5126,
+      "count": 36,
+      "min": [
+        -0.08169447630643845,
+        -2.259999990463257,
+        -0.08169447630643845
+      ],
+      "max": [
+        0.08169447630643845,
+        2.259999990463257,
+        0.08169447630643845
+      ],
+      "type": "VEC3",
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "name": "something0_0_normals",
+      "componentType": 5126,
+      "count": 36,
+      "min": [
+        -0.7071067690849304,
+        -1,
+        -0.7071067690849304
+      ],
+      "max": [
+        0.7071067690849304,
+        1,
+        0.7071067690849304
+      ],
+      "type": "VEC3",
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "name": "something0_0_texcoords",
+      "componentType": 5126,
+      "count": 36,
+      "min": [
+        0,
+        0
+      ],
+      "max": [
+        1,
+        1
+      ],
+      "type": "VEC2",
+      "bufferView": 2,
+      "byteOffset": 0
+    },
+    {
+      "name": "something0_0_indices",
+      "componentType": 5123,
+      "count": 36,
+      "min": [
+        0
+      ],
+      "max": [
+        35
+      ],
+      "type": "SCALAR",
+      "bufferView": 3,
+      "byteOffset": 0
+    }
+  ],
+  "asset": {
+    "generator": "obj2gltf",
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "name": "arrow",
+      "byteLength": 1224,
+      "uri": "data:application/octet-stream;base64,b0+nvdejEMBvT6e9b0+nPdejEMBvT6c9b0+nvdejEMBvT6c9b0+nvdejEMBvT6e9b0+nvdejEEBvT6c9b0+nvdejEEBvT6e9b0+nvdejEMBvT6e9b0+nPdejEEBvT6e9b0+nPdejEMBvT6e9b0+nvdejEMBvT6c9b0+nvdejEEBvT6c9b0+nvdejEMBvT6e9b0+nPdejEMBvT6c9b0+nvdejEEBvT6c9b0+nvdejEMBvT6c9b0+nPdejEMBvT6c9b0+nPdejEEBvT6e9b0+nPdejEEBvT6c9b0+nPdejEMBvT6e9b0+nPdejEMBvT6c9b0+nvdejEMBvT6e9b0+nPdejEMBvT6e9b0+nPdejEEBvT6e9b0+nPdejEMBvT6c9b0+nvdejEEBvT6e9b0+nPdejEEBvT6e9b0+nvdejEMBvT6e9b0+nvdejEEBvT6c9b0+nPdejEEBvT6e9b0+nvdejEEBvT6e9b0+nPdejEEBvT6c9b0+nvdejEEBvT6c9b0+nPdejEMBvT6c9b0+nPdejEEBvT6c9b0+nPdejEEBvT6e9b0+nvdejEEBvT6c9AAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAA8wQ1v6myR6TzBDW/8wQ1v5HJSCTzBDU/8wQ1vzUnR6TzBDW/8wQ1v6myR6TzBDW/8wQ1P5HJSKTzBDW/8wQ1Px0+SKTzBDW/8wQ1vx0+SCTzBDU/8wQ1v5HJSCTzBDU/8wQ1v6myR6TzBDW/8wQ1P6myRyTzBDU/8wQ1v5HJSCTzBDU/8wQ1vx0+SCTzBDU/8wQ1P6myRyTzBDU/8wQ1P5HJSKTzBDW/8wQ1PzUnRyTzBDU/AAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAA8wQ1Px0+SKTzBDW/8wQ1P5HJSKTzBDW/8wQ1P6myRyTzBDU/8wQ1vzUnR6TzBDW/8wQ1P5HJSKTzBDW/8wQ1v6myR6TzBDW/AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAA8wQ1PzUnRyTzBDU/8wQ1v5HJSCTzBDU/8wQ1P6myRyTzBDU/AAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAA7Q8UPQAAgD/tD5Q9AAAAAO0PFD0AAAAAAACgJQAAgD4AAIA/AAAAPwAAgD8AAIA+AACgJQAAgD4AAIA/AAAAAAAAoCUAAAAAAAAAAAAAAD8AAIA/AAAAPwAAoCUAAIA+AAAAAAAAQD8AAIA/AAAAPwAAAAAAAAA/AAAAAAAAQD8AAIA/AACAPwAAgD8AAEA/7Q+UPQAAgD/tD5Q9AAAAAO0PFD0AAIA/AAAAAAAAgD8AAIA/AACAPwAAAAAAAEA/AACAPwAAgD4AAIA/AAAAAAAAoCUAAIA+7Q8UPQAAgD8AAAAAAAAAAAAAgCIAAIA/AACAPwAAQD8AAIA/AAAAPwAAAAAAAEA/7Q8UPQAAAAAAAAAAAAAAAO0PFD0AAIA/AAABAAIAAwAEAAUABgAHAAgACQAKAAsADAANAA4ADwAQABEAEgATABQAFQAWABcAGAAZABoAGwAcAB0AHgAfACAAIQAiACMA"
+    }
+  ],
+  "bufferViews": [
+    {
+      "name": "bufferView_0",
+      "buffer": 0,
+      "byteLength": 432,
+      "byteOffset": 0,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_1",
+      "buffer": 0,
+      "byteLength": 432,
+      "byteOffset": 432,
+      "byteStride": 12,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_2",
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 864,
+      "byteStride": 8,
+      "target": 34962
+    },
+    {
+      "name": "bufferView_3",
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 1152,
+      "target": 34963
+    }
+  ],
+  "materials": [
+    {
+      "name": "material0",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5,
+          0.5,
+          0.5,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 1
+      },
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "alphaMode": "OPAQUE",
+      "doubleSided": false
+    }
+  ],
+  "meshes": [
+    {
+      "name": "something0",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0,
+            "NORMAL": 1,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "something",
+      "mesh": 0
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}
