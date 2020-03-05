@@ -1,9 +1,5 @@
 import Meshes from "../config/meshes"
 import Model from "./model"
-import * as THREE from 'three'
-import _ from 'lodash'
-import {OBJLoader} from 'three/examples/jsm/loaders/OBJLoader'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 // FIXME: not needed anymore?
 function ensureLoop(animation) {
@@ -37,9 +33,7 @@ class Models {
         manager.onProgress = function (item, loaded, total) {
             console.debug("manager.onProgress", item, loaded, total);
         };
-        if (!this.objLoader) {
-            this.objLoader = new OBJLoader(manager);
-        }
+
         if (!this.jsonLoader) {
             //this.jsonLoader = new THREE.JSONLoader(manager);
         }
@@ -47,91 +41,14 @@ class Models {
             this.imageLoader = new THREE.ImageLoader(manager);
         }
 
-        if(!this.gltfLoader) {
-            this.gltfLoader = new GLTFLoader();
+        if (!this.gltfLoader) {
+            this.gltfLoader = new THREE.GLTFLoader();
         }
 
         // FIXME: add caching later on
 
         this.textureLoader = new THREE.TextureLoader();
 
-    }
-/*
-    static assignTexture(object, texture, options) {
-        if(object.traverse) {
-            object.traverse(function (child) {
-                if (child && child.material) {
-                    child.material.map = texture;
-                    if (options.doublesided)
-                        child.material.side = THREE.DoubleSide;
-                    if (options.transparent) {
-                        child.material.transparent = true;
-                        child.material.depthWrite = false;
-                    }
-                }
-            });
-        }
-    }
-
-    static fixPositions(pos) {
-        if(pos) {
-            if (typeof pos.x === 'string' || pos.x instanceof String) {
-                pos.x = eval(pos.x);
-            }
-            if (typeof pos.y === 'string' || pos.y instanceof String) {
-                pos.y = eval(pos.y);
-            }
-            if (typeof pos.z === 'string' || pos.z instanceof String) {
-                pos.z = eval(pos.z);
-            }
-        }
-    }
-*/
-    async load(meshName, animationName) {
-        return this.loadUncached(meshName, animationName).then(this.packIntoNode.bind(this))
-    }
-
-    packIntoNode(options) {
-        const {meshDef, mesh, meshName} = options;
-        console.log("MESH", mesh)
-        var objects;
-        if(mesh.scene) {
-            objects = mesh.scene;
-        } else {
-            objects = mesh.clone();
-        }
-//let objects = mesh.scene
-        console.log("PACK", meshDef, objects, options);
-
-        objects = _.flatten([objects]);
-
-        // enclose mesh within scene-node, so that it can be rotated and there can be several meshes
-        // attached to one entity
-        const node = new THREE.Object3D();
-
-        _.each(objects, function (object) {
-
-   //         console.log("PRE rotation", meshDef.rotation)
-  //          Models.fixPositions(meshDef.rotation)
-            console.log("POST rotation", meshDef.rotation)
- //           _.extend(object.rotation, meshDef.rotation);
-            object.rotateX(Math.PI / 2);
-/*
-            _.extend(object.position, meshDef.position);
-
-            if (meshDef.scale && object.scale && object.scale.set) {
-                object.scale.set(meshDef.scale, meshDef.scale, meshDef.scale);
-            }
-*/
-            node.add(object);
-        });
-        const newModel = new Model(objects, node);
-        this.addRings(node, newModel);
-        newModel.name = mesh;
-        newModel.type = meshName;
-        //FIXME
-        // newModel.animation = animation;
-        return newModel
     }
 
     static createRing(color) {
@@ -146,6 +63,7 @@ class Models {
         hoverRing.visible = false;
         return hoverRing
     }
+
     static createBox() {
         const material = new THREE.MeshLambertMaterial({
             color: 0xdd9900,
@@ -153,7 +71,51 @@ class Models {
             transparent: true,
             opacity: 0.5
         });
-        return new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), material);
+        return new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+    }
+
+    async load(meshName, animationName) {
+        return this.loadUncached(meshName, animationName).then(this.packIntoNode.bind(this))
+    }
+
+    async packIntoNode(options) {
+        const {meshDef, mesh, meshName} = options;
+        console.log("MESH", mesh);
+        var objects;
+        if (mesh.scene) {
+            objects = mesh.scene;
+        } else {
+            objects = mesh.clone();
+        }
+        //let objects = mesh.scene
+        console.log("PACK", meshDef, objects, options);
+
+        objects = _.flatten([objects]);
+
+        // enclose mesh within scene-node, so that it can be rotated and there can be several meshes
+        // attached to one entity
+        const node = new THREE.Object3D();
+
+        _.each(objects, function (object) {
+
+            //         console.log("PRE rotation", meshDef.rotation)
+            //          Models.fixPositions(meshDef.rotation)
+            console.log("POST rotation", meshDef.rotation);
+            //object.rotateX(Math.PI / 2);
+
+            node.add(object);
+        });
+        const newModel = new Model(objects, node);
+
+        newModel.name = mesh;
+        newModel.type = meshName;
+        if(true) {
+            this.addRings(node, newModel);
+        }
+
+        //FIXME
+        // newModel.animation = animation;
+        return newModel
     }
 
     addRings(node, newModel) {
@@ -176,42 +138,19 @@ class Models {
         return this[loadFct](mesh, animation)
     }
 
-    makeTextureName(mesh, options) {
-        let texName = mesh + ".jpg";
-        if (options.texture) {
-            texName = options.texture;
-        }
-        return "models/" + texName;
-    }
-
-
-    async loadImage(texName) {
-
-        return new Promise((resolve, reject) => {
-            this.textureLoader.load(texName, function (texture) {
-                resolve(texture);
-            }, null, reject)
-        })
-    }
 
     async loadObj(meshName) {
-        if(false) {
-            return new Promise((resolve)=> {
-                const mesh = Models.createBox()
-                resolve({mesh, meshName})
-            })
-        }
-
-
         return new Promise((resolve, reject) => {
 
-            if(this.gltfLoader) {
+            if (this.gltfLoader) {
                 this.gltfLoader.load(
                     'models/' + meshName + '.gltf',
                     mesh => {
                         resolve({mesh, meshName})
                     },
-                    null,
+                    (xhr) => {
+                        console.log(meshName + " " + (xhr.loaded / xhr.total * 100) + '% loaded');
+                    },
                     reject);
             } else {
                 this.objLoader.load(
@@ -225,21 +164,13 @@ class Models {
         });
     }
 
-
-
     async loadObjComplete(name, dummy) {
         const meshDef = this.meshes[name];
         const meshName = (meshDef && meshDef.mesh) || name;
-        const texName = this.makeTextureName(meshName, meshDef);
-        console.log("Load texture", name, meshName, texName);
-        const meshObject = await this.loadObj(meshName)
+        console.log("Load texture", name, meshName);
+        const meshObject = await this.loadObj(meshName);
 
-        console.log("MODELOBJECT ", name, meshObject)
-
-        if(!this.gltfLoader) {
-            const texture = await this.loadImage(texName)
-            Models.assignTexture(meshObject.mesh, texture, meshDef);
-        }
+        console.log("MODELOBJECT ", name, meshObject);
 
         return Object.assign({meshDef}, meshObject);
     }

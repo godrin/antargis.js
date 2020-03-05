@@ -1,5 +1,3 @@
-import * as THREE from 'three'
-
 //var projector = new THREE.Projector();
 var raycaster = new THREE.Raycaster();
 

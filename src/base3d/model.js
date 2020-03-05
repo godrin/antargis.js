@@ -1,3 +1,20 @@
+const onlyOneAtATime = (function () {
+    let within = false;
+    return function (fct) {
+        console.log("TRYING ",fct);
+        if (within) {
+            console.log("TRYING LATER",fct);
+            setTimeout(() => onlyOneAtATime(fct), 10)
+        } else {
+            within=true;
+            console.log("TRYING DOING",fct);
+            fct();
+            console.log("TRYING DONE",fct);
+            within=false;
+        }
+    }
+})();
+
 
 class Model {
     constructor(innerMeshes, outerNode, hoverRing, selectRing) {
@@ -10,9 +27,9 @@ class Model {
     }
 
     attachToScene(scene) {
-        console.log("ADD MODEL TO SCEEN", this, scene)
-        this.scene = scene
-        scene.add(this.outerNode);
+        console.log("ADD MODEL TO SCEEN", this, scene);
+        this.scene = scene;
+        onlyOneAtATime(() => scene.add(this.outerNode));
     }
 
     setEntity(entity) {
@@ -63,7 +80,7 @@ class Model {
     }
 
     remove() {
-        console.log("REMOVE ME FROM SCENE", this)
+        console.log("REMOVE ME FROM SCENE", this);
         // hook to remove animation-restarter-interval
         if (this.innerMeshes && this.innerMeshes.length > 0) {
             _.each(this.innerMeshes, function (m) {

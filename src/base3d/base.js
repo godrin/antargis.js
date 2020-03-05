@@ -1,8 +1,4 @@
-import * as THREE from 'three'
-import SPE from '../libs/ShaderParticles'
-
 const clock = new THREE.Clock();
-
 
 class Base {
     constructor(el) {
@@ -20,7 +16,7 @@ class Base {
         camera.position.x = 16;
         camera.position.y = -5;
         camera.position.z = 10;
-        camera.rotation.x = (10 + 32) * Math.PI / 180;
+        camera.rotation.x = -(10 + 32) * Math.PI / 180;
 
         this.particleGroup = Base.makeSPEGroup();
 

@@ -1,7 +1,4 @@
-import * as THREE from 'three'
-import _ from 'lodash'
-
-import Terrain from './base3d/terrain'
+const Terrain = THREE.Terrain;
 
 class TerrainBuilder {
 
@@ -20,7 +17,7 @@ class TerrainBuilder {
                     }
                 }
             };
-        if (false)
+        if (true)
             material = new THREE.MeshBasicMaterial({
                 color: 0xff0000,
                 wireframe: true
@@ -45,7 +42,7 @@ class TerrainBuilder {
             clamp: false
         });
         terrainScene.rotation.x = 0;
-        //terrainScene.rotation.z=3.1415;
+        terrainScene.rotation.x = -Math.PI/2;
         terrainScene.position.x += options.width / 2;
         terrainScene.position.y += options.width / 2;
 

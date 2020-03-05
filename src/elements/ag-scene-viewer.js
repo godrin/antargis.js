@@ -1,7 +1,3 @@
-import * as THREE from "three";
-import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader"
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-
 class AgSceneViewer extends HTMLElement {
     connectedCallback() {
         this.initScene()
@@ -24,9 +20,14 @@ class AgSceneViewer extends HTMLElement {
         this.addLight();
         this.createCube();
         const model = await this.loadModel(this.getAttribute("gltf-file"));
+        this.scene.add(model)
         // and stone
-        const stone= await this.loadModel();
-        stone.position.x+=2
+        for(var i=2;i<=20;i+=2) {
+            const stone = await this.loadModel();
+            this.scene.add(stone);
+
+            stone.position.x += i
+        }
 
         this.arrowHelper(this.scene);
 
@@ -83,30 +84,24 @@ class AgSceneViewer extends HTMLElement {
     async loadModel(url) {
         return new Promise((resolve) => {
             // Instantiaßte a loader
-            var loader = new GLTFLoader();
+            if(!this.loader) {
+                this.loader = new THREE.GLTFLoader();
+            }
 
-            // Optional: Provide a DRACOLoader instance to decode compressed mesh data
-            var dracoLoader = new DRACOLoader();
-            dracoLoader.setDecoderPath('/examples/js/libs/draco/');
-            loader.setDRACOLoader(dracoLoader);
-
+            if(false) {
+                // Optional: Provide a DRACOLoader instance to decode compressed mesh data
+                var dracoLoader = new THREE.DRACOLoader();
+                dracoLoader.setDecoderPath('/examples/js/libs/draco/');
+                loader.setDRACOLoader(dracoLoader);
+            }
             // Load a glTF resource
-            loader.load(
+            this.loader.load(
                 // resource URL
                 url||'models/big_stone3.gltf',
                 // called when the resource is loaded
                 (gltf) => {
 
-                    this.scene.add(gltf.scene);
                     resolve(gltf.scene);
-                    //gltf.scene.rotateX(-Math.PI / 2);
-
-                    gltf.animations; // Array<THREE.AnimationClip>
-                    gltf.scene; // THREE.Scene
-                    gltf.scenes; // Array<THREE.Scene>
-                    gltf.cameras; // Array<THREE.Camera>
-                    gltf.asset; // Object
-
                 },
                 // called while loading is progressing
                 (xhr) => {
@@ -116,9 +111,7 @@ class AgSceneViewer extends HTMLElement {
                 },
                 // called when loading has errors
                 (error) => {
-
                     console.log('An error happened', error);
-
                 }
             );
         });

@@ -59,8 +59,6 @@
  *     `options.ySegments + 1`.
  */
 
-import * as THREE from 'three'
-
 const Terrain = function(options) {
     var defaultOptions = {
         after: null,

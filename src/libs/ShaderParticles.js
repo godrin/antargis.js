@@ -8,8 +8,6 @@
 //
 // ShaderParticleGroup may be freely distributed under the MIT license (See LICENSE.txt)
 
-import * as THREE from 'three'
-
 var SPE = SPE || {};
 
 SPE.utils = {

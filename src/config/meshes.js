@@ -1,6 +1,6 @@
 export default {
   "bakery": {
-    "mesh": "bakery2"
+    "mesh": "bakery3"
   },
   "big_stone": {
     "mesh": "big_stone3"
@@ -18,30 +18,24 @@ export default {
     "scale": 2.2
   },
   "crop_tiny": {
+    "mesh": "crop_tiny2",
     "transparent": true,
     "scale": 2.2
   },
   "farm": {
-    "mesh": "farm",
-    "scale": 0.1,
-    "rotation": {
-      "z": -0.6
-    }
+    "mesh": "farm2"
   },
   "fishing_hut": {
     "mesh": "fishing_hut2",
   },
   "grave": {
-    "mesh": "grave",
-    "scale": 0.2
+    "mesh": "grave2"
   },
   "hero": {
-    "mesh": "hero_lp",
-    "scale": 0.08
+    "mesh": "hero_lp2"
   },
   "mine": {
-    "mesh": "mine2",
-    "scale": 0.08
+    "mesh": "mine3"
   },
   "mill": {
     "mesh": "mill",
@@ -51,11 +45,7 @@ export default {
     "mesh": "townhall_try3"
   },
   "tower": {
-    "mesh": "tower",
-    "scale": 1.8,
-    "rotation": {
-      "z": "3.14*7/4+3.14"
-    }
+    "mesh": "tower2"
   },
   "man_pick": {
     "mesh": "man_pick",
@@ -174,6 +164,7 @@ export default {
     "doublesided": true,
     "transparent": true
   },
+
   "tree": {
     "mesh": "tree5",
     "scale": 0.2,
@@ -206,15 +197,10 @@ export default {
     }
   },
   "well": {
-    "mesh": "well",
-    "scale": 0.03
+    "mesh": "well"
   },
   "workshop": {
-    "mesh": "workshop",
-    "scale": 0.18,
-    "rotation": {
-      "z": ",-50*3.14/180"
-    },
+    "mesh": "workshop2",
     "particles": {
       "smoke": {
         "position": {

@@ -1,5 +1,4 @@
 import EntityTypes from '../config/entities'
-import _ from 'lodash'
 
 //FIXME
 const Mixins = {};
@@ -45,6 +44,10 @@ class Entity {
         }
     };
 
+    getId() {
+        return this.uid
+    }
+
     postLoad() {
         _.each(this.mixins, mixin => {
             if (mixin.postLoad) {
@@ -68,7 +71,7 @@ class Entity {
         if (this.mesh) {
             if (this.mesh && this.mesh.rotation && this.rotation)
                 this.mesh.rotation.z = this.rotation;
-            this.mesh.setPos(this.pos.x, this.pos.y, this.map.get("rock").interpolate(this.pos.x, this.pos.y));
+            this.mesh.setPos(this.pos.x, this.map.get("rock").interpolate(this.pos.x, this.pos.y), -this.pos.y);
         }
     };
 

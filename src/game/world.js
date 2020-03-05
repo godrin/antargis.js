@@ -1,5 +1,3 @@
-import {Vector3} from 'three'
-import _ from 'lodash'
 import Events from '../libs/events'
 
 class World {
@@ -50,7 +48,7 @@ class World {
             }
             return true;
         }).sortBy(function (e) {
-            if (origin instanceof Vector3)
+            if (origin instanceof THREE.Vector3)
                 return e.pos.distanceTo(origin);
             return 1;
         }).value();

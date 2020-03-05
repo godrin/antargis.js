@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 var ArrayType = window.Float64Array || window.Array;
 
 function createMap(w, h) {

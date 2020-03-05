@@ -1,11 +1,8 @@
-import World from '../game/world'
-import HeightMap from '../game/heightmap'
 import Base from "../base3d/base";
-import * as THREE from "three";
 import addSkybox from "../base3d/skybox";
 import TerrainBuilder from "../terrain_builder";
-import _ from "lodash";
 import Pick from '../base3d/pick'
+import AntScene from "../base3d/ant-scene";
 
 class AgGameView extends HTMLElement {
     connectedCallback() {
@@ -31,6 +28,7 @@ class AgGameView extends HTMLElement {
     }
 
     frameCallback(e) {
+        this.antScene.tick()
     }
 
     disconnectedCallback() {
@@ -55,7 +53,7 @@ class AgGameView extends HTMLElement {
         TerrainBuilder.create(map, this.scene, threeHeightMap);
 
         // FIXME: load all models beforehand
-        this.world.initScene(this.scene);
+        this.world.initScene(this.antScene);
     }
 
     getVisibilityChangeEvent() {
@@ -87,6 +85,8 @@ class AgGameView extends HTMLElement {
         this.scene.add(directionalLight);
 
         addSkybox(this.scene);
+
+        this.antScene = new AntScene(this.scene)
     }
 
 

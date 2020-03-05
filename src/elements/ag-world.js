@@ -19,7 +19,6 @@ class AgWorld extends HTMLElement {
             this.loadWorld(this.getAttribute("load")).then(this.inform.bind(this))
         }
 
-
         document[this.exposeName] = this.world;
     }
 
