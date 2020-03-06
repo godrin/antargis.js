@@ -8,11 +8,11 @@ module.exports = {
             source: "./src/demo.js",
             target: "./dist/demo.js"
         }
-        /*,
+        ,
         {
             source:"./src/three.js",
             target: "./dist/three.js"
-        }*/
+        }
     ],
     sass: [{
         source: "./index.scss",

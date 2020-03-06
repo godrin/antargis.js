@@ -93,7 +93,7 @@ const Terrain = function(options) {
     // across the terrain or having multiple meshes for optimization purposes.
     var scene = new THREE.Object3D();
     // Planes are initialized on the XY plane, so rotate so Z is up.
-    scene.rotation.x = -0.5 * Math.PI;
+    //scene.rotation.x = -0.5 * Math.PI;
 
     var mesh = new THREE.Mesh(
         new THREE.PlaneGeometry(options.xSize, options.ySize, options.xSegments, options.ySegments),

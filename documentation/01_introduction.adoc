@@ -1,6 +1,10 @@
 == Introduction & goals
 
-Antargis.js should/will be a rewrite of https://github.com/godrin/antargis which had major drawbacks, being implemented in C++ and ruby.
+Antargis.js is or will be a:
+
+* extended clone of Powermonger
+* a rewrite of https://github.com/godrin/antargis which had major drawbacks, being implemented in C++ and ruby.
+
 This new version takes into account that the whole web-technology has gone through the roof and it's far enough to handle a
 RTS-game on it's own.
 

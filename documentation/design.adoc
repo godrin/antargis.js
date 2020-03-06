@@ -1,5 +1,4 @@
-User-Requirements
-=================
+== User-Requirements
 Screens:
 - game
 - later:
@@ -19,13 +18,11 @@ Sound:
 - sheep-sound
 - tocktock when inventing
 
-Dev-Requirements
-================
+== Dev-Requirements
 - A-function: 
   - A("man") - get all entites with mixins man"
   - A("#godrin") - get entity with name godrin
   - A(".somewhat") - get all entites with class somewhat
 - enable/disable loggin from console (default is off)
 
-Overview
-========
+== Overview

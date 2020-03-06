@@ -5,3 +5,4 @@ Demo on: https://godrin.github.io/antargis.js/
 
 ParticleEngine from https://github.com/squarefeet/ShaderParticleEngine
 
+<<./documentation/arc42.adoc, Arc42-style documentation>>
