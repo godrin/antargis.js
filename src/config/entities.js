@@ -79,7 +79,7 @@ export default {
       "boss",
       "hero",
       "job",
-      "player"
+      "player",
     ]
   },
   "tower": {

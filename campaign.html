@@ -8,10 +8,10 @@
 <ag-world load="levels/tests/entities.json">
 
     <div ag class='gui'>
-        <ag-entity-view world-accessor event="hovered">
+        <ag-entity-view inject-world event="hovered">
             TYPE hovered:${this.entity.typeName}
         </ag-entity-view>
-        <ag-entity-view world-accessor event="selected">
+        <ag-entity-view inject-world event="selected">
             TYPE selected:${this.entity.typeName}
             <div class='ag-border pull-left gui-el'>
                 <div class='ag-content' ng-repeat="entity in world.entitiesByType['boss']">
@@ -35,12 +35,14 @@
             </div>
         </ag-entity-view>
     </div>
-
-    <ag-game-view world-accessor></ag-game-view>
+  <ag-scene inject-world>
+      <ag-game-view inject-world inject-scene control-progress></ag-game-view>
+  </ag-scene>
 </ag-world>
 
 <script src="dist/three.js"></script>
 <script src="node_modules/lodash/lodash.min.js"></script>
+<script src="src/libs/SPE.min.js"></script>
 <script src="dist/index.js"></script>
 </body>
 </html>

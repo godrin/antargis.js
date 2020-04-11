@@ -1,3 +1,4 @@
+/** very simplistic scene viewer used for displaying a single model. */
 class AgSceneViewer extends HTMLElement {
     connectedCallback() {
         this.initScene()

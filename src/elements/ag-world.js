@@ -22,18 +22,18 @@ class AgWorld extends HTMLElement {
         document[this.exposeName] = this.world;
     }
 
-    inform() {
-        this.querySelectorAll("*[world-accessor]").forEach(e =>
-            e.dispatchEvent(new WorldEvent(this.world)))
-    }
-
     disconnectedCallback() {
         delete document[this.exposeName]
     }
 
+    inform() {
+        this.querySelectorAll("*[inject-world]").forEach(e =>
+            e.dispatchEvent(new WorldEvent(this.world)))
+    }
+
     loadWorld(url) {
         return ajax(url).then(data =>
-            WorldLoader.load(this.world, data)
+            new WorldLoader().load(this.world, data)
         )
     }
 }

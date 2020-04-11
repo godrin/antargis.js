@@ -172,7 +172,7 @@ export default {
   },
   "sheep": {
     "scale": 0.15,
-    "type": "json",
+//    "type": "json",
     "rotation": {
       "x": "3.14*0.5"
     },

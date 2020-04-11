@@ -58,7 +58,6 @@
  *     Rendering might be slightly faster if this is a multiple of
  *     `options.ySegments + 1`.
  */
-
 const Terrain = function(options) {
     var defaultOptions = {
         after: null,
@@ -79,6 +78,7 @@ const Terrain = function(options) {
         ySize: 1024,
         clamp:false
     };
+
     options = options || {};
     for (var opt in defaultOptions) {
         if (defaultOptions.hasOwnProperty(opt)) {
@@ -126,6 +126,8 @@ const Terrain = function(options) {
     if (typeof options.after === 'function') {
         options.after(v, options);
     }
+    mesh.geometry.computeVertexNormals();
+    mesh.geometry.computeFaceNormals();
     // Mark the geometry as having changed and needing updates.
     mesh.geometry.verticesNeedUpdate = true;
     mesh.geometry.normalsNeedUpdate = true;

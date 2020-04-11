@@ -1,16 +1,15 @@
 const onlyOneAtATime = (function () {
     let within = false;
     return function (fct) {
-        console.log("TRYING ",fct);
         if (within) {
-            console.log("TRYING LATER",fct);
             setTimeout(() => onlyOneAtATime(fct), 10)
         } else {
             within=true;
-            console.log("TRYING DOING",fct);
-            fct();
-            console.log("TRYING DONE",fct);
-            within=false;
+            try {
+                fct();
+            } finally {
+                within = false;
+            }
         }
     }
 })();
@@ -27,9 +26,12 @@ class Model {
     }
 
     attachToScene(scene) {
-        console.log("ADD MODEL TO SCEEN", this, scene);
         this.scene = scene;
-        onlyOneAtATime(() => scene.add(this.outerNode));
+        if(false) {
+            onlyOneAtATime(() => scene.add(this.outerNode));
+        } else {
+            scene.add(this.outerNode)
+        }
     }
 
     setEntity(entity) {
@@ -54,6 +56,7 @@ class Model {
     }
 
     detachFromScene() {
+        scene.remove(this.outerNode)
     }
 
     setPos(x, y, z) {
@@ -66,7 +69,7 @@ class Model {
         if (!this.emitter) {
             console.log("model - ENABLE");
             var emitter = this.emitter = this.scene.particleGroup.getFromPool(); //addEmitter( Base.makeEmitter(new THREE.Vector3(0,0,0)));
-//      emitter.position.copy(this.position);
+            emitter.position.value = this.position
             emitter.enable();
         }
     }

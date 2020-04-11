@@ -24980,7 +24980,7 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
  * matches the value obtained from the evaluated expression. In other words, you define a container element
  * (where you place the directive), place an expression on the **`on="..."` attribute**
  * (or the **`ng-switch="..."` attribute**), define any inner elements inside of the directive and place
- * a when attribute per element. The when attribute is used to inform ngSwitch which element to display when the on
+ * a when attribute per element. The when attribute is used to _inform ngSwitch which element to display when the on
  * expression is evaluated. If a matching expression is not found via a when attribute then an element with the default
  * attribute is displayed.
  *

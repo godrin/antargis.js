@@ -1,3 +1,4 @@
+/** This is the actual game. */
 import './elements/intro.js';
 import './elements/credits.js';
 import './elements/ag-game-view.js';
