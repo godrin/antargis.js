@@ -24,7 +24,7 @@ function(Generator, HeightMap, Level, World, Gui, GameView) {
 
     var levelName=location.hash.replace(/^#/,'');
     if(!levelName)
-      levelName="tests/fetch.js";
+      levelName="tests/fetch.json";
 
     Level.load(levelName, map, world,function() {
       new GameView("#angular-game",world);

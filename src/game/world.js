@@ -1,4 +1,5 @@
 import Events from '../libs/events'
+import {Move} from "./ll/move";
 
 class World {
   constructor(map) {
@@ -9,7 +10,7 @@ class World {
       window.World = this;
 
     this.hovered = new Events();
-    this.selected = new Events()
+    this.selected = new Events();
   }
 
   get width() {
@@ -45,8 +46,9 @@ class World {
             console.log("OBJ", val);
           } else {
             if (e[name] instanceof Array) {
-              if (!_.contains(e[name], val))
+              if (e[name].indexOf(val) < 0) {
                 return false;
+              }
             } else if (e[name] instanceof Object) {
               if (!e[name][val])
                 return false;
@@ -77,8 +79,8 @@ class World {
     this.hoveredEntity = entity;
     if (this.hoveredEntity) {
       this.hoveredEntity.hovered(true);
-      this.hovered.publish(entity)
     }
+    this.hovered.publish(entity)
   }
 
   select(entity) {
@@ -87,8 +89,8 @@ class World {
     this.selectedEntity = entity;
     if (this.selectedEntity) {
       this.selectedEntity.selected(true);
-      this.selected.publish(entity)
     }
+    this.selected.publish(entity)
   }
 
   getSelectedHero() {
@@ -105,6 +107,21 @@ class World {
       }
     });
   }
+
+  click(lastPos) {
+    console.log("WORLD.click", lastPos);
+    if (this.hoveredEntity) {
+      this.select(this.hoveredEntity);
+    } else if (this.selectedEntity && this.selectedEntity.pushJob /*&& this.selectedEntity.isA("hero") && this.selectedEntity.player == "human"*/) {
+
+      console.log("assign new move job", lastPos);
+      this.selectedEntity.resetJobs();
+      this.selectedEntity.pushJob(new Move(this.selectedEntity, lastPos, 0));
+//          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
+      //this.selectedEntity.pushHlJob(new Jobs.hl.Move(this.selectedEntity, lastPos));
+    }
+  }
+
 }
 
 export default World;

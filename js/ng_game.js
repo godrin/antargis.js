@@ -1,4 +1,4 @@
-define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick", 'jobs'], 
+define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "terrain", "pick", 'jobs'],
   function(app, Base, Generator, HeightMap, Level, World, Skybox, Terrain, Pick, Jobs) {
 
     // game controller is the main controller used by the router doing only global things
@@ -29,9 +29,9 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       });
 
       var levelName;
-      levelName = "tests/fetch.js";
+      levelName = "tests/fetch.json";
       levelName = "tests/entities.js";
-      //    levelName = "tests/hero_move.js";
+      //    levelName = "tests/hero_move.json";
       World.createWorld(64, levelName).then(function(world) {
         $scope.world = world;
       });
@@ -53,7 +53,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
 
     app.factory('World', function($q) {
       return {
-        // FIXME: add facility to load worlds 
+        // FIXME: add facility to load worlds
         createWorld: function(w, levelName) {
           return $q(function(resolve, reject) {
             var mapOptions = {
@@ -99,7 +99,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
           setSize();
           var resizer = angular.element(window).on("resize",setSize);
           $scope.$on("$destroy", function() {
-            resizer.off(); 
+            resizer.off();
           });
 
           $element.on("mouseup", function(e) {
@@ -133,7 +133,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
             }
             $scope.$emit("hover", {
               x: e.pageX,
-              y: e.pageY, 
+              y: e.pageY,
               rx: rx,
               ry: ry
             });
@@ -201,7 +201,7 @@ define(["app2", "base", "generator", "heightmap", "level", "world", "skybox", "t
       angular.element(window).on("resize",function(e) {
         var size = {
           width : $element.width(),
-          height : $element.height() 
+          height : $element.height()
         };
         data.setSize(size);
       });

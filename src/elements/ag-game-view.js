@@ -134,19 +134,10 @@ class AgGameView extends HTMLElement {
 
   click(e) {
     //FIXME: move to world
-    console.log("CLICK", e);
-    const world = this.world;
-    if (!world) {
+    if (!this.world) {
       return;
     }
-    if (world.hoveredEntity) {
-      world.select(world.hoveredEntity);
-    } else if (world.selectedEntity && world.selectedEntity.pushJob && world.selectedEntity.isA("hero") && world.selectedEntity.player == "human") {
-      console.log("assign new move job");
-      world.selectedEntity.resetJobs();
-//          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
-      world.selectedEntity.pushHlJob(new Jobs.hl.Move(world.selectedEntity, lastPos));
-    }
+    this.world.click(this.lastPos)
     console.log("SCENE", this.scene)
   }
 
@@ -183,7 +174,7 @@ class AgGameView extends HTMLElement {
       this.world.hover(entity);
 
       if (!entity) {
-        this.lastPos = new THREE.Vector2().copy(res[0].point);
+        this.lastPos = new THREE.Vector2(res[0].point.x, -res[0].point.z)//.copy(res[0].point);
       }
     }
   }

@@ -1,7 +1,7 @@
 define([],function() {
   function LevelController($scope, $resource, $location) {
     $scope.levels = $resource('js/config/level.json').query();
-    $scope.curlevel = 'tests/fetch.js';
+    $scope.curlevel = 'tests/fetch.json';
     $scope.$watch("level",function(x) {
       console.debug("angular.level level changed",x);
     });

@@ -20,7 +20,7 @@ function ensureLoop(animation) {
 class ModelLoader {
 
   constructor(loaders = {}, manager = null, meshes = null) {
-    Object.assign(this, _.pick(loaders, ['objLoader', 'jsonLoader', 'imageLoader']));
+    Object.assign(this, _.pick(loaders, ['imageLoader']));
 
     if (!manager && THREE.LoadingManager) {
       manager = new THREE.LoadingManager();
@@ -34,9 +34,6 @@ class ModelLoader {
       console.debug("manager.onProgress", item, loaded, total);
     };
 
-    if (!this.jsonLoader) {
-      //this.jsonLoader = new THREE.JSONLoader(manager);
-    }
     if (!this.imageLoader && THREE.ImageLoader) {
       this.imageLoader = new THREE.ImageLoader(manager);
     }
@@ -57,13 +54,15 @@ class ModelLoader {
       color: color,
       flatShading: THREE.FlatShading,
       transparent: true,
-      opacity: 0.5
+      opacity: 0.5,
+      depthTest: false,
+      depthWrite: false
     });
-    const hoverRing = new THREE.Mesh(new THREE.RingGeometry(1.3, 2, 20, 5, 0, Math.PI * 2), material);
-    hoverRing.position.set(0, 0, 0.2);
-    hoverRing.rotateOnAxis(new THREE.Vector3(1, 0, 0), -1.6);
-    hoverRing.visible = false;
-    return hoverRing
+    const someRing = new THREE.Mesh(new THREE.RingGeometry(1.3, 2, 20, 5, 0, Math.PI * 2), material);
+    someRing.position.set(0, 0.5, 0.0);
+    someRing.rotateOnAxis(new THREE.Vector3(1, 0, 0), -1.6);
+    someRing.visible = false;
+    return someRing
   }
 
   static createBox() {
@@ -119,16 +118,9 @@ class ModelLoader {
     if (!meshDef) {
       console.warn("No Mesh defined for name '" + mesh + "'");
     }
-    const loadFct = (meshDef.type === "json") ? "loadJSON" : "loadObjComplete";
 
-    if (loadFct == "loadJSON") {
-      //FIXME
-      return new Promise(_.identity);
-    }
-
-    return this[loadFct](mesh, animation)
+    return this.loadObjComplete(mesh, animation)
   }
-
 
   async loadObj(meshName) {
     return new Promise((resolve, reject) => {
@@ -142,14 +134,6 @@ class ModelLoader {
           (xhr) => {
             console.log(meshName + " " + (xhr.loaded / xhr.total * 100) + '% loaded');
           },
-          reject);
-      } else {
-        this.objLoader.load(
-          'models/' + meshName + '.obj',
-          mesh => {
-            resolve({mesh, meshName})
-          },
-          null,
           reject);
       }
     });

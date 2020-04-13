@@ -14,7 +14,7 @@ class Entity {
     Object.assign(this, ops);
     // FIXME: reduce complexity and references by removing models, map and so ???
     this.state = {};
-    this.pos = new Vector2().copy(this.pos)
+    this.pos = new Vector2().copy(this.pos);
     this.typeName = this.type;
     this.uid = uid++;
     this.map = heightmap;
@@ -28,7 +28,7 @@ class Entity {
       this.mixins = {};
       this.mixinNames = [];
       this.mixinDef = entity.mixins;
-      console.log("MIXINDEFS", ops.mixinDefs)
+      console.log("MIXINDEFS", ops.mixinDefs);
       entity.mixins.forEach(mixin => {
         var found = ops.mixinDefs[mixin];
         if (found) {
@@ -36,7 +36,7 @@ class Entity {
           this.mixins[mixin] = found;
           this.mixinNames.push(mixin);
           Object.assign(this, found);
-          console.log("FOUND",found,this)
+          console.log("FOUND", found, this)
         } else {
           console.log("Mixin not found", mixin)
         }
@@ -57,6 +57,7 @@ class Entity {
   }
 
   isA(mixin) {
+    console.log("isa", mixin, this.mixinDef);
     return this.mixinDef.indexOf(mixin) >= 0;
   }
 
@@ -101,7 +102,7 @@ class Entity {
 
   setMesh(name) {
 
-    if(name) {
+    if (name) {
       this.meshName = name;
     }
 
@@ -110,7 +111,6 @@ class Entity {
     return this.modelLoader.load(meshType, animation).then((mesh) => {
       console.log("MODEL loaded", mesh, meshType, animation, this.scene);
       mesh.attachToScene(this.scene);
-      //, this, self.scene, (mesh) => {
 
       if (this.mesh) {
         this.mesh.remove();

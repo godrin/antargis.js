@@ -24,7 +24,7 @@ export default class Events {
     publish(info) {
         // Cycle through topics queue, fire!
         this.listeners.forEach((item)=> {
-            item(info != undefined ? info : {});
+            item(info); //info != undefined ? info : {});
         });
     }
 }

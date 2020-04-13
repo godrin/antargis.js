@@ -5,7 +5,7 @@
   {"type":"townhall","pos":{"x":8,"y":1}},
   {"type":"well","pos":{"x":12,"y":1}},
   {"type":"tower","pos":{"x":14,"y":1}},
-  {"type":"man","pos":{"x":16,"y":1}},
+  {"type":"man","pos":{"x":16,"y":5}},
   {"type":"hero","pos":{"x":16,"y":3}},
   {"type":"mine","pos":{"x":18,"y":1}},
   {"type":"bakery","pos":{"x":20,"y":1}},

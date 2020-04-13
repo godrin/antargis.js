@@ -70,7 +70,7 @@ define([],function() {
           timeScale:45,
           startFrame:1,
           endFrame:48,
-          "events": [ 
+          "events": [
             {
               time:35,
               name:"pick"
@@ -90,7 +90,7 @@ define([],function() {
           timeScale:40,
           startFrame:1,
           endFrame:35,
-          "events": [ 
+          "events": [
             {
               time:27,
               name:"pick"
@@ -144,7 +144,7 @@ define([],function() {
           startFrame:1,
           endFrame:41,
           timeScale:25,
-          "events": [ 
+          "events": [
             {
               time:18,
               name:"sword"
@@ -174,10 +174,7 @@ define([],function() {
       doublesided:true
     },
     sheep: {
-      scale:0.15,
       type:"json",
-      rotation: { x: 3.14*0.5 },
-
       texture:"sheep.png",
       //wireframe:true,
       //defaultMaterial:true,
