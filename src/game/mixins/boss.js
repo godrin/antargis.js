@@ -1,11 +1,12 @@
 import {HLRestJob} from "../hl/rest";
 
 let boss = {
+  // initializer
   postLoad: function () {
-    console.log("POSTLOAD");
-    if (!this.followers)
+    if (!this.followers) {
+      // each entity should have it's array
       this.followers = [];
-    else {
+    } else {
       // FIXME: retrieve objects from ids
     }
   },
@@ -22,13 +23,14 @@ let boss = {
     var boss = this;
     if (this.boss)
       boss = this.boss;
-    if (boss && boss.assignMeJob)
+    if (boss && boss.assignMeJob instanceof Function)
       boss.assignMeJob(this);
   },
   getHlJob: function () {
     if (this.jobs)
+      // take last job which provides the assignMeJob function
       for (var i = this.jobs.length - 1; i >= 0; i--) {
-        if (this.jobs[i].assignMeJob)
+        if (this.jobs[i].assignMeJob instanceof Function)
           return this.jobs[i];
       }
   },
@@ -55,12 +57,11 @@ let boss = {
     this.followers.push(follower);
   },
   dismiss: function (follower) {
-    this.followers = _.without(this.followers, follower);
-    console.log("dismissed", follower, this.followers.length);
+    this.followers = this.followers.filter((current) => current !== follower);
     delete follower.boss;
     follower.resetJobs();
   }
-}
+};
 
 const Boss = () => boss;
 

@@ -19,7 +19,6 @@ describe("Move", () => {
       expect(job.ready).to.be.false
     })
 
-
     it("should stop if reach distance is reached",()=>{
       const fromPos = new Vector2(2, 3);
       const toPos = new Vector2(2, 4);

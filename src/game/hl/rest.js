@@ -8,19 +8,20 @@ class HLRestJob extends HLJob {
     this.entity = entity;
     this.length = length;
     this.done = false;
-    if (formatted)
+    if (formatted) {
       this.formation = new Formations.Rest();
-    else
+    } else {
       this.formation = new Formations.Null();
-  };
+    }
+  }
 
   assignMeJob(e) {
     if (!this.commonStart()) {
       e.resetNonHlJobs();
       var newPos = this.formation.getPos(this.entity, e);
-      if (e.pos.distanceTo(newPos) > 0.1)
+      if (e.pos.distanceTo(newPos) > 0.1) {
         e.pushJob(new MlMoveJob(e, newPos));
-      else {
+      } else {
         var dir = this.formation.getDir(this.entity, e);
         e.pushJob(new MLRestJob(e, 5, dir));
       }

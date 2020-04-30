@@ -1,6 +1,6 @@
 define(["jobs"],function(Jobs) {
   return {
-    // FIXME: maybe move this to other mixin/class - may be used by hero too 
+    // FIXME: maybe move this to other mixin/class - may be used by hero too
     resourcesNeeded:function() {
       if(!this.needed)
         return [];
@@ -27,7 +27,6 @@ define(["jobs"],function(Jobs) {
           this.pushHlJob(new Jobs.hl.Fetch(this));
         }
       }
-
     },
     addFollower:function(follower) {
       this.followers.push(follower);

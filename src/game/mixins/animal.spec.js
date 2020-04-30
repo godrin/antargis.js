@@ -49,7 +49,7 @@ describe("Animal", () => {
       }
       var amount = walk * 1.0 / all;
       expect(amount).to.be.above(0.4);
-      expect(amount).to.be.below(0.6)
-    })
+      expect(amount).to.be.below(0.6);
+    });
   });
 });
