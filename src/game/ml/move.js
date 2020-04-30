@@ -1,11 +1,12 @@
-import Move from '../ll/move'
+import {Move} from '../ll/move'
 
-class MlMoveJob {
+class MlMove {
   constructor(entity, pos, meshType) {
     this.entity = entity;
     this.mltargetPos = pos;
-    if (!meshType)
+    if (!meshType) {
       meshType = "walk";
+    }
     this.meshType = meshType;
   }
 
@@ -22,4 +23,4 @@ class MlMoveJob {
 
 }
 
-export {MlMoveJob}
+export {MlMove}

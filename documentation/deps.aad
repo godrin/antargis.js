@@ -1,0 +1,6 @@
+== Dependencies
+
+[analysis]
+....
+dependeo search -ljs ../src|dependeo output plantuml --level=0
+....

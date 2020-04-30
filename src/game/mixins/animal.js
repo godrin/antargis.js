@@ -3,7 +3,6 @@ import {Vector2} from "../vector2";
 
 let animal = {
   onNoJob: function (delta) {
-    console.log("ON NO JOB");
     if (this.shouldWalk()) {
       this.setMesh("walk");
       let targetPos = new Vector2(Math.random() * 2 - 1,

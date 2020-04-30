@@ -1,5 +1,5 @@
 import Events from '../libs/events'
-import {Move} from "./ll/move";
+import {MlMove} from "./ml/move";
 
 class World {
   constructor(map) {
@@ -116,7 +116,7 @@ class World {
 
       console.log("assign new move job", lastPos);
       this.selectedEntity.resetJobs();
-      this.selectedEntity.pushJob(new Move(this.selectedEntity, lastPos, 0));
+      this.selectedEntity.pushJob(new MlMove(this.selectedEntity, lastPos, 0));
 //          world.selectedEntity.pushJob(new Jobs.ml.Move(world.selectedEntity,lastPos));
       //this.selectedEntity.pushHlJob(new Jobs.hl.Move(this.selectedEntity, lastPos));
     }

@@ -12,14 +12,15 @@ describe("Entity", () => {
       };
 
       const ops = {
-        type: "animal", entityTypes: {
+        type: "animal",
+        entityTypes: {
           animal: {
             mixins: ["job"]
           }
         },
         mixinDefs: {
-          job: {
-            run: jobRun
+          job: ()=>{
+            return { run: jobRun };
           }
         }
       };
@@ -67,11 +68,11 @@ describe("Entity", () => {
           }
         },
         mixinDefs: {
-          job: {
-            postLoad: postLoad
+          job: ()=>{
+            return {postLoad: postLoad};
           },
-          somethingelse: {
-            postLoad: postLoad
+          somethingelse: ()=>{
+            return {postLoad: postLoad};
           }
         }
       };

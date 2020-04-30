@@ -21,6 +21,9 @@ class AgGameView extends HTMLElement {
     this.addEventListener("mousedown", this.mousedown.bind(this));
     this.addEventListener("mouseup", this.mouseup.bind(this));
     this.addEventListener("mousemove", this.mousemove.bind(this));
+    this.addEventListener("touchstart", this.touchstart.bind(this));
+    this.addEventListener("touchend", this.touchend.bind(this));
+    this.addEventListener("touchmove", this.touchmove.bind(this));
     this.addEventListener("wheel", this.wheel.bind(this));
     this.addEventListener("click", this.click.bind(this));
     this.addEventListener("world", this.worldCreated.bind(this));
@@ -28,6 +31,8 @@ class AgGameView extends HTMLElement {
     document.addEventListener(this.getVisibilityChangeEvent().visibilityChange, this.visibilityChange.bind(this));
 
     this.viewCenter = {x: 0, y: 0, z: 10};
+    this.touches = {};
+
 
     this.moves = 0;
     this.view = new View(this);
@@ -58,6 +63,7 @@ class AgGameView extends HTMLElement {
     this.world = e.world;
     const map = this.world.map;
 
+    // FIXME:move this somewhere else
     const threeHeightMap = map.toThreeTerrain();
 
     TerrainBuilder.create(map, this.scene, threeHeightMap);
@@ -124,6 +130,27 @@ class AgGameView extends HTMLElement {
     this.moves = 0;
   }
 
+  touchstart(e) {
+    console.log("touchstart",e)
+    const touch =e.targetTouches
+    this.touches[0]={x:touch.clientX, y:touch.clientY}
+  }
+
+  touchend(e) {
+    delete this.touches[0];
+    console.log("touchend",e)
+  }
+
+  touchmove(e) {
+    console.log("touchmove",e)
+    const width = this.offsetWidth;
+    const height = this.offsetHeight;
+    const x = e.targetTouches[0].clientX-this.touches[0].x
+    const y = e.targetTouches[0].clientY-this.touches[0].y
+    console.log("XXXX",y,x,width,height,JSON.stringify(this.touches))
+    this.move({x:x/width, y:y/height})
+  }
+
   wheel(e) {
     this.viewCenter.z += e.deltaY * 0.1;
     if (this.viewCenter.z < 5) {
@@ -133,12 +160,10 @@ class AgGameView extends HTMLElement {
   }
 
   click(e) {
-    //FIXME: move to world
     if (!this.world) {
       return;
     }
     this.world.click(this.lastPos)
-    console.log("SCENE", this.scene)
   }
 
   mousemove(e) {
@@ -203,7 +228,7 @@ class AgGameView extends HTMLElement {
   keydown(e) {
     console.log("KEYdown", e);
     if (e.keyCode == 27) {
-      world.select(null);
+      this.world.select(null);
     }
   }
 }

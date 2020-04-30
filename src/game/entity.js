@@ -28,15 +28,13 @@ class Entity {
       this.mixins = {};
       this.mixinNames = [];
       this.mixinDef = entity.mixins;
-      console.log("MIXINDEFS", ops.mixinDefs);
       entity.mixins.forEach(mixin => {
         var found = ops.mixinDefs[mixin];
-        if (found) {
+        if (found && found instanceof Function) {
           found = found();
           this.mixins[mixin] = found;
           this.mixinNames.push(mixin);
           Object.assign(this, found);
-          console.log("FOUND", found, this)
         } else {
           console.log("Mixin not found", mixin)
         }
@@ -57,7 +55,6 @@ class Entity {
   }
 
   isA(mixin) {
-    console.log("isa", mixin, this.mixinDef);
     return this.mixinDef.indexOf(mixin) >= 0;
   }
 
