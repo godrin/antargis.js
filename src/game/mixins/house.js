@@ -1,5 +1,5 @@
-import { HlInventJob} from '../hl/invent';
-import { HlFetchJob} from '../hl/fetch';
+import {HlInventJob} from '../hl/invent';
+import {HlFetchJob} from '../hl/fetch';
 
 let house = {
   // FIXME: maybe move this to other mixin/class - may be used by hero too
@@ -7,12 +7,12 @@ let house = {
     if (!this.needed)
       return [];
     var currentlyNeeded = [];
-    console.log("NEDDED",this.needed)
-    for(var k in this.needed) {
+    console.log("NEDDED", this.needed);
+    for (var k in this.needed) {
       var v = this.needed[k];
       var times = v - (this.resources[k] || 0);
       if (times > 0) {
-        for(var i=0;i<times;i++) {
+        for (var i = 0; i < times; i++) {
           currentlyNeeded.push(k);
         }
       }
@@ -24,12 +24,21 @@ let house = {
     var needed = this.resourcesNeeded();
 
     if (needed.length > 0) {
-      if (HlInventJob.applyable(this, needed)) {
-        this.pushHlJob(new HlInventJob(this));
+      if (this.inventApplyable(needed)) {
+        this.pushHlJob(this.createInventJob());
       } else {
-        this.pushHlJob(new HlFetchJob(this));
+        this.pushHlJob(this.createFetchJob());
       }
     }
+  },
+  inventApplyable: function(needed) {
+    return HlInventJob.applyable(this, needed);
+  },
+  createInventJob: function () {
+    return new HlInventJob(this);
+  },
+  createFetchJob: function () {
+    return new HlFetchJob(this);
   },
   addFollower: function (follower) {
     this.followers.push(follower);

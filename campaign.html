@@ -7,8 +7,7 @@
 
 <ag-fullscreen class="fullscreen-toggle">Enable fullscreen</ag-fullscreen>
 
-<ag-world load="levels/tests/entities.json">
-
+<ag-world load="levels/tests/invent.json">
     <div ag class='gui'>
         <ag-entity-view inject-world event="hovered" class="ag-border gui-el pull-left">
            <h3>{{typeName}}</h3>
@@ -20,6 +19,11 @@
                 <h3>{{name}} {{#player}}({{player}}){{/player}}</h3>
                 <p> ({{pos.x}}, {{pos.y}})</p>
                 <p>boss:{{boss.name}}</p>
+                <ul>
+                {{#resources}}
+                  <li>{{name}}:{{value}}</li>
+                {{/resources}}
+                </ul>
               </div>
               <div class="button-rest">REST</div>
             </div>

@@ -112,7 +112,7 @@ class World {
     console.log("WORLD.click", lastPos);
     if (this.hoveredEntity) {
       this.select(this.hoveredEntity);
-    } else if (this.selectedEntity && this.selectedEntity.pushJob /*&& this.selectedEntity.isA("hero") && this.selectedEntity.player == "human"*/) {
+    } else if (this.selectedEntity && this.selectedEntity.pushJob && this.selectedEntity.isA("hero") /*&& this.selectedEntity.player == "human"*/) {
 
       console.log("assign new move job", lastPos);
       this.selectedEntity.resetJobs();

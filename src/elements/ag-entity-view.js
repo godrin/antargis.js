@@ -1,6 +1,25 @@
 import {HLRestJob} from "../game/hl/rest";
 
 class AgEntityView extends HTMLElement {
+  static presentEntity(entity) {
+    return {
+      typeName: entity.typeName,
+      pos: {
+        x: entity.pos.x,
+        y: entity.pos.y
+      },
+      resources: AgEntityView.presentResources(entity.resources)
+    };
+  }
+
+  static presentResources(resources) {
+    const result = [];
+    for (var key in resources) {
+      result.push({name: key, value: resources[key]});
+    }
+    return result;
+  }
+
   connectedCallback() {
     this.template = this.innerHTML;
     this.changed(null);
@@ -13,6 +32,9 @@ class AgEntityView extends HTMLElement {
     if (this.listener) {
       this.listener.remove()
     }
+    if (this.redrawer) {
+      this.redrawer.remove()
+    }
   }
 
   worldCreated(ev) {
@@ -24,10 +46,13 @@ class AgEntityView extends HTMLElement {
 
   changed(entity) {
     if (this.entity !== entity) {
+      this.stopListening(this.entity);
+
       this.entity = entity;
       if (this.entity) {
         this.redraw()
       }
+      this.startListening(this.entity)
     }
     if (this.entity) {
       this.style.display = "";
@@ -37,7 +62,7 @@ class AgEntityView extends HTMLElement {
   }
 
   redraw() {
-    this.innerHTML = mustache.render(this.template, this.entity);
+    this.innerHTML = mustache.render(this.template, AgEntityView.presentEntity(this.entity));
     const buttonRest = this.getElementsByClassName("button-rest")[0];
     if (buttonRest) {
       buttonRest.addEventListener("click", this.rest.bind(this))
@@ -48,6 +73,19 @@ class AgEntityView extends HTMLElement {
     this.entity.resetJobs();
     this.entity.pushJob(new HLRestJob(this.entity, 0, false));
     console.log("REST")
+  }
+
+  startListening(entity) {
+    console.log("START", entity)
+    if(entity) {
+      this.redrawer = entity.changed.subscribe( this.redraw.bind(this));
+    }
+  }
+  stopListening(entity) {
+    if(this.redrawer) {
+      this.redrawer.remove();
+      this.redrawer = null;
+    }
   }
 }
 

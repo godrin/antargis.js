@@ -30,8 +30,13 @@ let job = {
   tick: function (delta) {
     while (this.jobs && delta > 0 && this.jobs.length > 0) {
       var job = this.jobs[this.jobs.length - 1];
+      if(!(job.onFrame instanceof Function)) {
+        console.error("Job.onFrame is not a function for",job);
+        return;
+      }
       delta = job.onFrame(delta);
       if (job.ready) {
+        console.error("JOB IS READY", job)
         if (job.assignMeJob) {
           console.log("JOB READY!!!", this.jobs);
         }

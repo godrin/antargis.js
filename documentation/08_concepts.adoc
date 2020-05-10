@@ -1,0 +1,30 @@
+== Technical and crosscutting concepts
+
+=== Mixin concept
+Entities are from the start all the same. The actual functionaliy is based a a configuration in
+link:../src/config/entities.js[Entity-config]. There the mixins are defined.
+
+A workshop for instance can have a job (job-mixin), can have men (boss), can have smoke (smoke) and
+at last does some default stuff for buildings (house).
+
+  "workshop": {
+    "needed": {
+      "wood": 1,
+      "stone": 1,
+      "water": 1,
+      "food": 1,
+      "tool": 10
+    },
+    "production": {
+      "tool": {
+        "wood": 1,
+        "stone": 1
+      }
+    },
+    "mixins": [
+      "boss",
+      "job",
+      "house",
+      "smoke"
+    ]
+  },

@@ -1,17 +1,19 @@
+import {MlInvent} from "../ml/invent";
+
 class HlInventJob {
   constructor(entity) {
     this.entity = entity;
-    this.producable = this.applyable;
+    this.producable = HlInventJob.applyable;
   }
 
   static applyable(e, needed) {
-    var producable = _.filter(needed, function (resource) {
+    let producable = _.filter(needed, function (resource) {
       if (e.production) {
         var ok = true;
         var prereq = e.production[resource];
-        console.debug("invent - rule", prereq, e.resources);
-        if (!prereq)
+        if (!prereq) {
           return false;
+        }
         _.each(prereq, function (amount, res) {
 
           if (!e.resources[res] || e.resources[res] < amount) {
@@ -22,7 +24,6 @@ class HlInventJob {
           return true;
       }
     });
-    console.debug("invent - PRODUCABLE", producable);
     if (producable.length > 0) {
       return _.sample(producable);
     }
@@ -30,12 +31,13 @@ class HlInventJob {
   }
 
   assignMeJob(e) {
-    var res = producable(this.entity, this.entity.resourcesNeeded());
-    console.debug("invent - PRODS", res);
-    if (res)
-      e.pushJob(new Invent(e, res, this.entity));
-    else
+    console.log("assign me job ",e, this)
+    var res = this.producable(this.entity, this.entity.resourcesNeeded());
+    if (res) {
+      e.pushJob(new MlInvent(e, res, this.entity));
+    } else {
       this.entity.clearHlJob();
+    }
   }
 }
 

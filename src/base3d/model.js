@@ -83,7 +83,6 @@ class Model {
     }
 
     remove() {
-        console.log("REMOVE ME FROM SCENE", this);
         // hook to remove animation-restarter-interval
         if (this.innerMeshes && this.innerMeshes.length > 0) {
             _.each(this.innerMeshes, function (m) {

@@ -1,4 +1,5 @@
 import {Vector2} from "./vector2";
+import Events from "../libs/events";
 
 var uid = 11110;
 
@@ -40,6 +41,7 @@ class Entity {
         }
       });
     }
+    this.changed = new Events();
   };
 
   get id() {
@@ -106,7 +108,6 @@ class Entity {
     const {meshType, animation} = this.getMeshDef();
 
     return this.modelLoader.load(meshType, animation).then((mesh) => {
-      console.log("MODEL loaded", mesh, meshType, animation, this.scene);
       mesh.attachToScene(this.scene);
 
       if (this.mesh) {
@@ -134,11 +135,14 @@ class Entity {
 
   increaseBy(what, amount) {
     this.resources[what] = (this.resources[what] || 0) + amount;
+    this.changed.publish("changed");
   };
 
   take(what, amount) {
     if (this.resources[what] >= amount) {
       this.resources[what] -= amount;
+      this.changed.publish("changed");
+
       return true;
     }
     return false;
@@ -149,6 +153,9 @@ class Entity {
       this.resources[what] -= amount;
       console.debug("GIVE TO", toEntity, what);
       toEntity.resources[what] = (toEntity.resources[what] || 0) + amount;
+      this.changed.publish("changed");
+      toEntity.changed.publish("changed");
+
       return true;
     }
     return false;

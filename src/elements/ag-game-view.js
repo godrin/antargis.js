@@ -39,6 +39,8 @@ class AgGameView extends HTMLElement {
     this.updateSize({target: window});
 
     this.updateCamera()
+
+    this.speed = 4;
   }
 
   frameCallback(e) {
@@ -99,16 +101,16 @@ class AgGameView extends HTMLElement {
 
   tick(delta) {
     if (this.controlProgress && !this.world.pause) {
-      this.world.tick(delta)
+      this.world.tick(delta * this.speed)
     }
   }
 
   visibilityChange(ev) {
     if (ev.target[this.getVisibilityChangeEvent().hidden]) {
-      world.pause = true
+      this.world.pause = true
       // hidden
     } else {
-      world.pause = false
+      this.world.pause = false
       // visible
     }
   }

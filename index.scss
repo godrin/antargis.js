@@ -38,7 +38,7 @@ body:fullscreen > ag-fullscreen{
   display: none;
 }
 
-ag-fullscreen {
+ag-fullscreen, *[is="ag-fullscreen"] {
   position:fixed;
   bottom:10px;
   left:10px;

@@ -142,10 +142,7 @@ class ModelLoader {
   async loadObjComplete(name, dummy) {
     const meshDef = this.meshes[name];
     const meshName = (meshDef && meshDef.mesh) || name;
-    console.log("Load texture", name, meshName);
     const meshObject = await this.loadObj(meshName);
-
-    console.log("MODELOBJECT ", name, meshObject);
 
     return Object.assign({meshDef}, meshObject);
   }

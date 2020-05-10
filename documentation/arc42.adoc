@@ -12,3 +12,4 @@ include::04_solution.adoc[]
 
 include::05_blocks.adoc[]
 
+include::08_concepts.adoc[]

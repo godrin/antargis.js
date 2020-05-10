@@ -20,3 +20,20 @@ Player -- [Menus]
 
 === Menus
 
+=== GameEngine
+
+[plantuml]
+....
+
+package GameEngine {
+    [World] --> Entity: contains
+
+    [WorldLoader] -> [Entity]: creates
+    [WorldLoader] -> [World]: adds entities to
+    [Entity] --> [Job]: contains
+    [Entity] -- [Mixins]
+}
+....
+
+Mixin-idea:
+
