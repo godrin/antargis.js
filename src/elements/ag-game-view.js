@@ -134,23 +134,28 @@ class AgGameView extends HTMLElement {
 
   touchstart(e) {
     console.log("touchstart",e)
-    const touch =e.targetTouches
-    this.touches[0]={x:touch.clientX, y:touch.clientY}
+    const id=0
+    const touch =e.targetTouches[id]
+    this.touches[id]={x:touch.clientX, y:touch.clientY}
   }
 
   touchend(e) {
-    delete this.touches[0];
     console.log("touchend",e)
+    delete this.touches[0];
   }
 
   touchmove(e) {
     console.log("touchmove",e)
+    const id=0
+    const touch =e.targetTouches[id]
     const width = this.offsetWidth;
     const height = this.offsetHeight;
-    const x = e.targetTouches[0].clientX-this.touches[0].x
-    const y = e.targetTouches[0].clientY-this.touches[0].y
+    const x = touch.clientX-this.touches[id].x
+    const y = touch.clientY-this.touches[id].y
+    this.touches[id]={x:touch.clientX, y:touch.clientY}
     console.log("XXXX",y,x,width,height,JSON.stringify(this.touches))
-    this.move({x:x/width, y:y/height})
+  //  this.move({x:x/width, y:y/height})
+    this.move({dx: x / width, dy: y / height});
   }
 
   wheel(e) {
