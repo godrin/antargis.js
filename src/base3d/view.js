@@ -36,11 +36,11 @@ class View  {
             // stop this rendering - because the scope / canvas is destroyed
             if (!this.destroyed) {
                 if (this.hidden) {
-                    setTimeout(dorender, 50);
+                    setTimeout(dorender, 10);
                 } else {
                     setTimeout(function () {
                         requestAnimationFrame(dorender);
-                    }, 50);
+                    }, 10);
                 }
             }
             var time = (new Date()).getTime();

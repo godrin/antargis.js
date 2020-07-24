@@ -31,20 +31,26 @@ class MlInvent extends StateMachine {
         this.homeEntity.incSmoke();
       }
       this.mode = "productionFinished";
+      console.log("productionFinished set mode return true")
       return true;
     } else {
+      console.log("productionFinished resources lost")
       // source resources got lost :-(
       this.setFinished()
     }
+		return true;
   }
 
   productionFinished() {
     console.debug("invent - productionFinished", this.resource, 1);
+    this.homeEntity.increaseBy(this.resource, 1);
     if (this.homeEntity.decSmoke) {
       this.homeEntity.decSmoke();
     }
-    this.homeEntity.increaseBy(this.resource, 1);
-    this.ready = true;
+    this.setFinished();
+		console.log("MlInvent should be ready");
+    this.mode = "wrong"
+    return true;
   }
 
   createRestJob() {

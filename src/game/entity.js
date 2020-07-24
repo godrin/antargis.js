@@ -134,7 +134,10 @@ class Entity {
   };
 
   increaseBy(what, amount) {
-    this.resources[what] = (this.resources[what] || 0) + amount;
+    if(!this.resources[what]) {
+      this.resources[what]=0;
+    }
+    this.resources[what] = this.resources[what] + amount;
     this.changed.publish("changed");
   };
 

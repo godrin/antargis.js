@@ -15,16 +15,16 @@ class StateMachine {
   }
 
   onFrame(delta) {
-    var done = false;
+    let done = false;
     do {
       if (!(this[this.mode] instanceof Function)) {
-        throw new StateMachineException("MODE " + this.mode + "not found");
+        throw new StateMachineException("MODE " + this.mode + " not found for class "+typeof(this));
       }
-      done = this[this.mode]();
-      console.log("DONE",done, this.mode)
+      done = this[this.mode](delta);
+      console.log("DONE", done, this.mode, this);
     } while (!done && !this.ready);
-    return delta;
+    return 0; // always eat up the delta
   }
 }
 
-export { StateMachine}
+export {StateMachine}

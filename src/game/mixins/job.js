@@ -9,10 +9,12 @@ let job = {
       throw "Job is ready - dont' push!";
     }
     this.jobs.push(job);
-    this.updateCurrentJob();
-    if (this.currentJob.init)
-      this.currentJob.init();
+    if (this.getCurrentJob().init)
+      this.getCurrentJob().init();
   },
+	getCurrentJob: function() {
+      return this.jobs[this.jobs.length - 1];
+	},
   resetNonHlJobs: function () {
     if (this.jobs)
       this.jobs = _.filter(this.jobs, function (job) {
@@ -21,27 +23,22 @@ let job = {
   },
   resetJobs: function () {
     this.jobs = [];
-    this.updateCurrentJob();
-  },
-  updateCurrentJob: function () {
-    if (this.jobs)
-      this.currentJob = this.jobs[this.jobs.length - 1];
   },
   tick: function (delta) {
     while (this.jobs && delta > 0 && this.jobs.length > 0) {
-      var job = this.jobs[this.jobs.length - 1];
+      var job = this.getCurrentJob();
       if(!(job.onFrame instanceof Function)) {
         console.error("Job.onFrame is not a function for",job);
         return;
       }
       delta = job.onFrame(delta);
       if (job.ready) {
-        console.error("JOB IS READY", job)
+        console.error("JOB IS READY", job, job.mode, this.jobs, this.jobs.length)
         if (job.assignMeJob) {
           console.log("JOB READY!!!", this.jobs);
         }
         this.jobs.pop();
-        this.updateCurrentJob();
+				console.log("JOBS", this.jobs.map(j=>j.__proto__));
       }
     }
     if (delta > 0) {

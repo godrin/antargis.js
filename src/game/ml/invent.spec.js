@@ -38,8 +38,9 @@ describe('MlInvent', () => {
         pushJob: sinon.spy()
       };
       const house = {
-        production: {tool: {wood:1,stone:1}},
-        take: sinon.fake.returns(true)
+        production: {tool: {wood: 1, stone: 1}},
+        take: sinon.fake.returns(true),
+        increaseBy:sinon.fake()
       };
       const job = new MlInvent(entity, 'tool', house);
       // jump over first state
@@ -49,18 +50,19 @@ describe('MlInvent', () => {
       job.onFrame(0);
 
       expect(house.take.callCount).to.eql(2);
-      expect(house.take.getCall(0).calledWithExactly("wood",1 )).to.be.true;
-      expect(house.take.getCall(1).calledWithExactly( "stone",1)).to.be.true;
+      expect(house.take.getCall(0).calledWithExactly("wood", 1)).to.be.true;
+      expect(house.take.getCall(1).calledWithExactly("stone", 1)).to.be.true;
 
-      expect(entity.pushJob).to.be.calledWith("foo")
+      expect(entity.pushJob).to.be.calledWith("foo");
       expect(job.mode).to.eql("productionFinished")
-    })
-    it("should increase the production", ()=>{
+      expect(house.increaseBy).to.be.calledWith("tool",1)
+    });
+    it("should increase the production", () => {
       const entity = {
         pushJob: sinon.spy()
       };
       const house = {
-        production: {tool: {wood:1,stone:1}},
+        production: {tool: {wood: 1, stone: 1}},
         take: sinon.fake.returns(true),
         increaseBy: sinon.fake()
       };
@@ -69,6 +71,8 @@ describe('MlInvent', () => {
       job.mode = "productionFinished";
       job.createRestJob = sinon.fake.returns("foo");
 
+      job.onFrame(0);
+      job.onFrame(0);
       job.onFrame(0);
 
       expect(house.increaseBy).to.be.calledWith("tool", 1);
