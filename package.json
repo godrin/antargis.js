@@ -17,7 +17,7 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "esm": "^3.2.25",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mustache": "^4.0.1",
     "three": "^0.113.2",
     "three.terrain.js": "^1.6.0",
