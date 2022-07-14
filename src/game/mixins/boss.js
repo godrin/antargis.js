@@ -1,4 +1,4 @@
-import {HLRestJob} from "../hl/rest";
+import {HLRestJob} from "../hl/rest.js";
 
 let boss = {
   // initializer

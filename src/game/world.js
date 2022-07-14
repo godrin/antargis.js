@@ -1,5 +1,5 @@
-import Events from '../libs/events'
-import {MlMove} from "./ml/move";
+import Events from '../libs/events.js'
+import {MlMove} from "./ml/move.js";
 
 class World {
   constructor(map) {

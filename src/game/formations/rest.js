@@ -1,6 +1,6 @@
-import {Base} from './base'
-import {Vector2} from "../vector2";
-import {Angle} from '../angle'
+import {Base} from './base.js'
+import {Vector2} from "../vector2.js";
+import {Angle} from '../angle.js'
 
 var lines = [10, 14, 20, 40, 100];
 

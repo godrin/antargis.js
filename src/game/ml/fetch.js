@@ -1,5 +1,5 @@
-import {Move} from "../ll/move";
-import RestJob from "../ll/rest";
+import {Move} from "../ll/move.js";
+import RestJob from "../ll/rest.js";
 
 class MlFetchJob {
    constructor(entity, resource, targetEntity, homeEntity) {

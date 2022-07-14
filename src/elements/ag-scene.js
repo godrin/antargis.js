@@ -1,5 +1,5 @@
-import AntScene from "../base3d/ant-scene";
-import TerrainBuilder from "../libs/terrain_builder";
+import AntScene from "../base3d/ant-scene.js";
+import TerrainBuilder from "../libs/terrain_builder.js";
 
 class SceneEvent extends Event {
   constructor(scene) {

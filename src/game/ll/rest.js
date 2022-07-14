@@ -1,4 +1,4 @@
-import Job from './job'
+import Job from './job.js'
 
 class RestJob extends Job {
   constructor(entity, time) {

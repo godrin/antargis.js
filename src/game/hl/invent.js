@@ -1,4 +1,4 @@
-import {MlInvent} from "../ml/invent";
+import {MlInvent} from "../ml/invent.js";
 
 class HlInventJob {
   constructor(entity) {

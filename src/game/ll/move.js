@@ -1,6 +1,6 @@
-import Job from './job'
-import {Vector2} from "../vector2";
-import {Angle} from "../angle"
+import Job from './job.js'
+import {Vector2} from "../vector2.js";
+import {Angle} from "../angle.js"
 
 var tmpDir = new Vector2();
 

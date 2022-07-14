@@ -1,5 +1,5 @@
-import {Base} from './base'
-import {Vector2} from "../vector2";
+import {Base} from './base.js'
+import {Vector2} from "../vector2.js";
 
 class Move extends Base {
 

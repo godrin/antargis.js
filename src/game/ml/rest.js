@@ -1,4 +1,4 @@
-import RestJob from "../ll/rest";
+import RestJob from "../ll/rest.js";
 
 class MLRestJob {
   constructor(entity, length, direction) {

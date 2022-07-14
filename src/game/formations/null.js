@@ -1,5 +1,5 @@
-import {Vector2} from "../vector2";
-import {Base} from './base'
+import {Vector2} from "../vector2.js";
+import {Base} from './base.js'
 
 class Null extends Base {
   constructor() {

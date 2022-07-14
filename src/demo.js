@@ -1,1 +1,1 @@
-import './elements/ag-scene-viewer';
+import './elements/ag-scene-viewer.js';

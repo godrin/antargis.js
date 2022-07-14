@@ -1,5 +1,5 @@
-import {HlInventJob} from '../hl/invent';
-import {HlFetchJob} from '../hl/fetch';
+import {HlInventJob} from '../hl/invent.js';
+import {HlFetchJob} from '../hl/fetch.js';
 
 let house = {
   // FIXME: maybe move this to other mixin/class - may be used by hero too

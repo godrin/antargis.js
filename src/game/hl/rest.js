@@ -1,6 +1,6 @@
-import {HLJob} from './base'
-import { Formations} from "../formations";
-import {MLRestJob} from "../ml/rest";
+import {HLJob} from './base.js'
+import { Formations} from "../formations/index.js";
+import {MLRestJob} from "../ml/rest.js";
 
 class HLRestJob extends HLJob {
   constructor(entity, length, formatted) {

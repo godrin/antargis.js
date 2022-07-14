@@ -1,7 +1,7 @@
-import {HLJob} from "./base";
-import RestJob from "../ll/rest";
-import {MLRestJob} from "../ml/rest";
-import {MlFetchJob} from "../ml/fetch";
+import {HLJob} from "./base.js";
+import RestJob from "../ll/rest.js";
+import {MLRestJob} from "../ml/rest.js";
+import {MlFetchJob} from "../ml/fetch.js";
 
 class HlFetchJob extends HLJob {
   constructor(entity, count) {

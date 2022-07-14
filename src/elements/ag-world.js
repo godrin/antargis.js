@@ -1,7 +1,7 @@
-import World from "../game/world";
-import HeightMap from "../game/heightmap";
-import ajax from "../ajax"
-import WorldLoader from "../game/world-loader"
+import World from "../game/world.js";
+import HeightMap from "../game/heightmap.js";
+import ajax from "../ajax.js"
+import WorldLoader from "../game/world-loader.js"
 
 class WorldEvent extends Event {
     constructor(world) {

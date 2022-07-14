@@ -1,5 +1,5 @@
-import {Vector2} from "./vector2";
-import Events from "../libs/events";
+import {Vector2} from "./vector2.js";
+import Events from "../libs/events.js";
 
 var uid = 11110;
 

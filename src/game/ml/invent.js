@@ -1,6 +1,6 @@
-import RestJob from "../ll/rest";
-import {MlMove} from "./move";
-import {StateMachine} from "./state-machine";
+import RestJob from "../ll/rest.js";
+import {MlMove} from "./move.js";
+import {StateMachine} from "./state-machine.js";
 
 class MlInvent extends StateMachine {
   constructor(entity, resource, homeEntity) {

@@ -1,4 +1,4 @@
-import {HLRestJob} from "../game/hl/rest";
+import {HLRestJob} from "../game/hl/rest.js";
 
 class AgEntityView extends HTMLElement {
 	static presentEntity(entity) {
@@ -73,11 +73,9 @@ class AgEntityView extends HTMLElement {
 	rest() {
 		this.entity.resetJobs();
 		this.entity.pushJob(new HLRestJob(this.entity, 0, false));
-		console.log("REST")
 	}
 
 	startListening(entity) {
-		console.log("START", entity)
 		if(entity) {
 			this.redrawer = entity.changed.subscribe( this.redraw.bind(this));
 		}

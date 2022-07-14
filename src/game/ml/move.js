@@ -1,4 +1,4 @@
-import {Move} from '../ll/move'
+import {Move} from '../ll/move.js'
 
 class MlMove {
   constructor(entity, pos, meshType) {

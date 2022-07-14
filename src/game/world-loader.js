@@ -1,7 +1,7 @@
-import { Entity } from './entity'
-import ModelLoader from '../base3d/model_loader'
-import * as Mixin from "./mixin"
-import EntityTypes from '../config/entities'
+import { Entity } from './entity.js'
+import ModelLoader from '../base3d/model_loader.js'
+import * as Mixin from "./mixin.js"
+import EntityTypes from '../config/entities.js'
 
 
 class WorldLoader {

@@ -1,5 +1,5 @@
-import Meshes from "../config/meshes"
-import Model from "./model"
+import Meshes from "../config/meshes.js"
+import Model from "./model.js"
 
 // FIXME: not needed anymore?
 function ensureLoop(animation) {

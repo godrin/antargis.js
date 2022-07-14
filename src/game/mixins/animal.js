@@ -1,5 +1,5 @@
-import {Move} from '../ll/move'
-import {Vector2} from "../vector2";
+import {Move} from '../ll/move.js'
+import {Vector2} from "../vector2.js";
 
 let animal = {
   onNoJob: function (delta) {

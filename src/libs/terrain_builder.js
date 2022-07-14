@@ -1,4 +1,4 @@
-import TextureLoader from "../base3d/texture_loader";
+import TextureLoader from "../base3d/texture_loader.js";
 
 const Terrain = THREE.Terrain;
 
